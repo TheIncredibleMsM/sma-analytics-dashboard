@@ -13,6 +13,9 @@ Google sign-in and logs who opened it.
   row to a Google Sheet, then serves the dashboard from Drive
 - `SETUP.md` — step-by-step deployment walkthrough
 - `CONTINUE HERE.md` — where the project stands and what comes next
+- `transcripts/` — the raw practice transcripts the dashboard data is built from,
+  one file per practice date. These are the original record; if a number in the
+  dashboard looks wrong, check it against the transcript for that day.
 
 ## Deploying
 

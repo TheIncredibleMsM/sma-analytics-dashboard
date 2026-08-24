@@ -103,7 +103,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-08-20a",
+  "version": "2026-08-24d",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -139,7 +139,7 @@ const BASELINE = {
     },
     {
       "num": "33",
-      "name": "James Southword",
+      "name": "James Southworth",
       "classOf": "2030",
       "year": "Fr",
       "status": "active"
@@ -185,7 +185,7 @@ const BASELINE = {
       "classOf": "2028",
       "year": "Jr",
       "status": "active",
-      "method": "Quarterback. From 18 Aug he is “5A” or “5 Red” (he wears a red penny) because a new player also wears 5. A bare “5” in the 18 Aug transcript has been read as Major, since Maddie wrote “5B” whenever she meant the other boy."
+      "method": "Quarterback. From 18 Aug he is “5A” or “5 Red” (he wears a red penny) because a new player also wears 5. In the 18 Aug Pat and go he was taking snaps, not receiving passes — so he has no catch/drop reps in that drill. Every bare “5” in that drill is the other boy, 5B (corrected 24 Aug)."
     },
     {
       "num": "75",
@@ -350,11 +350,11 @@ const BASELINE = {
     },
     {
       "num": "25B",
-      "name": "",
+      "name": "Ash Vrielink",
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "The other boy wearing 25 from 18 Aug. Name not yet known."
+      "method": "Identified 24 Aug. One of the two boys wearing 25 from 18 Aug; 25A is still unidentified."
     },
     {
       "num": "5B",
@@ -362,7 +362,7 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "New player sharing Major Howard's number from 18 Aug. Major is 5 (“5A” / “5 Red”); this is the other one."
+      "method": "New player sharing Major Howard's number from 18 Aug. Major is 5 (“5A” / “5 Red”); this is the other one. In the 18 Aug Pat and go, every unlabelled “5” is this player — Maddie did not go back and mark them 5B while recording (corrected 24 Aug)."
     },
     {
       "num": "64",
@@ -410,7 +410,8 @@ const BASELINE = {
       "id": "p0810",
       "date": "2026-08-10",
       "session": "Afternoon",
-      "weather": {}
+      "weather": {},
+      "note": "Correction 24 Aug: one rep transcribed as “nine” was #19 misheard — there is no #9 on the roster. Re-read as #19."
     },
     {
       "id": "p0811",
@@ -451,7 +452,7 @@ const BASELINE = {
       "date": "2026-08-18",
       "session": "Afternoon",
       "weather": {},
-      "note": "A lot of new players. Two boys now wear 25 (25A / 25B) and a new player wears 5, so Major is 5A (“5 Red”). #19 back from injury. New rule: a play called wrong costs everyone else five pushups — #66, #8 and #4 each called one wrong today."
+      "note": "A lot of new players. Two boys now wear 25 (25A / 25B) and a new player wears 5, so Major is 5A (“5 Red”). #19 back from injury. New rule: a play called wrong costs everyone else five pushups — #66, #8 and #4 each called one wrong today. Correction 24 Aug: seven Pat and go reps first logged against Major (5A) were actually 5B — Major was taking snaps in that drill, so he has no catch/drop reps in it."
     },
     {
       "id": "p0819",
@@ -667,7 +668,12 @@ const BASELINE = {
         "40",
         "5"
       ],
-      "note": "Two lines. #10 snaps to #40 on one side; #75 (alternating with #66, and #19 at times) snaps to #5 on the other. Each relay passes to whoever is next in line. Coach calls the style."
+      "note": "Two lines. #10 snaps to #40 on one side; #75 (alternating with #66, and #19 at times) snaps to #5 on the other. Each relay passes to whoever is next in line. Coach calls the style.",
+      "feederWeights": {
+        "10": 0.5,
+        "75": 0.25,
+        "66": 0.25
+      }
     },
     {
       "id": "n1",
@@ -714,7 +720,12 @@ const BASELINE = {
         "40",
         "5"
       ],
-      "note": "#10 snapping to #40 on one side, #81 to #5 on the other; #75 swapped in for #81 partway through the curved set. Transcribed by Maddie's assistant."
+      "note": "#10 snapping to #40 on one side, #81 to #5 on the other; #75 swapped in for #81 partway through the curved set. Transcribed by Maddie's assistant.",
+      "feederWeights": {
+        "10": 0.5,
+        "81": 0.25,
+        "75": 0.25
+      }
     },
     {
       "id": "t2",
@@ -770,7 +781,7 @@ const BASELINE = {
         "40",
         "6"
       ],
-      "note": "#81 snapped the opening set, then #75 took over. #40 fed the balls until the last set, when #6 took over and #40 started catching. The opening set's pass style was never named, so it can't be compared with the short/curved/long columns."
+      "note": "#81 snapped the opening set, then #75 took over. #40 fed the balls until the last set, when #6 took over and #40 started catching. The opening set's pass style was never named, so it can't be compared with the short/curved/long columns. One line only, with the snap and the feed both handed over mid-drill, so the share each of them took is a straight guess rather than a split between lines."
     },
     {
       "id": "w2",
@@ -2478,7 +2489,7 @@ const BASELINE = {
     {
       "id": "M040",
       "drillId": "m1",
-      "raw": "Catch from nine"
+      "raw": "Catch from 19"
     },
     {
       "id": "M041",
@@ -4728,7 +4739,7 @@ const BASELINE = {
     {
       "id": "Y155",
       "drillId": "z1",
-      "raw": "Drop from 5"
+      "raw": "Drop from 5B"
     },
     {
       "id": "Y156",
@@ -4803,7 +4814,7 @@ const BASELINE = {
     {
       "id": "Y170",
       "drillId": "z1",
-      "raw": "Drop from 5"
+      "raw": "Drop from 5B"
     },
     {
       "id": "Y171",
@@ -5048,7 +5059,7 @@ const BASELINE = {
     {
       "id": "Y219",
       "drillId": "z1",
-      "raw": "Catch from 5"
+      "raw": "Catch from 5B"
     },
     {
       "id": "Y220",
@@ -5133,7 +5144,7 @@ const BASELINE = {
     {
       "id": "Y236",
       "drillId": "z1",
-      "raw": "Drop from 5"
+      "raw": "Drop from 5B"
     },
     {
       "id": "Y237",
@@ -5208,7 +5219,7 @@ const BASELINE = {
     {
       "id": "Y251",
       "drillId": "z1",
-      "raw": "Drop from 5"
+      "raw": "Drop from 5B"
     },
     {
       "id": "Y252",
@@ -5298,7 +5309,7 @@ const BASELINE = {
     {
       "id": "Y269",
       "drillId": "z1",
-      "raw": "Catch from 5"
+      "raw": "Catch from 5B"
     },
     {
       "id": "Y270",
@@ -5368,7 +5379,7 @@ const BASELINE = {
     {
       "id": "Y283",
       "drillId": "z1",
-      "raw": "Drop from 5"
+      "raw": "Drop from 5B"
     },
     {
       "id": "Y284",
@@ -6672,8 +6683,38 @@ function closeModal() { const m = $(".modal-bg"); if (m) m.remove(); }
 function blank() { return { targets:0, catches:0, drops:0, uncatchable:0, throws:0, badThrows:0,
   snaps:0, att:0, comp:0, passYds:0, passTd:0, intThrown:0, rec:0, recYds:0, recTd:0,
   playDrops:0, fumbles:0, tackles:0, ints:0, ff:0, pbu:0, carries:0, rushYds:0,
-  snapsTaken:0, badSnaps:0, snapsGraded:0, snapsOff:0 }; }
-function statsFor(items) {
+  snapsTaken:0, badSnaps:0, snapsGraded:0, snapsOff:0,
+  snapsShared:0, relayShared:0 }; }
+/* Every rep in a feeding drill needed someone to snap it and someone to relay
+   it, and the drill records who those boys were — but not who took which rep.
+   So the reps are split evenly across the names on duty and reported as shared,
+   never mixed into the counted snaps that carry a bad-snap rate. Without this a
+   boy who spent the whole hour snapping reads as though he never took the field. */
+function sharedDuty(mon) {
+  const out = { snap: {}, relay: {} };
+  if (!mon) return out;
+  const ids = BASELINE.practices.filter(p => mondayOf(p.date) === mon).map(p => p.id);
+  BASELINE.drills.filter(d => d.kind === "rep" && ids.includes(d.practiceId)).forEach(d => {
+    const reps = linesOf(d.id).length;
+    if (!reps) return;
+    [["feeders", "snap"], ["relays", "relay"]].forEach(([key, bucket]) => {
+      const who = (d[key] || []).filter(Boolean);
+      if (!who.length) return;
+      /* Two lines usually run at once. When one line had a lone snapper and the
+         other had two alternating, an even split shorts the lone one — those
+         drills carry explicit shares. Everything else splits evenly. */
+      const wt = (key === "feeders" && d.feederWeights) || null;
+      who.forEach(n => {
+        const share = wt ? (wt[n] || 0) : 1 / who.length;
+        out[bucket][n] = (out[bucket][n] || 0) + reps * share;
+      });
+    });
+  });
+  ["snap", "relay"].forEach(b =>
+    Object.keys(out[b]).forEach(n => out[b][n] = Math.round(out[b][n])));
+  return out;
+}
+function statsFor(items, mon) {
   const S = {}, get = n => (S[n] = S[n] || blank());
   items.forEach(x => {
     const p = x.p; if (!p) return;
@@ -6771,6 +6812,9 @@ function statsFor(items) {
         else if (["incomplete", "drop"].includes(p.outcome)) d.pbu++; else d.tackles++; });
     }
   });
+  const duty = sharedDuty(mon);
+  Object.keys(duty.snap).forEach(n => { get(n).snapsShared += duty.snap[n]; });
+  Object.keys(duty.relay).forEach(n => { get(n).relayShared += duty.relay[n]; });
   return S;
 }
 
@@ -6837,7 +6881,8 @@ const AREAS = [
 function roleOf(s) {
   if (!s) return "";
   const bits = [];
-  if (s.snaps >= 3) bits.push("snapping");
+  if (s.snaps >= 3 || s.snapsShared >= 3) bits.push("snapping");
+  if (s.relayShared >= 3) bits.push("relaying");
   if (s.att >= 3) bits.push("throwing");
   if (s.targets >= 3) bits.push("catching");
   if (s.carries + s.rec >= 3) bits.push("carrying");
@@ -6938,8 +6983,8 @@ function renderCoach() {
   }
   if (!WEEK || !ws.includes(WEEK)) WEEK = ws[0];
   const prev = prevWeek(WEEK);
-  const now = statsFor(itemsInWeek(WEEK));
-  const was = prev ? statsFor(itemsInWeek(prev)) : {};
+  const now = statsFor(itemsInWeek(WEEK), WEEK);
+  const was = prev ? statsFor(itemsInWeek(prev), prev) : {};
   const nums = Array.from(new Set(Object.keys(now).concat(Object.keys(was))))
     .sort((a, b) => (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
   const pracs = BASELINE.practices.filter(p => mondayOf(p.date) === WEEK);
@@ -7043,7 +7088,7 @@ function renderCoach() {
             st !== "active" ? ` <span class="tag warn">${esc(st)}</span>` : ""}</td>
           <td>${up ? `<span class="up" title="praised by a coach">${"★".repeat(Math.min(up, 3))}</span>` : ""}</td>
           <td class="muted">${esc(roleOf(s) || "—")}</td>
-          <td class="n">${s.snaps || "—"}${s.badSnaps ? ` <span class="dn">(${s.badSnaps} bad)</span>` : ""}</td>
+          <td class="n">${s.snaps || "—"}${s.badSnaps ? ` <span class="dn">(${s.badSnaps} bad)</span>` : ""}${s.snapsShared ? ` <span class="muted" title="He was on snap duty for feeding drills. Who took which rep was never called out, so the drill's reps are split evenly between the boys named on duty — an estimate, not a count.">+≈${s.snapsShared} shared</span>` : ""}</td>
           <td class="n">${s.att ? s.comp + "/" + s.att : "—"}</td>
           <td class="n">${cp}</td>
           <td class="n">${(s.carries + s.rec) || "—"}</td>
@@ -7355,8 +7400,8 @@ const tag = n => "#" + n + (surname(n) ? " " + surname(n) : "");
 function debriefText(week) {
   const W = week || WEEK || weeks()[0];
   const prev = prevWeek(W);
-  const now = statsFor(itemsInWeek(W));
-  const was = prev ? statsFor(itemsInWeek(prev)) : {};
+  const now = statsFor(itemsInWeek(W), W);
+  const was = prev ? statsFor(itemsInWeek(prev), prev) : {};
   const pracs = BASELINE.practices.filter(p => mondayOf(p.date) === W);
   const pracIds = pracs.map(p => p.id);
   const items = itemsInWeek(W);
