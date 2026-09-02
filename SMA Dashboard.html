@@ -89,11 +89,13 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
 <main>
   <section class="view on" id="v-coach"><div id="coachArea"></div></section>
   <section class="view" id="v-plays"><div id="playsArea"></div></section>
+  <section class="view" id="v-game"><div id="gameArea"></div></section>
   <section class="view" id="v-more"><div id="moreArea"></div></section>
 </main>
 <nav class="tabs">
   <button data-view="coach" class="on"><span class="ic">▲</span>For coaches</button>
   <button data-view="plays"><span class="ic">≡</span>Every play</button>
+  <button data-view="game"><span class="ic">★</span>Games</button>
 </nav>
 <script>
 "use strict";
@@ -103,7 +105,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-08-24d",
+  "version": "2026-09-01d",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -126,7 +128,12 @@ const BASELINE = {
     "Moving ball 4by4": 33,
     "Snap and run": 15,
     "Snap and run (second go)": 15,
-    "Moving ball drill": 30
+    "Moving ball drill": 30,
+    "Pat-N-Go": 10,
+    "4x4": 30,
+    "Saber": 10,
+    "Moving ball": 10,
+    "Kick return v opponent defence": 30
   },
   "players": [
     {
@@ -135,7 +142,7 @@ const BASELINE = {
       "classOf": "2028",
       "year": "Jr",
       "status": "active",
-      "method": "Quarterback — takes snaps and relays in the passing drill. Catches nearly anything thrown at him, so 'was it caught' can't tell a good snap from a rescued one."
+      "method": "Quarterback in the passing drills — he takes the relay and catches nearly everything, so a high catch rate here does not mean what it means for a receiver."
     },
     {
       "num": "33",
@@ -146,10 +153,11 @@ const BASELINE = {
     },
     {
       "num": "4",
-      "name": "Cason Nash",
+      "name": "Casen Nash",
       "classOf": "2030",
       "year": "Fr",
-      "status": "active"
+      "status": "active",
+      "admin": "Spelling corrected 25 Aug — Casen, not Cason."
     },
     {
       "num": "6",
@@ -167,7 +175,7 @@ const BASELINE = {
     },
     {
       "num": "80",
-      "name": "Jackson Bishop",
+      "name": "Jax Bishop",
       "classOf": "2029",
       "year": "So",
       "status": "active"
@@ -185,14 +193,18 @@ const BASELINE = {
       "classOf": "2028",
       "year": "Jr",
       "status": "active",
-      "method": "Quarterback. From 18 Aug he is “5A” or “5 Red” (he wears a red penny) because a new player also wears 5. In the 18 Aug Pat and go he was taking snaps, not receiving passes — so he has no catch/drop reps in that drill. Every bare “5” in that drill is the other boy, 5B (corrected 24 Aug)."
+      "method": "Quarterback. He receives the snap on most drills, so many of his “catches” are snaps taken rather than receiving reps."
     },
     {
       "num": "75",
-      "name": "Dominic Knight",
+      "name": "Dom Knight",
       "classOf": "2028",
       "year": "Jr",
-      "status": "active"
+      "status": "active",
+      "alias": [
+        "85"
+      ],
+      "admin": "Dom wears 75 on some days and 85 on others. Both numbers are counted as the same player."
     },
     {
       "num": "8",
@@ -215,21 +227,23 @@ const BASELINE = {
       "year": "Sr",
       "status": "active",
       "note": "Cleared to play. Deliberately not credited with anything until his number is mentioned in a drill, so bench time can't read as poor performance.",
-      "method": "Named in his own right from 17 Aug (a catch in the Monday pat-and-go), so he counts from that day. Nothing before it was credited to him."
+      "method": "His record starts on 17 August. Earlier practices are deliberately not counted against him."
     },
     {
       "num": "13",
       "name": "Jacob Becker",
       "classOf": "2027",
       "year": "Sr",
-      "status": "active"
+      "status": "active",
+      "admin": "Wore a purple penny on 24 Aug — “purple” meant 13 that day only."
     },
     {
       "num": "12",
       "name": "Cooper Dailey",
       "classOf": "2027",
       "year": "Sr",
-      "status": "active"
+      "status": "active",
+      "admin": "Spelling confirmed from the game team sheet."
     },
     {
       "num": "50",
@@ -243,14 +257,8 @@ const BASELINE = {
       "name": "Mickey McGuinness",
       "classOf": "2027",
       "year": "Sr",
-      "status": "active"
-    },
-    {
-      "num": "34",
-      "name": "Landon Douglas",
-      "classOf": "2028",
-      "year": "Jr",
-      "status": "active"
+      "status": "active",
+      "method": "Most of his snaps were only written down because something went wrong with them, so the count of off-target snaps is not a rate and should not be read as one."
     },
     {
       "num": "15",
@@ -258,15 +266,16 @@ const BASELINE = {
       "classOf": "2028",
       "year": "Jr",
       "status": "active",
-      "method": "Recorded as “Siwu” on 12 Aug, but on 17 Aug Maddie guessed #62 might be Siwoo Ahn. One of the two is wrong — unresolved."
+      "admin": "Was briefly recorded as “Siwu”. Wrong — unidentified."
     },
     {
       "num": "",
-      "name": "Cash Gilliad",
+      "name": "Cash Gilliand",
       "classOf": "2027",
       "year": "Sr",
       "status": "active",
-      "noNumber": true
+      "noNumber": true,
+      "admin": "Game number 6. No practice number on file."
     },
     {
       "num": "82",
@@ -274,7 +283,7 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "Number seen catching in the pat-and-go on 12 Aug. Name not yet known."
+      "admin": "Number seen catching in the pat-and-go on 12 Aug. Name not yet known."
     },
     {
       "num": "62",
@@ -282,7 +291,7 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "Kicking on his own on 17 Aug — twice noted as a good kick. Maddie thinks this may be Siwoo Ahn but is not sure. Not confirmed."
+      "admin": "Was guessed to be Siwoo Ahn. Withdrawn 25 Aug. Unidentified."
     },
     {
       "num": "2",
@@ -290,23 +299,15 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "First seen 17 Aug."
-    },
-    {
-      "num": "22",
-      "name": "",
-      "classOf": "",
-      "year": "",
-      "status": "active",
-      "method": "First seen 17 Aug."
+      "admin": "First seen 17 Aug."
     },
     {
       "num": "23",
-      "name": "",
+      "name": "Elijah Boyd-Sanders",
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "First seen 17 Aug. Coach said “Yeah, Elijah” on 18 Aug and Maddie thinks that is this player — unconfirmed."
+      "admin": "Confirmed 25 Aug — Coach Tinker shouted “Gotta get those, Elijah” at 23."
     },
     {
       "num": "27",
@@ -314,7 +315,7 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "Seen once, 17 Aug."
+      "admin": "Seen once, 17 Aug."
     },
     {
       "num": "45",
@@ -322,7 +323,7 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "First seen 17 Aug."
+      "admin": "First seen 17 Aug."
     },
     {
       "num": "83",
@@ -330,7 +331,7 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "Seen once, 17 Aug."
+      "admin": "Seen once, 17 Aug."
     },
     {
       "num": "25",
@@ -338,7 +339,7 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "Caught and dropped through 17 Aug. From 18 Aug there are two boys wearing 25 (25A and 25B) and it is not known which of them this is."
+      "admin": "Caught and dropped through 17 Aug, before there were two boys wearing 25. Not known which of them this is."
     },
     {
       "num": "25A",
@@ -346,31 +347,37 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "One of two boys wearing 25 from 18 Aug. Name not yet known."
+      "admin": "Unidentified. Aiden Lee was matched to this number from the game team sheet, but Maddie said on 1 Sep that we still do not know who 25A is, so the name has been taken off."
     },
     {
-      "num": "25B",
+      "num": "22",
       "name": "Ash Vrielink",
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "Identified 24 Aug. One of the two boys wearing 25 from 18 Aug; 25A is still unidentified."
+      "alias": [
+        "25B"
+      ],
+      "admin": "Ash wore 25B until the end of August and wears 22 now. Both numbers count as the same player. Game #51."
     },
     {
       "num": "5B",
-      "name": "",
+      "name": "Landon Douglass",
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "New player sharing Major Howard's number from 18 Aug. Major is 5 (“5A” / “5 Red”); this is the other one. In the 18 Aug Pat and go, every unlabelled “5” is this player — Maddie did not go back and mark them 5B while recording (corrected 24 Aug)."
+      "alias": [
+        "34"
+      ],
+      "admin": "Landon also appears as #34, which he wore until 18 Aug. Both numbers are counted as the same player. Game #21."
     },
     {
       "num": "64",
-      "name": "",
+      "name": "Kitt Phelan",
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "Seen 12 Aug, no plays recorded yet."
+      "admin": "Called Kitt. Surname Phelan, from the game team sheet — the earlier “Dillon” was wrong."
     },
     {
       "num": "17",
@@ -378,7 +385,55 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "method": "Seen 12 Aug, no plays recorded yet."
+      "admin": "Seen 12 Aug, no plays recorded yet."
+    },
+    {
+      "num": "0",
+      "name": "Dylan Cavazos",
+      "classOf": "",
+      "year": "",
+      "status": "active",
+      "admin": "Dylan has no practice or game-day practice number. #0 is a stand-in so his snaps can be counted; it is not a jersey he wears."
+    },
+    {
+      "num": "84",
+      "name": "",
+      "classOf": "",
+      "year": "",
+      "status": "active",
+      "admin": "Seen in a transcript, not yet identified."
+    },
+    {
+      "num": "21",
+      "name": "",
+      "classOf": "",
+      "year": "",
+      "status": "active",
+      "admin": "Seen in a transcript, not yet identified."
+    },
+    {
+      "num": "20",
+      "name": "",
+      "classOf": "",
+      "year": "",
+      "status": "active",
+      "admin": "Seen in a transcript, not yet identified."
+    },
+    {
+      "num": "55",
+      "name": "",
+      "classOf": "",
+      "year": "",
+      "status": "active",
+      "admin": "Seen in a transcript, not yet identified."
+    },
+    {
+      "num": "95",
+      "name": "",
+      "classOf": "",
+      "year": "",
+      "status": "active",
+      "admin": "Seen in a transcript, not yet identified."
     }
   ],
   "practices": [
@@ -467,6 +522,55 @@ const BASELINE = {
       "session": "Afternoon",
       "weather": {},
       "note": "Practice happened. Coach asked for no stats to be recorded — a gap in the data, not a day off."
+    },
+    {
+      "id": "p0824",
+      "date": "2026-08-24",
+      "session": "Afternoon",
+      "weather": {},
+      "note": "Pat-N-Go then a 4x4. Every bare 5 in the Pat-N-Go means 5B, because Major was passing; in the 4x4 a bare 5 means Major. #13 wore a purple penny."
+    },
+    {
+      "id": "p0825",
+      "date": "2026-08-25",
+      "session": "Morning",
+      "weather": {},
+      "note": "6am practice. Maddie collected names and practice numbers at the water break, which is where most of the roster came from. The player she called “Siwoo” all morning was actually Dylan, a new member with no number — every such play is recorded against the #0 stand-in. The drone was filming, so anything missed is on film."
+    },
+    {
+      "id": "p0826",
+      "date": "2026-08-26",
+      "session": "Afternoon",
+      "weather": {},
+      "note": "Started indoors walking through plays — no stats possible. On the field: a drill against the defensive set the next opponent runs, then Pat-N-Go, then a 4x4. Maddie recorded feeling light-headed during the 4x4."
+    },
+    {
+      "id": "p0827",
+      "date": "2026-08-27",
+      "session": "Afternoon",
+      "weather": {},
+      "note": "Walkthrough practice. The boys were not wearing jersey numbers, so no stats could be taken — a gap in the data, not a day off."
+    },
+    {
+      "id": "p0828",
+      "date": "2026-08-28",
+      "session": "Evening",
+      "weather": {},
+      "note": "Warm-up before the first game — a Pat-N-Go and a 4x4, both translated back into practice numbers so they sit with the rest of the season. The game itself is on the Games tab."
+    },
+    {
+      "id": "p0831",
+      "date": "2026-08-31",
+      "session": "Afternoon",
+      "weather": {},
+      "note": "Practice happened. Maddie could not attend, so nothing is recorded — a gap in the data, not a day off. Mason told her the catching was poor."
+    },
+    {
+      "id": "p0901",
+      "date": "2026-09-01",
+      "session": "Morning",
+      "weather": {},
+      "note": "6am. Ash confirmed his practice number is now 22. The purple penny today was Mickey (#66). The shock-and-lock and donut drills were run but not charted — Coach has asked her not to. Almost nothing was caught on long balls all morning, and Coach said so out loud twice."
     }
   ],
   "drills": [
@@ -880,6 +984,219 @@ const BASELINE = {
       "endedAt": null,
       "movingStart": true,
       "note": "Ball advances between plays. #81 snapping, then #66. Yardage is indicative only."
+    },
+    {
+      "id": "a1",
+      "practiceId": "p0824",
+      "name": "Pat-N-Go",
+      "kind": "rep",
+      "startedAt": "17:08",
+      "endedAt": "17:41",
+      "style": "short",
+      "feeders": [
+        "66",
+        "85",
+        "31"
+      ],
+      "relays": [
+        "6",
+        "5"
+      ],
+      "note": "#66 snapping to #6 on the left; #85 and #31 alternating to Major Howard on the right, and from partway through only #85. #40 took over passing for the final long set. Every bare 5 in this drill is 5B."
+    },
+    {
+      "id": "a2",
+      "practiceId": "p0824",
+      "name": "4x4",
+      "kind": "play",
+      "startedAt": "17:41",
+      "endedAt": null,
+      "note": "#31 snapping to Major (5A), with #81 taking over partway through. Defence included 64, 50, 85, 10, 13 and 5B. Ball started on the 10."
+    },
+    {
+      "id": "b1",
+      "practiceId": "p0825",
+      "name": "Pat-N-Go",
+      "kind": "rep",
+      "startedAt": "06:02",
+      "endedAt": "06:30",
+      "style": "short",
+      "feeders": [
+        "66",
+        "10",
+        "85",
+        "81",
+        "31"
+      ],
+      "relays": [
+        "40",
+        "5"
+      ],
+      "note": "#66 and #10 alternating to Valor (40) on the left; #85 and #81 to Major (5A) on the right, becoming #31 and #85 partway through the long set. Every bare 5 in a catch or drop line is 5B, Landon Douglas."
+    },
+    {
+      "id": "b2",
+      "practiceId": "p0825",
+      "name": "4x4",
+      "kind": "play",
+      "startedAt": "06:33",
+      "endedAt": "07:00",
+      "note": "Ball starts on the 25 every rep. Dylan — a new player with no number, recorded as #0 — snapped to Major on every rep until it got too dark to see the snapper; those reps are marked as an unconfirmed snapper and nobody is credited. Every 5 here is Major."
+    },
+    {
+      "id": "b3",
+      "practiceId": "p0825",
+      "name": "Saber",
+      "kind": "play",
+      "startedAt": "07:00",
+      "endedAt": "07:09",
+      "note": "A new play. #85 (Dom) snapping almost throughout, #10 for one rep. Ball starts on the 10, later the 5. Maddie could not tell whether the 5 in these plays is Major or Landon — on one rep a 5 carries while a 5 blocks, so both are on the field. Every 5 is left bare and should be treated as unresolved."
+    },
+    {
+      "id": "b4",
+      "practiceId": "p0825",
+      "name": "Moving ball",
+      "kind": "play",
+      "startedAt": "07:09",
+      "endedAt": null,
+      "movingStart": true,
+      "note": "Ball is re-spotted between plays. #31 snapping to Major, #81 taking over partway through. Yardage is indicative only."
+    },
+    {
+      "id": "c1",
+      "practiceId": "p0826",
+      "name": "Kick return v opponent defence",
+      "kind": "play",
+      "startedAt": "17:12",
+      "endedAt": "17:15",
+      "noSnap": true,
+      "note": "Not a 4x4 — a rehearsal against the defensive set the next opponent runs. #8 kicks and the return man tries to break through. Defence: 31, 13, 50, 6, 80, 40 and 3. Ball started on the 30. No snapping. #8's kicks are recorded like passes, so his passing line for this drill is really a kicking line."
+    },
+    {
+      "id": "c2",
+      "practiceId": "p0826",
+      "name": "Pat-N-Go",
+      "kind": "rep",
+      "startedAt": "17:15",
+      "endedAt": "17:57",
+      "style": "short",
+      "feeders": [
+        "75",
+        "81",
+        "31",
+        "10"
+      ],
+      "relays": [
+        "5",
+        "6"
+      ],
+      "note": "#75 alternating with #81 to Major Howard on the right, #10 snapping to #6 on the left. Partway through the outs set #81 swapped out to catch and #31 took over snapping on the right. Major was passing all drill, so a bare 5 in a catch or drop line has been read as 5B — Maddie did not state that rule aloud this time, so it is an inference."
+    },
+    {
+      "id": "c3",
+      "practiceId": "p0826",
+      "name": "4x4",
+      "kind": "play",
+      "startedAt": "17:57",
+      "endedAt": null,
+      "note": "#31 snapping throughout. Maddie first said #10 was snapping and corrected herself later — “I've been wrong, I'm pretty sure it's 31 snapping today, 10 has yet to snap today” — so the correction has been applied to every rep, including the ones recorded before she said it."
+    },
+    {
+      "id": "q1",
+      "practiceId": "p0828",
+      "name": "Pat-N-Go",
+      "kind": "rep",
+      "startedAt": "21:35",
+      "endedAt": "21:48",
+      "style": "short",
+      "feeders": [
+        "66",
+        "10",
+        "75",
+        "31"
+      ],
+      "relays": [
+        "6",
+        "5"
+      ],
+      "note": "Warm-up on the field before the first game. Recorded in game jerseys and translated back to practice numbers so it sits alongside every other Pat-N-Go. The recording is noisy — treat these as indicative rather than exact."
+    },
+    {
+      "id": "q2",
+      "practiceId": "p0828",
+      "name": "4x4",
+      "kind": "play",
+      "startedAt": "21:48",
+      "endedAt": "22:00",
+      "note": "Warm-up before kickoff, translated back to practice numbers. Ball started on the 30."
+    },
+    {
+      "id": "c4",
+      "practiceId": "p0826",
+      "name": "4x4",
+      "kind": "play",
+      "startedAt": "17:29",
+      "endedAt": "17:50",
+      "note": "#31 snapping throughout. Maddie twice corrected herself on this — “it was not 10 that snapped, it was 31” — so every rep is credited to 31, including the ones she first attributed to 10. Ball starts on the 10 each rep."
+    },
+    {
+      "id": "c5",
+      "practiceId": "p0826",
+      "name": "Saber",
+      "kind": "play",
+      "startedAt": "17:52",
+      "endedAt": null,
+      "note": "#75 was snapping the whole drill — she only realised partway through, so the earlier reps have been corrected to match. The opening reps had no snap at all: #81 handed the ball to #5 directly. As with the other Saber sessions, a bare 5 could be Major or Landon and has been left unresolved."
+    },
+    {
+      "id": "e1",
+      "practiceId": "p0901",
+      "name": "Pat-N-Go",
+      "kind": "rep",
+      "startedAt": "06:00",
+      "endedAt": "06:30",
+      "style": "short",
+      "feeders": [
+        "31",
+        "75",
+        "10",
+        "66"
+      ],
+      "relays": [
+        "5",
+        "40"
+      ],
+      "note": "#31 alternating with #75 to Major on the right; #10 alternating with #66 (the purple penny today) on the left. A bare 25 in this drill cannot be pinned to 25A or 25B and is marked uncertain."
+    },
+    {
+      "id": "e2",
+      "practiceId": "p0901",
+      "name": "Long pass and cover",
+      "kind": "play",
+      "startedAt": "06:34",
+      "endedAt": "06:55",
+      "noYards": true,
+      "noSnap": true,
+      "note": "A new drill on the left side of the field. Coach Followell feeds Major from a standing start and Major throws long; a defender shadows the receiver but NOBODY TACKLES — Maddie was clear that they were only standing near the man. So there are no tackles in here at all, and no yardage either: the ball is thrown from a standing coach rather than a snap, so a “gain” would mean nothing. The right side of the field was doing tackling practice she did not chart."
+    },
+    {
+      "id": "e3",
+      "practiceId": "p0901",
+      "name": "4x4",
+      "kind": "play",
+      "startedAt": "06:55",
+      "endedAt": "07:08",
+      "note": "#75 snapping, #81 taking over near the end. Ball moved 20 → 25 → 35 between sets. Still no tackling — the defence shadowed rather than tackled, which Maddie was not happy about."
+    },
+    {
+      "id": "e4",
+      "practiceId": "p0901",
+      "name": "Moving 4x4",
+      "kind": "play",
+      "startedAt": "07:08",
+      "endedAt": null,
+      "movingStart": true,
+      "note": "#81 snapping throughout. Ball advances between plays, so yardage here is not measured."
     }
   ],
   "lines": [
@@ -1141,7 +1458,7 @@ const BASELINE = {
     {
       "id": "L052",
       "drillId": "d5",
-      "raw": "75 snapped to 5, who passed to 12, who ran over 33, made it to the 25 yard line - CHING"
+      "raw": "75 snapped to 5, who passed to 12, who ran over 33, made it to the 25 yard line"
     },
     {
       "id": "L053",
@@ -5575,6 +5892,3365 @@ const BASELINE = {
       "id": "Y322",
       "drillId": "z4",
       "raw": "66 snaps to 5, a bad snap from 66 that 5 had to pick up off the ground, who then passes to 40 at the 25 yard line, who is tackled by 6"
+    },
+    {
+      "id": "A001",
+      "drillId": "a1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "A002",
+      "drillId": "a1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A003",
+      "drillId": "a1",
+      "raw": "Catch from 40"
+    },
+    {
+      "id": "A004",
+      "drillId": "a1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A005",
+      "drillId": "a1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A006",
+      "drillId": "a1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "A007",
+      "drillId": "a1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A008",
+      "drillId": "a1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A009",
+      "drillId": "a1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A010",
+      "drillId": "a1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A011",
+      "drillId": "a1",
+      "raw": "Catch from 62"
+    },
+    {
+      "id": "A012",
+      "drillId": "a1",
+      "raw": "Catch from 64*"
+    },
+    {
+      "id": "A013",
+      "drillId": "a1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "A014",
+      "drillId": "a1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "A015",
+      "drillId": "a1",
+      "raw": "Catch from 40"
+    },
+    {
+      "id": "A016",
+      "drillId": "a1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A017",
+      "drillId": "a1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A018",
+      "drillId": "a1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "A019",
+      "drillId": "a1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A020",
+      "drillId": "a1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A021",
+      "drillId": "a1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A022",
+      "drillId": "a1",
+      "raw": "Catch from 25"
+    },
+    {
+      "id": "A023",
+      "drillId": "a1",
+      "raw": "Catch from 13*"
+    },
+    {
+      "id": "A024",
+      "drillId": "a1",
+      "raw": "Catch from 62"
+    },
+    {
+      "id": "A025",
+      "drillId": "a1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "A026",
+      "drillId": "a1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "A027",
+      "drillId": "a1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "A028",
+      "drillId": "a1",
+      "raw": "Catch from 10"
+    },
+    {
+      "id": "A029",
+      "drillId": "a1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A030",
+      "drillId": "a1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "A031",
+      "drillId": "a1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A032",
+      "drillId": "a1",
+      "raw": "switching to outs"
+    },
+    {
+      "id": "A033",
+      "drillId": "a1",
+      "raw": "Drop from 40"
+    },
+    {
+      "id": "A034",
+      "drillId": "a1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "A035",
+      "drillId": "a1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "A036",
+      "drillId": "a1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A037",
+      "drillId": "a1",
+      "raw": "Catch from 25B"
+    },
+    {
+      "id": "A038",
+      "drillId": "a1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A039",
+      "drillId": "a1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A040",
+      "drillId": "a1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "A041",
+      "drillId": "a1",
+      "raw": "*******"
+    },
+    {
+      "id": "A042",
+      "drillId": "a1",
+      "raw": "Drop from 81*"
+    },
+    {
+      "id": "A043",
+      "drillId": "a1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A044",
+      "drillId": "a1",
+      "raw": "Catch from 62"
+    },
+    {
+      "id": "A045",
+      "drillId": "a1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A046",
+      "drillId": "a1",
+      "raw": "Drop from 22"
+    },
+    {
+      "id": "A047",
+      "drillId": "a1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A048",
+      "drillId": "a1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "A049",
+      "drillId": "a1",
+      "raw": "Catch from 40*"
+    },
+    {
+      "id": "A050",
+      "drillId": "a1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "A051",
+      "drillId": "a1",
+      "raw": "Catch from 25B"
+    },
+    {
+      "id": "A052",
+      "drillId": "a1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A053",
+      "drillId": "a1",
+      "raw": "A good snap from 81"
+    },
+    {
+      "id": "A054",
+      "drillId": "a1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A055",
+      "drillId": "a1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A056",
+      "drillId": "a1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A057",
+      "drillId": "a1",
+      "raw": "A good snap from 31"
+    },
+    {
+      "id": "A058",
+      "drillId": "a1",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "A059",
+      "drillId": "a1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A060",
+      "drillId": "a1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "A061",
+      "drillId": "a1",
+      "raw": "Catch from 62"
+    },
+    {
+      "id": "A062",
+      "drillId": "a1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "A063",
+      "drillId": "a1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "A064",
+      "drillId": "a1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "A065",
+      "drillId": "a1",
+      "raw": "switching to longer"
+    },
+    {
+      "id": "A066",
+      "drillId": "a1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "A067",
+      "drillId": "a1",
+      "raw": "Drop from 12"
+    },
+    {
+      "id": "A068",
+      "drillId": "a1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A069",
+      "drillId": "a1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "A070",
+      "drillId": "a1",
+      "raw": "Catch from 25B"
+    },
+    {
+      "id": "A071",
+      "drillId": "a1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A072",
+      "drillId": "a1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A073",
+      "drillId": "a1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A074",
+      "drillId": "a1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "A075",
+      "drillId": "a1",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "A076",
+      "drillId": "a1",
+      "raw": "Drop from 62"
+    },
+    {
+      "id": "A077",
+      "drillId": "a1",
+      "raw": "Drop from 50*"
+    },
+    {
+      "id": "A078",
+      "drillId": "a1",
+      "raw": "Drop from 22"
+    },
+    {
+      "id": "A079",
+      "drillId": "a1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "A080",
+      "drillId": "a1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "A081",
+      "drillId": "a1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A082",
+      "drillId": "a1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A083",
+      "drillId": "a1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "A084",
+      "drillId": "a1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "A085",
+      "drillId": "a1",
+      "raw": "switching to long"
+    },
+    {
+      "id": "A086",
+      "drillId": "a1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A087",
+      "drillId": "a1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A088",
+      "drillId": "a1",
+      "raw": "Drop from 25"
+    },
+    {
+      "id": "A089",
+      "drillId": "a1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "A090",
+      "drillId": "a1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "A091",
+      "drillId": "a1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "A092",
+      "drillId": "a1",
+      "raw": "Catch from 62"
+    },
+    {
+      "id": "A093",
+      "drillId": "a1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A094",
+      "drillId": "a1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "A095",
+      "drillId": "a1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A096",
+      "drillId": "a1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "A097",
+      "drillId": "a1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A098",
+      "drillId": "a1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A099",
+      "drillId": "a1",
+      "raw": "Drop from 6"
+    },
+    {
+      "id": "A100",
+      "drillId": "a1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A101",
+      "drillId": "a1",
+      "raw": "Catch from 25"
+    },
+    {
+      "id": "A102",
+      "drillId": "a1",
+      "raw": "Drop from 80*"
+    },
+    {
+      "id": "A103",
+      "drillId": "a1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A104",
+      "drillId": "a1",
+      "raw": "Catch from 62*"
+    },
+    {
+      "id": "A105",
+      "drillId": "a1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "A106",
+      "drillId": "a1",
+      "raw": "Catch from 81*"
+    },
+    {
+      "id": "A107",
+      "drillId": "a1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A108",
+      "drillId": "a1",
+      "raw": "Catch from 31*"
+    },
+    {
+      "id": "A109",
+      "drillId": "a1",
+      "raw": "Catch from 22*"
+    },
+    {
+      "id": "A110",
+      "drillId": "a1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "A111",
+      "drillId": "a1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "A112",
+      "drillId": "a1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "A113",
+      "drillId": "a1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A114",
+      "drillId": "a1",
+      "raw": "Catch from 25"
+    },
+    {
+      "id": "A115",
+      "drillId": "a1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A116",
+      "drillId": "a1",
+      "raw": "Drop from 12"
+    },
+    {
+      "id": "A117",
+      "drillId": "a1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "A118",
+      "drillId": "a1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "A119",
+      "drillId": "a1",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "A120",
+      "drillId": "a1",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "A121",
+      "drillId": "a1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A122",
+      "drillId": "a1",
+      "raw": "Drop from 31"
+    },
+    {
+      "id": "A123",
+      "drillId": "a1",
+      "raw": "Catch from 62"
+    },
+    {
+      "id": "A124",
+      "drillId": "a1",
+      "raw": "Drop from 50*"
+    },
+    {
+      "id": "A125",
+      "drillId": "a1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "A126",
+      "drillId": "a1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "A127",
+      "drillId": "a1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A128",
+      "drillId": "a2",
+      "raw": "start 10"
+    },
+    {
+      "id": "A129",
+      "drillId": "a2",
+      "raw": "*******"
+    },
+    {
+      "id": "A130",
+      "drillId": "a2",
+      "raw": "31 snaps to 5, who hands it off to 12, who makes it through the whole defence*"
+    },
+    {
+      "id": "A131",
+      "drillId": "a2",
+      "raw": "31 snaps to 5, who hands it off to 12, who takes it to the 15 yard line"
+    },
+    {
+      "id": "A132",
+      "drillId": "a2",
+      "raw": "31 snaps to 5, who hands it off to 12, who is blocked by 5B at the 10 yard line"
+    },
+    {
+      "id": "A133",
+      "drillId": "a2",
+      "raw": "*******"
+    },
+    {
+      "id": "A134",
+      "drillId": "a2",
+      "raw": "*******"
+    },
+    {
+      "id": "A135",
+      "drillId": "a2",
+      "raw": "31 snaps to 5, who hands it off to 12, who takes it all the way to the 27 yard hash"
+    },
+    {
+      "id": "A136",
+      "drillId": "a2",
+      "raw": "31 snaps to 5, who hands it off to 12, who makes it to the 20 yard line"
+    },
+    {
+      "id": "A137",
+      "drillId": "a2",
+      "raw": "31 snaps to 5, who hands it off to 12, but 12 fumbles it in the handoff and 50 recovers it"
+    },
+    {
+      "id": "A138",
+      "drillId": "a2",
+      "raw": "*******"
+    },
+    {
+      "id": "A139",
+      "drillId": "a2",
+      "raw": "31 snaps to 5, who hands it off to 12, who is stopped by 13 at the 10 yard line before the whistle"
+    },
+    {
+      "id": "A140",
+      "drillId": "a2",
+      "raw": "31 snaps to 5, who passes to 40, who jukes past four separate guys to make it to the 15 yard line"
+    },
+    {
+      "id": "A141",
+      "drillId": "a2",
+      "raw": "81 snaps to 5, who passes to 40, who jukes around 13 and takes it all the way to the 20 yard line"
+    },
+    {
+      "id": "A142",
+      "drillId": "a2",
+      "raw": "false start from 66*"
+    },
+    {
+      "id": "A143",
+      "drillId": "a2",
+      "raw": "81 snaps to 5, who passes to 40, who takes it to the 40 yard line"
+    },
+    {
+      "id": "A144",
+      "drillId": "a2",
+      "raw": "81 snaps to 5, who hands it off to somebody*"
+    },
+    {
+      "id": "A145",
+      "drillId": "a2",
+      "raw": "81 snaps to 5, who passes to 12, who takes it to the 20 yard line"
+    },
+    {
+      "id": "A146",
+      "drillId": "a2",
+      "raw": "81 snaps to 5, who passes to 12, who is tackled by 5B at about the 8 yard hash"
+    },
+    {
+      "id": "A147",
+      "drillId": "a2",
+      "raw": "81 snaps to 5, who passes to 40, who jukes past 4 and makes it all the way to the 25 yard line"
+    },
+    {
+      "id": "A148",
+      "drillId": "b1",
+      "raw": "*******"
+    },
+    {
+      "id": "A149",
+      "drillId": "b1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "A150",
+      "drillId": "b1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A151",
+      "drillId": "b1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "A152",
+      "drillId": "b1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A153",
+      "drillId": "b1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A154",
+      "drillId": "b1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A155",
+      "drillId": "b1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A156",
+      "drillId": "b1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A157",
+      "drillId": "b1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A158",
+      "drillId": "b1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A159",
+      "drillId": "b1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A160",
+      "drillId": "b1",
+      "raw": "switching to outs"
+    },
+    {
+      "id": "A161",
+      "drillId": "b1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "A162",
+      "drillId": "b1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A163",
+      "drillId": "b1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "A164",
+      "drillId": "b1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "A165",
+      "drillId": "b1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "A166",
+      "drillId": "b1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A167",
+      "drillId": "b1",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "A168",
+      "drillId": "b1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "A169",
+      "drillId": "b1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A170",
+      "drillId": "b1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "A171",
+      "drillId": "b1",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "A172",
+      "drillId": "b1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "A173",
+      "drillId": "b1",
+      "raw": "Drop from 12"
+    },
+    {
+      "id": "A174",
+      "drillId": "b1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A175",
+      "drillId": "b1",
+      "raw": "A bad snap from 66"
+    },
+    {
+      "id": "A176",
+      "drillId": "b1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A177",
+      "drillId": "b1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "A178",
+      "drillId": "b1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A179",
+      "drillId": "b1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "A180",
+      "drillId": "b1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A181",
+      "drillId": "b1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "A182",
+      "drillId": "b1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "A183",
+      "drillId": "b1",
+      "raw": "switching to long"
+    },
+    {
+      "id": "A184",
+      "drillId": "b1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "A185",
+      "drillId": "b1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "A186",
+      "drillId": "b1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A187",
+      "drillId": "b1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "A188",
+      "drillId": "b1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A189",
+      "drillId": "b1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "A190",
+      "drillId": "b1",
+      "raw": "Drop from 12"
+    },
+    {
+      "id": "A191",
+      "drillId": "b1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A192",
+      "drillId": "b1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A193",
+      "drillId": "b1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "A194",
+      "drillId": "b1",
+      "raw": "Drop from 23"
+    },
+    {
+      "id": "A195",
+      "drillId": "b1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A196",
+      "drillId": "b1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A197",
+      "drillId": "b1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A198",
+      "drillId": "b1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A199",
+      "drillId": "b1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "A200",
+      "drillId": "b1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A201",
+      "drillId": "b1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A202",
+      "drillId": "b1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A203",
+      "drillId": "b1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "A204",
+      "drillId": "b1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A205",
+      "drillId": "b1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "A206",
+      "drillId": "b1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "A207",
+      "drillId": "b1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "A208",
+      "drillId": "b1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "A209",
+      "drillId": "b1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "A210",
+      "drillId": "b1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A211",
+      "drillId": "b1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A212",
+      "drillId": "b1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A213",
+      "drillId": "b1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A214",
+      "drillId": "b1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A215",
+      "drillId": "b1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "A216",
+      "drillId": "b1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A217",
+      "drillId": "b1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "A218",
+      "drillId": "b1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "A219",
+      "drillId": "b1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "A220",
+      "drillId": "b1",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "A221",
+      "drillId": "b1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A222",
+      "drillId": "b1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "A223",
+      "drillId": "b1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A224",
+      "drillId": "b1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "A225",
+      "drillId": "b1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "A226",
+      "drillId": "b1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "A227",
+      "drillId": "b1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A228",
+      "drillId": "b1",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "A229",
+      "drillId": "b1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A230",
+      "drillId": "b1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "A231",
+      "drillId": "b1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "A232",
+      "drillId": "b1",
+      "raw": "switching to super long"
+    },
+    {
+      "id": "A233",
+      "drillId": "b1",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "A234",
+      "drillId": "b1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "A235",
+      "drillId": "b1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "A236",
+      "drillId": "b1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A237",
+      "drillId": "b1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A238",
+      "drillId": "b1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "A239",
+      "drillId": "b1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "A240",
+      "drillId": "b1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "A241",
+      "drillId": "b1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "A242",
+      "drillId": "b1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A243",
+      "drillId": "b1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A244",
+      "drillId": "b1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "A245",
+      "drillId": "b1",
+      "raw": "*******"
+    },
+    {
+      "id": "A246",
+      "drillId": "b1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "A247",
+      "drillId": "b1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "A248",
+      "drillId": "b1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "A249",
+      "drillId": "b1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "A250",
+      "drillId": "b1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "A251",
+      "drillId": "b1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "A252",
+      "drillId": "b1",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "A253",
+      "drillId": "b1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "A254",
+      "drillId": "b1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "A255",
+      "drillId": "b1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "A256",
+      "drillId": "b1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "A257",
+      "drillId": "b1",
+      "raw": "Drop from 10"
+    },
+    {
+      "id": "A258",
+      "drillId": "b2",
+      "raw": "start 25"
+    },
+    {
+      "id": "A259",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes to 40, who takes it all the way to the 45 yard line before the whistle"
+    },
+    {
+      "id": "A260",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes to 8, who takes it all the way to the 45 yard line before the whistle"
+    },
+    {
+      "id": "A261",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes all the way down to 40, who catches it on the 50 yard line and takes it to the 40 yard line"
+    },
+    {
+      "id": "A262",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who tries to pass to 23, but 31 intercepts it"
+    },
+    {
+      "id": "A263",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes to 31, who catches it at the 30 yard mark and winds up taking it to the 35 yard mark*"
+    },
+    {
+      "id": "A264",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes to 12, who makes it past 13 and 23 at the 30 yard mark before the whistle"
+    },
+    {
+      "id": "A265",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes to 40, who jukes around 4 at the 35 yard line and takes it to the 40 yard line before the whistle"
+    },
+    {
+      "id": "A266",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes all the way down to 31, but 31 does not catch it at about the 43 yard hash"
+    },
+    {
+      "id": "A267",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who throws a long pass to 23, who catches it at the 45 yard line"
+    },
+    {
+      "id": "A268",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who hands it off to 8, who takes it all the way to the 40 yard line where he is caught by 4 and 19"
+    },
+    {
+      "id": "A269",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes all the way down to 23, but 23 is tackled by 19 and 33 at the 45 yard line and drops the ball"
+    },
+    {
+      "id": "A270",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes to 80, who takes it to the 35 yard line while being chased by 64, 19 and 23"
+    },
+    {
+      "id": "A271",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes to 23*",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "A272",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes it all the way over to 8, who catches it on the 30 yard line and is tackled by 33, 40 and 23 before the whistle",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "A273",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who does a really long pass all the way down to 80, who catches it at the 45 yard line and takes it to the 40 yard line",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "A274",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who passes to 23, who catches it on the 30 yard line and is stopped at the 35 yard line by 19 and 33",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "A275",
+      "drillId": "b2",
+      "raw": "0 snaps to 5, who hands it off to 80, who runs all the way down before 19 pushes him out of bounds at the 35 yard line",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "A276",
+      "drillId": "b3",
+      "raw": "start 10"
+    },
+    {
+      "id": "A277",
+      "drillId": "b3",
+      "raw": "*******"
+    },
+    {
+      "id": "A278",
+      "drillId": "b3",
+      "raw": "*******"
+    },
+    {
+      "id": "A279",
+      "drillId": "b3",
+      "raw": "*******"
+    },
+    {
+      "id": "A280",
+      "drillId": "b3",
+      "raw": "85 snaps to 5, who passes to 40, who takes it to the 20 yard line"
+    },
+    {
+      "id": "A281",
+      "drillId": "b3",
+      "raw": "*******"
+    },
+    {
+      "id": "A282",
+      "drillId": "b3",
+      "raw": "85 snaps to 64, who passes to 5, who passes to 40, who takes it all the way to the 20 yard line"
+    },
+    {
+      "id": "A283",
+      "drillId": "b3",
+      "raw": "85 snaps to 64, who passes to 5, who takes it to the 20 yard line, jukes past a couple of guys, takes it to the 30 yard line, then jukes past 19, before the whistle"
+    },
+    {
+      "id": "A284",
+      "drillId": "b3",
+      "raw": "85 snaps to 64, but 64 does not catch it, then 64 passes to 5, who passes to 10, but 10 misses it at the 25 yard line*"
+    },
+    {
+      "id": "A285",
+      "drillId": "b3",
+      "raw": "85 snaps to 64, who passes to 5, who runs it all the way to the 15 yard line*"
+    },
+    {
+      "id": "A286",
+      "drillId": "b3",
+      "raw": "85 snaps to 5, who passes to 40, who jukes around 19 and 80 and takes it all the way to the 20 yard line before the whistle*"
+    },
+    {
+      "id": "A287",
+      "drillId": "b3",
+      "raw": "85 snaps to 5, who tries to pass to 40, but 40 misses it at the 10 yard line*",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "A288",
+      "drillId": "b3",
+      "raw": "85 snaps to 5, who passes to 40, who takes it to the 20 yard line"
+    },
+    {
+      "id": "A289",
+      "drillId": "b3",
+      "raw": "85 snaps to 5, who passes back to 85, who catches it at the 20 yard line"
+    },
+    {
+      "id": "A290",
+      "drillId": "b3",
+      "raw": "start 5"
+    },
+    {
+      "id": "A291",
+      "drillId": "b3",
+      "raw": "10 passes back to 40, who passes it all the way down to 5, but 5 misses it at the 25 yard line"
+    },
+    {
+      "id": "A292",
+      "drillId": "b3",
+      "raw": "85 snaps to 5, who passes to 64, who takes it to the 15 yard line"
+    },
+    {
+      "id": "A293",
+      "drillId": "b3",
+      "raw": "85 snaps the ball way too high and nobody could catch it, a bad snap"
+    },
+    {
+      "id": "A294",
+      "drillId": "b3",
+      "raw": "85 does a much lower snap to 5, who makes a really long pass down to 40, but 40 does not catch it at around the 45 yard line*"
+    },
+    {
+      "id": "A295",
+      "drillId": "b4",
+      "raw": "start 10"
+    },
+    {
+      "id": "A296",
+      "drillId": "b4",
+      "raw": "0 snaps to 5, who passes to 12, who takes it to the 15 yard line",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "A297",
+      "drillId": "b4",
+      "raw": "start 15"
+    },
+    {
+      "id": "A298",
+      "drillId": "b4",
+      "raw": "31 snaps to 5, who passes to 4, who catches it at the 20 yard line and is stopped right there by 33, a good block"
+    },
+    {
+      "id": "A299",
+      "drillId": "b4",
+      "raw": "start 20"
+    },
+    {
+      "id": "A300",
+      "drillId": "b4",
+      "raw": "31 snaps to 5, who passes to 40, who catches it at the 25 yard line, jukes past 21, and is tackled by 4 at the 40 yard line before the whistle"
+    },
+    {
+      "id": "A301",
+      "drillId": "b4",
+      "raw": "start 30"
+    },
+    {
+      "id": "A302",
+      "drillId": "b4",
+      "raw": "*******"
+    },
+    {
+      "id": "A303",
+      "drillId": "b4",
+      "raw": "81 snaps to 5, who passes all the way down to 40, who catches it at the 35 yard mark"
+    },
+    {
+      "id": "A304",
+      "drillId": "b4",
+      "raw": "start 34"
+    },
+    {
+      "id": "A305",
+      "drillId": "b4",
+      "raw": "31 snaps to 5, who passes all the way down to 40, who catches it at the 42 yard hash, and 8 tries to tackle him but misses"
+    },
+    {
+      "id": "A306",
+      "drillId": "b4",
+      "raw": "31 snaps to 5, who passes to 12, who catches it right before the 40 yard line where the whistle goes"
+    },
+    {
+      "id": "A307",
+      "drillId": "b4",
+      "raw": "start 30"
+    },
+    {
+      "id": "A308",
+      "drillId": "b4",
+      "raw": "5 passes to 80, who catches it at the 45 yard line",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "A309",
+      "drillId": "b4",
+      "raw": "start 40"
+    },
+    {
+      "id": "A310",
+      "drillId": "b4",
+      "raw": "81 snaps to 5, who passes to 40, but 40 does not catch it at the 50 yard line"
+    },
+    {
+      "id": "A311",
+      "drillId": "b4",
+      "raw": "81 snaps to 5, who passes to 40, who takes it to the 40 yard line"
+    },
+    {
+      "id": "A312",
+      "drillId": "b4",
+      "raw": "start 40"
+    },
+    {
+      "id": "A313",
+      "drillId": "b4",
+      "raw": "81 snaps to 5, who passes down to 31, but 31 does not catch it at about the 47 yard hash"
+    },
+    {
+      "id": "A314",
+      "drillId": "b4",
+      "raw": "81 snaps to 5, who throws a long pass to 40, who catches it at the 45 yard line and takes it to the 30 yard line"
+    },
+    {
+      "id": "A315",
+      "drillId": "b4",
+      "raw": "start 40"
+    },
+    {
+      "id": "A316",
+      "drillId": "b4",
+      "raw": "81 snaps to 5, who passes to 31 at the 15 yard line, but the ball was not caught"
+    },
+    {
+      "id": "A317",
+      "drillId": "b4",
+      "raw": "81 snaps to 5, who passes all the way down to 81, into the end zone*"
+    },
+    {
+      "id": "C001",
+      "drillId": "c1",
+      "raw": "8 kicks the ball to the 15 yard line, 40 catches it there and runs all the way to the 25 yard line before the whistle"
+    },
+    {
+      "id": "C002",
+      "drillId": "c1",
+      "raw": "8 kicks the ball, 40 catches it at the 5 yard mark and runs all the way down to the 45 yard mark before the whistle"
+    },
+    {
+      "id": "C003",
+      "drillId": "c1",
+      "raw": "8 kicks the ball all the way down to just before the 5 yard mark*"
+    },
+    {
+      "id": "C004",
+      "drillId": "c2",
+      "raw": "*******"
+    },
+    {
+      "id": "C005",
+      "drillId": "c2",
+      "raw": "*******"
+    },
+    {
+      "id": "C006",
+      "drillId": "c2",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "C007",
+      "drillId": "c2",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "C008",
+      "drillId": "c2",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "C009",
+      "drillId": "c2",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "C010",
+      "drillId": "c2",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "C011",
+      "drillId": "c2",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "C012",
+      "drillId": "c2",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "C013",
+      "drillId": "c2",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "C014",
+      "drillId": "c2",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "C015",
+      "drillId": "c2",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "C016",
+      "drillId": "c2",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "C017",
+      "drillId": "c2",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "C018",
+      "drillId": "c2",
+      "raw": "Catch from 25"
+    },
+    {
+      "id": "C019",
+      "drillId": "c2",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "C020",
+      "drillId": "c2",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "C021",
+      "drillId": "c2",
+      "raw": "Drop from 12"
+    },
+    {
+      "id": "C022",
+      "drillId": "c2",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "C023",
+      "drillId": "c2",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "C024",
+      "drillId": "c2",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "C025",
+      "drillId": "c2",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "C026",
+      "drillId": "c2",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "C027",
+      "drillId": "c2",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "C028",
+      "drillId": "c2",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "C029",
+      "drillId": "c2",
+      "raw": "switching to outs"
+    },
+    {
+      "id": "C030",
+      "drillId": "c2",
+      "raw": "Drop from 40"
+    },
+    {
+      "id": "C031",
+      "drillId": "c2",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "C032",
+      "drillId": "c2",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "C033",
+      "drillId": "c2",
+      "raw": "Drop from 23"
+    },
+    {
+      "id": "C034",
+      "drillId": "c2",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "C035",
+      "drillId": "c2",
+      "raw": "*******a bad snap to Major, I could not tell who from"
+    },
+    {
+      "id": "C036",
+      "drillId": "c2",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "C037",
+      "drillId": "c2",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "C038",
+      "drillId": "c2",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "C039",
+      "drillId": "c2",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "C040",
+      "drillId": "c2",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "C041",
+      "drillId": "c2",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "C042",
+      "drillId": "c2",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "C043",
+      "drillId": "c2",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "C044",
+      "drillId": "c2",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "C045",
+      "drillId": "c2",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "C046",
+      "drillId": "c2",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "C047",
+      "drillId": "c2",
+      "raw": "Catch from 40"
+    },
+    {
+      "id": "C048",
+      "drillId": "c2",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "C049",
+      "drillId": "c2",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "C050",
+      "drillId": "c2",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "C051",
+      "drillId": "c2",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "C052",
+      "drillId": "c2",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "C053",
+      "drillId": "c2",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "C054",
+      "drillId": "c2",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "C055",
+      "drillId": "c2",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "C056",
+      "drillId": "c2",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "C057",
+      "drillId": "c2",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "C058",
+      "drillId": "c2",
+      "raw": "switching to longer"
+    },
+    {
+      "id": "C059",
+      "drillId": "c2",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "C060",
+      "drillId": "c2",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "C061",
+      "drillId": "c2",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "C062",
+      "drillId": "c2",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "C063",
+      "drillId": "c2",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "C064",
+      "drillId": "c2",
+      "raw": "Drop from 25"
+    },
+    {
+      "id": "C065",
+      "drillId": "c2",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "C066",
+      "drillId": "c2",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "C067",
+      "drillId": "c2",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "C068",
+      "drillId": "c2",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "C069",
+      "drillId": "c2",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "C070",
+      "drillId": "c2",
+      "raw": "Catch from 50*"
+    },
+    {
+      "id": "C071",
+      "drillId": "c2",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "C072",
+      "drillId": "c2",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "C073",
+      "drillId": "c2",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "C074",
+      "drillId": "c2",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "C075",
+      "drillId": "c2",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "C076",
+      "drillId": "c2",
+      "raw": "Drop from 25"
+    },
+    {
+      "id": "C077",
+      "drillId": "c2",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "C078",
+      "drillId": "c2",
+      "raw": "Drop from 6"
+    },
+    {
+      "id": "C079",
+      "drillId": "c2",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "C080",
+      "drillId": "c2",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "C081",
+      "drillId": "c2",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "C082",
+      "drillId": "c2",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "C083",
+      "drillId": "c2",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "C084",
+      "drillId": "c2",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "C085",
+      "drillId": "c2",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "C086",
+      "drillId": "c2",
+      "raw": "Catch from 4*"
+    },
+    {
+      "id": "C087",
+      "drillId": "c3",
+      "raw": "start 30"
+    },
+    {
+      "id": "C088",
+      "drillId": "c3",
+      "raw": "31 snaps to 5, who tries to pass to someone at the 35 yard line but the ball was dropped*"
+    },
+    {
+      "id": "C089",
+      "drillId": "c3",
+      "raw": "31 snaps to 5, who hands it off to 12, who takes it to the 25 yard line"
+    },
+    {
+      "id": "C090",
+      "drillId": "c3",
+      "raw": "*******that rep was reset after two players did push ups"
+    },
+    {
+      "id": "C091",
+      "drillId": "c3",
+      "raw": "31 snaps to 5, who passes to 12, who takes it to the 22 yard hash while being covered by 19, 40, 23 and 10"
+    },
+    {
+      "id": "C092",
+      "drillId": "c3",
+      "raw": "31 snaps to 5, who passes to 12, who takes it to the 30 yard line with 19 in pursuit"
+    },
+    {
+      "id": "Q001",
+      "drillId": "q1",
+      "raw": "33 caught 1, dropped 1"
+    },
+    {
+      "id": "Q002",
+      "drillId": "q1",
+      "raw": "64 caught 2, dropped 0"
+    },
+    {
+      "id": "Q003",
+      "drillId": "q1",
+      "raw": "23 caught 2, dropped 0"
+    },
+    {
+      "id": "Q004",
+      "drillId": "q1",
+      "raw": "10 caught 1, dropped 0"
+    },
+    {
+      "id": "Q005",
+      "drillId": "q1",
+      "raw": "25B caught 1, dropped 0"
+    },
+    {
+      "id": "Q006",
+      "drillId": "q1",
+      "raw": "12 caught 1, dropped 0"
+    },
+    {
+      "id": "Q007",
+      "drillId": "q1",
+      "raw": "50 caught 0, dropped 1"
+    },
+    {
+      "id": "Q008",
+      "drillId": "q1",
+      "raw": "25A caught 1, dropped 0"
+    },
+    {
+      "id": "Q009",
+      "drillId": "q1",
+      "raw": "13 caught 1, dropped 0"
+    },
+    {
+      "id": "Q010",
+      "drillId": "q1",
+      "raw": "5B caught 1, dropped 0"
+    },
+    {
+      "id": "Q011",
+      "drillId": "q1",
+      "raw": "6 caught 1, dropped 0"
+    },
+    {
+      "id": "Q012",
+      "drillId": "q1",
+      "raw": "switching to outs"
+    },
+    {
+      "id": "Q013",
+      "drillId": "q1",
+      "raw": "40 caught 2, dropped 1"
+    },
+    {
+      "id": "Q014",
+      "drillId": "q1",
+      "raw": "12 caught 0, dropped 1"
+    },
+    {
+      "id": "Q015",
+      "drillId": "q1",
+      "raw": "25A caught 2, dropped 0"
+    },
+    {
+      "id": "Q016",
+      "drillId": "q1",
+      "raw": "13 caught 1, dropped 1"
+    },
+    {
+      "id": "Q017",
+      "drillId": "q1",
+      "raw": "19 caught 1, dropped 1"
+    },
+    {
+      "id": "Q018",
+      "drillId": "q1",
+      "raw": "80 caught 0, dropped 2"
+    },
+    {
+      "id": "Q019",
+      "drillId": "q1",
+      "raw": "23 caught 2, dropped 0"
+    },
+    {
+      "id": "Q020",
+      "drillId": "q1",
+      "raw": "64 caught 1, dropped 1"
+    },
+    {
+      "id": "Q021",
+      "drillId": "q1",
+      "raw": "8 caught 2, dropped 0"
+    },
+    {
+      "id": "Q022",
+      "drillId": "q1",
+      "raw": "25B caught 1, dropped 1"
+    },
+    {
+      "id": "Q023",
+      "drillId": "q1",
+      "raw": "4 caught 0, dropped 1"
+    },
+    {
+      "id": "Q024",
+      "drillId": "q1",
+      "raw": "50 caught 1, dropped 0"
+    },
+    {
+      "id": "Q025",
+      "drillId": "q1",
+      "raw": "5B caught 0, dropped 1"
+    },
+    {
+      "id": "Q026",
+      "drillId": "q1",
+      "raw": "switching to longer"
+    },
+    {
+      "id": "Q027",
+      "drillId": "q1",
+      "raw": "4 caught 3, dropped 1"
+    },
+    {
+      "id": "Q028",
+      "drillId": "q1",
+      "raw": "12 caught 1, dropped 1"
+    },
+    {
+      "id": "Q029",
+      "drillId": "q1",
+      "raw": "50 caught 1, dropped 1"
+    },
+    {
+      "id": "Q030",
+      "drillId": "q1",
+      "raw": "6 caught 1, dropped 1"
+    },
+    {
+      "id": "Q031",
+      "drillId": "q1",
+      "raw": "25A caught 2, dropped 0"
+    },
+    {
+      "id": "Q032",
+      "drillId": "q1",
+      "raw": "13 caught 0, dropped 1"
+    },
+    {
+      "id": "Q033",
+      "drillId": "q1",
+      "raw": "5B caught 1, dropped 1"
+    },
+    {
+      "id": "Q034",
+      "drillId": "q1",
+      "raw": "19 caught 0, dropped 2"
+    },
+    {
+      "id": "Q035",
+      "drillId": "q1",
+      "raw": "33 caught 0, dropped 2"
+    },
+    {
+      "id": "Q036",
+      "drillId": "q1",
+      "raw": "80 caught 2, dropped 0"
+    },
+    {
+      "id": "Q037",
+      "drillId": "q1",
+      "raw": "64 caught 2, dropped 0"
+    },
+    {
+      "id": "Q038",
+      "drillId": "q1",
+      "raw": "25B caught 0, dropped 1"
+    },
+    {
+      "id": "Q039",
+      "drillId": "q1",
+      "raw": "23 caught 0, dropped 2"
+    },
+    {
+      "id": "Q040",
+      "drillId": "q1",
+      "raw": "8 caught 2, dropped 1"
+    },
+    {
+      "id": "Q041",
+      "drillId": "q1",
+      "raw": "switching to super long"
+    },
+    {
+      "id": "Q042",
+      "drillId": "q1",
+      "raw": "25B caught 1, dropped 1"
+    },
+    {
+      "id": "Q043",
+      "drillId": "q1",
+      "raw": "25A caught 2, dropped 0"
+    },
+    {
+      "id": "Q044",
+      "drillId": "q1",
+      "raw": "6 caught 2, dropped 0"
+    },
+    {
+      "id": "Q045",
+      "drillId": "q1",
+      "raw": "12 caught 2, dropped 0"
+    },
+    {
+      "id": "Q046",
+      "drillId": "q1",
+      "raw": "13 caught 0, dropped 1"
+    },
+    {
+      "id": "Q047",
+      "drillId": "q1",
+      "raw": "33 caught 2, dropped 0"
+    },
+    {
+      "id": "Q048",
+      "drillId": "q1",
+      "raw": "64 caught 0, dropped 1"
+    },
+    {
+      "id": "Q049",
+      "drillId": "q1",
+      "raw": "19 caught 0, dropped 2"
+    },
+    {
+      "id": "Q050",
+      "drillId": "q1",
+      "raw": "80 caught 1, dropped 1"
+    },
+    {
+      "id": "Q051",
+      "drillId": "q1",
+      "raw": "23 caught 2, dropped 0"
+    },
+    {
+      "id": "Q052",
+      "drillId": "q1",
+      "raw": "8 caught 1, dropped 1"
+    },
+    {
+      "id": "Q053",
+      "drillId": "q1",
+      "raw": "5B caught 0, dropped 2"
+    },
+    {
+      "id": "Q054",
+      "drillId": "q1",
+      "raw": "4 caught 1, dropped 0"
+    },
+    {
+      "id": "Q055",
+      "drillId": "q1",
+      "raw": "50 caught 0, dropped 1"
+    },
+    {
+      "id": "Q056",
+      "drillId": "q2",
+      "raw": "start 30"
+    },
+    {
+      "id": "Q057",
+      "drillId": "q2",
+      "raw": "*******missed the first rep"
+    },
+    {
+      "id": "Q058",
+      "drillId": "q2",
+      "raw": "31 snaps to 5, who hands it off to 12, who is stopped by 33 and 25B at the 20 yard line"
+    },
+    {
+      "id": "Q059",
+      "drillId": "q2",
+      "raw": "31 snaps to 5, who passes to 6, who takes it to the 25 yard line"
+    },
+    {
+      "id": "Q060",
+      "drillId": "q2",
+      "raw": "*******31 snaps to 5 and hands it off, but I missed to whom"
+    },
+    {
+      "id": "Q061",
+      "drillId": "q2",
+      "raw": "31 snaps to 5, who hands it off to 40, who jukes past 33 and takes it to the 25 yard line"
+    },
+    {
+      "id": "Q062",
+      "drillId": "q2",
+      "raw": "31 snaps to 5, who passes to 40, who takes it to the 10 yard line"
+    },
+    {
+      "id": "Q063",
+      "drillId": "q2",
+      "raw": "false start from 10, the rep did not count*"
+    },
+    {
+      "id": "Q064",
+      "drillId": "q2",
+      "raw": "31 snaps to 5, who passes to 12, who takes it to the 15 yard line"
+    },
+    {
+      "id": "Q065",
+      "drillId": "q2",
+      "raw": "31 snaps to 5, who hands it off to 12, who is stopped by 25A, 33 and 4 at the 25 yard line"
+    },
+    {
+      "id": "D001",
+      "drillId": "c4",
+      "raw": "start 10"
+    },
+    {
+      "id": "D002",
+      "drillId": "c4",
+      "raw": "*******"
+    },
+    {
+      "id": "D003",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes to 40, who makes it to the 10 yard line"
+    },
+    {
+      "id": "D004",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes to 40, who makes it to the 20 yard line before the whistle"
+    },
+    {
+      "id": "D005",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes to 6, who takes it to the 17 yard hash before the whistle"
+    },
+    {
+      "id": "D006",
+      "drillId": "c4",
+      "raw": "*******"
+    },
+    {
+      "id": "D007",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes to 40, who takes it to the 20 yard line and is stopped by 19 and 81"
+    },
+    {
+      "id": "D008",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who hands it off to 6, who takes it to the 17 yard hash before the whistle"
+    },
+    {
+      "id": "D009",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes to 80, who is shock and locked by 6 at the 20 yard line"
+    },
+    {
+      "id": "D010",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes to 40, who takes it to the 20 yard line before the whistle"
+    },
+    {
+      "id": "D011",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes it and nobody catches it, the ball drops at around the 25 yard line"
+    },
+    {
+      "id": "D012",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who tries to pass to 23, but 23 intercepts it"
+    },
+    {
+      "id": "D013",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes to 40 at the 10 yard line, but 4 pushes him out of the way and the ball drops to the ground"
+    },
+    {
+      "id": "D014",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes to 80, who catches it at the 40 yard line and runs it to the 50 yard line before the whistle"
+    },
+    {
+      "id": "D015",
+      "drillId": "c4",
+      "raw": "31 snaps to 10, who tries to pass to 8 at the 20 yard line, but 4 intercepts it"
+    },
+    {
+      "id": "D016",
+      "drillId": "c4",
+      "raw": "31 snaps to 5, who passes all the way down and nobody catches it, the ball lands at the 50 yard line"
+    },
+    {
+      "id": "D017",
+      "drillId": "c5",
+      "raw": "start 10"
+    },
+    {
+      "id": "D018",
+      "drillId": "c5",
+      "raw": "81 hands the ball to 5, who runs with it all the way down to the 40 yard line"
+    },
+    {
+      "id": "D019",
+      "drillId": "c5",
+      "raw": "*******5 was running with the ball and took it to about the 17 yard hash"
+    },
+    {
+      "id": "D020",
+      "drillId": "c5",
+      "raw": "*******5 tried to pass to 81, or possibly 50 — unclear"
+    },
+    {
+      "id": "D021",
+      "drillId": "c5",
+      "raw": "75 snaps to 5, who passes it, but 13 intercepts it"
+    },
+    {
+      "id": "D022",
+      "drillId": "c5",
+      "raw": "75 snaps to 5, who passes to 22, who is stopped at the 12 yard hash before the whistle"
+    },
+    {
+      "id": "D023",
+      "drillId": "c5",
+      "raw": "75 snaps to 5, who passes to 22, who takes it to the 20 yard line where 80 tries to tackle him but misses"
+    },
+    {
+      "id": "D024",
+      "drillId": "c5",
+      "raw": "*******"
+    },
+    {
+      "id": "D025",
+      "drillId": "c5",
+      "raw": "75 snaps to 5, who passes to 22, who is tackled by 13 at the 10 yard line but makes it past and takes it to the 15 yard line before the whistle"
+    },
+    {
+      "id": "D026",
+      "drillId": "c5",
+      "raw": "75 snaps to 5, who passes to 22 on the 10 yard line, who makes it past 80 and 13 and takes it to the 30 yard line before the whistle"
+    },
+    {
+      "id": "D027",
+      "drillId": "c5",
+      "raw": "75 snaps to 5, who passes to 81, who takes it to the 20 yard line before the whistle"
+    },
+    {
+      "id": "E001",
+      "drillId": "e1",
+      "raw": "Drop from 12"
+    },
+    {
+      "id": "E002",
+      "drillId": "e1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "E003",
+      "drillId": "e1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "E004",
+      "drillId": "e1",
+      "raw": "Catch from 25*"
+    },
+    {
+      "id": "E005",
+      "drillId": "e1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "E006",
+      "drillId": "e1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "E007",
+      "drillId": "e1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "E008",
+      "drillId": "e1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "E009",
+      "drillId": "e1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "E010",
+      "drillId": "e1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "E011",
+      "drillId": "e1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "E012",
+      "drillId": "e1",
+      "raw": "Drop from 23"
+    },
+    {
+      "id": "E013",
+      "drillId": "e1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "E014",
+      "drillId": "e1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "E015",
+      "drillId": "e1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "E016",
+      "drillId": "e1",
+      "raw": "Drop from 25*"
+    },
+    {
+      "id": "E017",
+      "drillId": "e1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "E018",
+      "drillId": "e1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "E019",
+      "drillId": "e1",
+      "raw": "Catch from 9*"
+    },
+    {
+      "id": "E020",
+      "drillId": "e1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "E021",
+      "drillId": "e1",
+      "raw": "Catch from 80*"
+    },
+    {
+      "id": "E022",
+      "drillId": "e1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "E023",
+      "drillId": "e1",
+      "raw": "Drop from 23"
+    },
+    {
+      "id": "E024",
+      "drillId": "e1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "E025",
+      "drillId": "e1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "E026",
+      "drillId": "e1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "E027",
+      "drillId": "e1",
+      "raw": "switching to outs"
+    },
+    {
+      "id": "E028",
+      "drillId": "e1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "E029",
+      "drillId": "e1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "E030",
+      "drillId": "e1",
+      "raw": "Drop from 25*"
+    },
+    {
+      "id": "E031",
+      "drillId": "e1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "E032",
+      "drillId": "e1",
+      "raw": "Catch from 80*"
+    },
+    {
+      "id": "E033",
+      "drillId": "e1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "E034",
+      "drillId": "e1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "E035",
+      "drillId": "e1",
+      "raw": "Drop from 22"
+    },
+    {
+      "id": "E036",
+      "drillId": "e1",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "E037",
+      "drillId": "e1",
+      "raw": "Drop from 25*"
+    },
+    {
+      "id": "E038",
+      "drillId": "e1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "E039",
+      "drillId": "e1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "E040",
+      "drillId": "e1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "E041",
+      "drillId": "e1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "E042",
+      "drillId": "e1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "E043",
+      "drillId": "e1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "E044",
+      "drillId": "e1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "E045",
+      "drillId": "e1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "E046",
+      "drillId": "e1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "E047",
+      "drillId": "e1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "E048",
+      "drillId": "e1",
+      "raw": "Drop from 22"
+    },
+    {
+      "id": "E049",
+      "drillId": "e1",
+      "raw": "switching to long"
+    },
+    {
+      "id": "E050",
+      "drillId": "e1",
+      "raw": "Drop from 12"
+    },
+    {
+      "id": "E051",
+      "drillId": "e1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "E052",
+      "drillId": "e1",
+      "raw": "Catch from 10*"
+    },
+    {
+      "id": "E053",
+      "drillId": "e1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "E054",
+      "drillId": "e1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "E055",
+      "drillId": "e1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "E056",
+      "drillId": "e1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "E057",
+      "drillId": "e1",
+      "raw": "Bad throw from 19"
+    },
+    {
+      "id": "E058",
+      "drillId": "e1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "E059",
+      "drillId": "e1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "E060",
+      "drillId": "e1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "E061",
+      "drillId": "e1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "E062",
+      "drillId": "e1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "E063",
+      "drillId": "e1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "E064",
+      "drillId": "e1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "E065",
+      "drillId": "e1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "E066",
+      "drillId": "e1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "E067",
+      "drillId": "e1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "E068",
+      "drillId": "e1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "E069",
+      "drillId": "e1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "E070",
+      "drillId": "e1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "E071",
+      "drillId": "e1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "E072",
+      "drillId": "e1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "E073",
+      "drillId": "e1",
+      "raw": "Drop from 81"
+    },
+    {
+      "id": "E074",
+      "drillId": "e1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "E075",
+      "drillId": "e1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "E076",
+      "drillId": "e1",
+      "raw": "Drop from 12*"
+    },
+    {
+      "id": "E077",
+      "drillId": "e1",
+      "raw": "Catch from 4*"
+    },
+    {
+      "id": "E078",
+      "drillId": "e1",
+      "raw": "Catch from 13*"
+    },
+    {
+      "id": "E079",
+      "drillId": "e1",
+      "raw": "Catch from 25*"
+    },
+    {
+      "id": "E080",
+      "drillId": "e1",
+      "raw": "Catch from 33*"
+    },
+    {
+      "id": "E081",
+      "drillId": "e1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "E082",
+      "drillId": "e1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "E083",
+      "drillId": "e1",
+      "raw": "Bad throw from 19"
+    },
+    {
+      "id": "E084",
+      "drillId": "e1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "E085",
+      "drillId": "e1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "E086",
+      "drillId": "e1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "E087",
+      "drillId": "e1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "E088",
+      "drillId": "e1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "E089",
+      "drillId": "e1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "E090",
+      "drillId": "e1",
+      "raw": "Catch from 25*"
+    },
+    {
+      "id": "E091",
+      "drillId": "e1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "E092",
+      "drillId": "e1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "E093",
+      "drillId": "e1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "E094",
+      "drillId": "e1",
+      "raw": "Drop from 33"
+    },
+    {
+      "id": "E095",
+      "drillId": "e1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "E096",
+      "drillId": "e1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "E097",
+      "drillId": "e1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "E098",
+      "drillId": "e1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "E099",
+      "drillId": "e1",
+      "raw": "Catch from 81"
+    },
+    {
+      "id": "E100",
+      "drillId": "e1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "E101",
+      "drillId": "e1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "E102",
+      "drillId": "e1",
+      "raw": "Catch from 22"
+    },
+    {
+      "id": "E103",
+      "drillId": "e2",
+      "raw": "Coach passes to 5, who passes to 22, who catches it at about the 35 yard line"
+    },
+    {
+      "id": "E104",
+      "drillId": "e2",
+      "raw": "5 passes to 23, but 23 does not catch it"
+    },
+    {
+      "id": "E105",
+      "drillId": "e2",
+      "raw": "Coach passes to 5, who tries to pass to 64, but it goes over his head and 64 does not catch it"
+    },
+    {
+      "id": "E106",
+      "drillId": "e2",
+      "raw": "5 passes to 33, who does not catch it"
+    },
+    {
+      "id": "E107",
+      "drillId": "e2",
+      "raw": "Coach passes to 5, who does a very long pass to 22, who does not catch it"
+    },
+    {
+      "id": "E108",
+      "drillId": "e2",
+      "raw": "5 passes to 80, who catches it at about the 42 yard hash"
+    },
+    {
+      "id": "E109",
+      "drillId": "e2",
+      "raw": "5 passes to 64, who catches it on the 35 yard line"
+    },
+    {
+      "id": "E110",
+      "drillId": "e2",
+      "raw": "*******Coach passes to 5, who passes to 33 — I could not see whether he caught it"
+    },
+    {
+      "id": "E111",
+      "drillId": "e2",
+      "raw": "5 passes to 33, who catches it over by the 40 yard line"
+    },
+    {
+      "id": "E112",
+      "drillId": "e2",
+      "raw": "5 passes to 22 on the 45 yard line, but 22 does not catch it"
+    },
+    {
+      "id": "E113",
+      "drillId": "e2",
+      "raw": "Coach passes to 5, who passes to 80, who catches it on the 35 yard line"
+    },
+    {
+      "id": "E114",
+      "drillId": "e2",
+      "raw": "5 passes to 25, who does not catch it on the 50 yard line*"
+    },
+    {
+      "id": "E115",
+      "drillId": "e2",
+      "raw": "5 passes to 23 on the 30 yard line, but it goes straight through his hands and he drops it"
+    },
+    {
+      "id": "E116",
+      "drillId": "e2",
+      "raw": "*******5 passes to somebody at the 40 yard line — both 31 and 12 were there and both missed it"
+    },
+    {
+      "id": "E117",
+      "drillId": "e2",
+      "raw": "5 passes to 33, who catches it at the 40 yard line"
+    },
+    {
+      "id": "E118",
+      "drillId": "e2",
+      "raw": "5 passes to 80 at the 45 yard line, but 80 does not catch it"
+    },
+    {
+      "id": "E119",
+      "drillId": "e2",
+      "raw": "5 passes to 25 at the 30 yard line, but 25 does not catch it*"
+    },
+    {
+      "id": "E120",
+      "drillId": "e2",
+      "raw": "5 passes to 31 at about the 37 yard hash, but 31 does not catch it"
+    },
+    {
+      "id": "E121",
+      "drillId": "e2",
+      "raw": "*******5 passes to 8 on the 30 yard line — I did not say whether he caught it"
+    },
+    {
+      "id": "E122",
+      "drillId": "e2",
+      "raw": "Drop from 64 at the 35 yard line"
+    },
+    {
+      "id": "E123",
+      "drillId": "e2",
+      "raw": "Coach passes to 5, who passes to 23, who does not catch it at the 40 yard line"
+    },
+    {
+      "id": "E124",
+      "drillId": "e2",
+      "raw": "5 passes to 22, who catches it at the 45 yard line"
+    },
+    {
+      "id": "E125",
+      "drillId": "e2",
+      "raw": "Catch from 31 at the 45 yard line"
+    },
+    {
+      "id": "E126",
+      "drillId": "e2",
+      "raw": "Catch from 8 at the 34 yard hash"
+    },
+    {
+      "id": "E127",
+      "drillId": "e2",
+      "raw": "Catch from 13 at the 30 yard line"
+    },
+    {
+      "id": "E128",
+      "drillId": "e2",
+      "raw": "5 passes to 25, who catches it at the 50 yard line*"
+    },
+    {
+      "id": "E129",
+      "drillId": "e2",
+      "raw": "5 passes to 64, who catches it at the 30 yard line"
+    },
+    {
+      "id": "E130",
+      "drillId": "e2",
+      "raw": "Catch from 81 at the 50 yard line"
+    },
+    {
+      "id": "E131",
+      "drillId": "e2",
+      "raw": "81 passes to 31, who catches it at the 35 yard line"
+    },
+    {
+      "id": "E132",
+      "drillId": "e2",
+      "raw": "Coach passes to 25A, who catches it at about the 40 yard line"
+    },
+    {
+      "id": "E133",
+      "drillId": "e2",
+      "raw": "Coach passes to 25, who catches it at the 45 yard line*"
+    },
+    {
+      "id": "E134",
+      "drillId": "e2",
+      "raw": "Coach passes to 25, who drops it at the 45 yard line*"
+    },
+    {
+      "id": "E135",
+      "drillId": "e3",
+      "raw": "start 20"
+    },
+    {
+      "id": "E136",
+      "drillId": "e3",
+      "raw": "*******a good catch from 81, I could not see who passed it"
+    },
+    {
+      "id": "E137",
+      "drillId": "e3",
+      "raw": "0 snaps to 5, who hands it off to 12, who takes it to about the 25 yard line",
+      "uncertain": "snapper"
+    },
+    {
+      "id": "E138",
+      "drillId": "e3",
+      "raw": "75 snaps to 5, who hands it off to 12, who takes it to the 35 yard line"
+    },
+    {
+      "id": "E139",
+      "drillId": "e3",
+      "raw": "75 snaps to 5, who hands it off to 12, who takes it to the 32 yard hash"
+    },
+    {
+      "id": "E140",
+      "drillId": "e3",
+      "raw": "start 25"
+    },
+    {
+      "id": "E141",
+      "drillId": "e3",
+      "raw": "75 snaps to 5, who passes to 25, who catches it on the 35 yard line*"
+    },
+    {
+      "id": "E142",
+      "drillId": "e3",
+      "raw": "75 snaps to 5, who tries to pass to 8, but 8 does not catch it and the ball goes off the field"
+    },
+    {
+      "id": "E143",
+      "drillId": "e3",
+      "raw": "*******75 did not get the snap away"
+    },
+    {
+      "id": "E144",
+      "drillId": "e3",
+      "raw": "75 snaps to 5, who hands the ball off to 12, who takes it all the way to the 40 yard line"
+    },
+    {
+      "id": "E145",
+      "drillId": "e3",
+      "raw": "75 snaps to 5, who passes to 8, who catches it at about the 45 yard line"
+    },
+    {
+      "id": "E146",
+      "drillId": "e3",
+      "raw": "75 snaps to 5, who hands the ball off to 12, who takes it to approximately the 36 yard hash"
+    },
+    {
+      "id": "E147",
+      "drillId": "e3",
+      "raw": "75 snaps to 5, who fakes the handoff and passes to 25 at the 49 yard hash, but 25 does not catch it*"
+    },
+    {
+      "id": "E148",
+      "drillId": "e3",
+      "raw": "start 35"
+    },
+    {
+      "id": "E149",
+      "drillId": "e3",
+      "raw": "81 snaps to 5, who tries to pass to 81 at the 27 yard hash, but 81 does not catch it"
+    },
+    {
+      "id": "E150",
+      "drillId": "e3",
+      "raw": "81 snaps to 5, who passes to 22 at the 47 yard hash, but 22 does not catch it*"
+    },
+    {
+      "id": "E151",
+      "drillId": "e3",
+      "raw": "81 snaps to 5, who passes to 81, who catches it at the 26 yard hash"
+    },
+    {
+      "id": "E152",
+      "drillId": "e3",
+      "raw": "81 snaps to 5, who passes to 25, who catches it on the 36 yard hash and takes it to about the 45 yard line*"
+    },
+    {
+      "id": "E153",
+      "drillId": "e4",
+      "raw": "start 10"
+    },
+    {
+      "id": "E154",
+      "drillId": "e4",
+      "raw": "*******81 snaps to 5 who passes to someone — 64 caught it, and he was on defence"
+    },
+    {
+      "id": "E155",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who passes to 31, who catches it at the 15 yard line and takes it to the 30 yard line"
+    },
+    {
+      "id": "E156",
+      "drillId": "e4",
+      "raw": "start 15"
+    },
+    {
+      "id": "E157",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who does a long pass to 31, but 31 does not catch it at the 30 yard line"
+    },
+    {
+      "id": "E158",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who passes to 31 at the 34 yard hash, but 31 does not catch it"
+    },
+    {
+      "id": "E159",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who passes to 80 at the 35 yard line, but 80 does not catch it"
+    },
+    {
+      "id": "E160",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who passes to 80, but 80 does not catch it"
+    },
+    {
+      "id": "E161",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who passes to 23 on the 25 yard line, but 23 does not catch it"
+    },
+    {
+      "id": "E162",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who hands it off to 12, who takes it to the 38 yard hash"
+    },
+    {
+      "id": "E163",
+      "drillId": "e4",
+      "raw": "start 25"
+    },
+    {
+      "id": "E164",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who tries to pass to 23, but 23 does not catch it*"
+    },
+    {
+      "id": "E165",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who passes to 8, who catches it at the 35 yard line"
+    },
+    {
+      "id": "E166",
+      "drillId": "e4",
+      "raw": "start 35"
+    },
+    {
+      "id": "E167",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who passes to 80, who catches it on the 40 yard line"
+    },
+    {
+      "id": "E168",
+      "drillId": "e4",
+      "raw": "*******81 snaps to 5, who passes to somebody who does not catch it at the 45 yard line"
+    },
+    {
+      "id": "E169",
+      "drillId": "e4",
+      "raw": "81 snaps to 5, who passes to 80, who catches it at the 40 yard mark and takes it to the 50 yard mark"
     }
   ],
   "coachNotes": [
@@ -5949,6 +9625,416 @@ const BASELINE = {
       "tone": "coaching",
       "text": "Called a play wrong once — five pushups for everybody else under the new rule.",
       "during": "Whole practice"
+    },
+    {
+      "id": "cn38",
+      "date": "2026-08-24",
+      "practiceId": "p0824",
+      "by": "Coach Tinker",
+      "num": "4",
+      "tone": "coaching",
+      "text": "“Come on, Casen, you can get this.”",
+      "during": "Pat-N-Go, long"
+    },
+    {
+      "id": "cn39",
+      "date": "2026-08-24",
+      "practiceId": "p0824",
+      "by": "Maddie",
+      "num": "50",
+      "tone": "praise",
+      "text": "Recovered a fumbled handoff off the ground.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn40",
+      "date": "2026-08-24",
+      "practiceId": "p0824",
+      "by": "Maddie",
+      "num": "5B",
+      "tone": "praise",
+      "text": "Good block at the 10.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn41",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "8",
+      "tone": "praise",
+      "text": "“Yeah, 8.” After a good catch.",
+      "during": "Pat-N-Go, long"
+    },
+    {
+      "id": "cn42",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "23",
+      "tone": "praise",
+      "text": "A good catch — someone on the sideline called “Yeah, Elijah”, though Maddie could not tell who.",
+      "during": "Pat-N-Go, long"
+    },
+    {
+      "id": "cn43",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "4",
+      "tone": "praise",
+      "text": "“Let's go, Casen Nash!” Maddie did not see the play itself.",
+      "during": "Pat-N-Go, long"
+    },
+    {
+      "id": "cn44",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "40",
+      "tone": "praise",
+      "text": "“There it is, Valor Menn!”",
+      "during": "Pat-N-Go, super long"
+    },
+    {
+      "id": "cn45",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "8",
+      "tone": "praise",
+      "text": "“Beautiful, beautiful.”",
+      "during": "Pat-N-Go, super long"
+    },
+    {
+      "id": "cn46",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "64",
+      "tone": "praise",
+      "text": "“Okay, Kitt.” Said in an optimistic tone.",
+      "during": "Pat-N-Go, super long"
+    },
+    {
+      "id": "cn47",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "10",
+      "tone": "praise",
+      "text": "“Good job, Cooper Clark.”",
+      "during": "Shock and lock / donut"
+    },
+    {
+      "id": "cn48",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Dave Preston",
+      "num": "75",
+      "tone": "praise",
+      "text": "“Good job, Dom.”",
+      "during": "Shock and lock / donut"
+    },
+    {
+      "id": "cn49",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "19",
+      "tone": "praise",
+      "text": "“There it is, Marshall. Good block, Marshall.”",
+      "during": "Shock and lock / donut"
+    },
+    {
+      "id": "cn50",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "80",
+      "tone": "praise",
+      "text": "“There it is, Jax!”",
+      "during": "Shock and lock / donut"
+    },
+    {
+      "id": "cn51",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "23",
+      "tone": "coaching",
+      "text": "“Gotta get those, Elijah.” After the pass to him was intercepted.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn52",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Maddie",
+      "num": "31",
+      "tone": "praise",
+      "text": "Good job on the catch and run.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn53",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "23",
+      "tone": "praise",
+      "text": "A high five from Coach after a long catch at the 45.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn54",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "10",
+      "tone": "praise",
+      "text": "“Good job, Cooper Clark.”",
+      "during": "4x4"
+    },
+    {
+      "id": "cn55",
+      "date": "2026-08-25",
+      "practiceId": "p0825",
+      "by": "Coach Tinker",
+      "num": "33",
+      "tone": "praise",
+      "text": "Commended for his tackle.",
+      "during": "Saber"
+    },
+    {
+      "id": "cn56",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Coach Tinker",
+      "num": "4",
+      "tone": "praise",
+      "text": "“Good job, Casen.”",
+      "during": "Pat-N-Go, longer"
+    },
+    {
+      "id": "cn57",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Coach Tinker",
+      "num": "81",
+      "tone": "coaching",
+      "text": "“Come on, Mason.”",
+      "during": "Pat-N-Go, longer"
+    },
+    {
+      "id": "cn58",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Maddie",
+      "num": "8",
+      "tone": "praise",
+      "text": "Another really good kick while practising on his own.",
+      "during": "Pat-N-Go"
+    },
+    {
+      "id": "cn59",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Coach Tinker",
+      "num": "23",
+      "tone": "coaching",
+      "text": "“Somebody catch it. Come on, Elijah — we gotta get those.”",
+      "during": "4x4"
+    },
+    {
+      "id": "cn60",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Maddie",
+      "num": "23",
+      "tone": "praise",
+      "text": "Intercepted a pass while playing defence.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn61",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Maddie",
+      "num": "4",
+      "tone": "praise",
+      "text": "Twice broke up a pass to #40 — once knocking it loose, once catching it outright.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn62",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Maddie",
+      "num": "80",
+      "tone": "praise",
+      "text": "Caught at the 40 and carried it to the 50.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn63",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Coach Tinker",
+      "num": "13",
+      "tone": "praise",
+      "text": "“Great job, Jacob.”",
+      "during": "Saber"
+    },
+    {
+      "id": "cn64",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Coach Tinker",
+      "num": "40",
+      "tone": "coaching",
+      "text": "Coach set someone doing five push-ups for the dropped ball — Maddie could not tell whether it was #40 or #5.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn65",
+      "date": "2026-08-26",
+      "practiceId": "p0826",
+      "by": "Maddie",
+      "num": "13",
+      "tone": "praise",
+      "text": "Intercepted a pass and returned it the length of the field for a touchdown.",
+      "during": "Saber"
+    },
+    {
+      "id": "cn66",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Coach Tinker",
+      "num": "19",
+      "tone": "praise",
+      "text": "Coach said twice that the ball thrown to Marshall was a bad throw, not a drop — so neither of those counts against him.",
+      "during": "Pat-N-Go, long"
+    },
+    {
+      "id": "cn67",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Coach Tinker",
+      "num": "80",
+      "tone": "praise",
+      "text": "“Let's go, Jax.”",
+      "during": "Pat-N-Go, long"
+    },
+    {
+      "id": "cn68",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Coach Tinker",
+      "num": "64",
+      "tone": "praise",
+      "text": "“All right, Kitt!” — said with real enthusiasm after he caught a ball while playing defence.",
+      "during": "Moving 4x4"
+    },
+    {
+      "id": "cn69",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Maddie",
+      "num": "64",
+      "tone": "praise",
+      "text": "One of the best catchers on the team on short and outs balls.",
+      "during": "Pat-N-Go"
+    },
+    {
+      "id": "cn70",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Coach Tinker",
+      "num": "",
+      "tone": "coaching",
+      "text": "“Who can catch? I need someone that can catch.”",
+      "during": "Long pass and cover"
+    },
+    {
+      "id": "cn71",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Coach Tinker",
+      "num": "",
+      "tone": "coaching",
+      "text": "“Offence, catch the ball, or we're going to run for the next ten minutes.”",
+      "during": "Moving 4x4"
+    },
+    {
+      "id": "cn72",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Maddie",
+      "num": "4",
+      "tone": "praise",
+      "text": "Reliably there in cover on almost every play, all morning.",
+      "during": "Whole practice"
+    },
+    {
+      "id": "cn73",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Maddie",
+      "num": "19",
+      "tone": "praise",
+      "text": "With #4 and #33, one of the three who are always there in cover.",
+      "during": "Whole practice"
+    },
+    {
+      "id": "cn74",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Maddie",
+      "num": "12",
+      "tone": "praise",
+      "text": "The only player genuinely contesting the ball carrier while the rest shadowed.",
+      "during": "Long pass and cover"
+    },
+    {
+      "id": "cn75",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Maddie",
+      "num": "22",
+      "tone": "praise",
+      "text": "The first man all morning to catch a long ball.",
+      "during": "Long pass and cover"
+    },
+    {
+      "id": "cn76",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Maddie",
+      "num": "10",
+      "tone": "praise",
+      "text": "A good pushback.",
+      "during": "Tackling practice"
+    },
+    {
+      "id": "cn77",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Maddie",
+      "num": "31",
+      "tone": "praise",
+      "text": "A good tackle.",
+      "during": "Tackling practice"
+    },
+    {
+      "id": "cn78",
+      "date": "2026-09-01",
+      "practiceId": "p0901",
+      "by": "Maddie",
+      "num": "25",
+      "tone": "praise",
+      "text": "A good breakthrough, got past #13.",
+      "during": "Tackling practice"
     }
   ],
   "glossary": [
@@ -5969,7 +10055,395 @@ const BASELINE = {
       "means": "line of scrimmage"
     }
   ],
-  "fieldNote": "Practice happens on a 100-yard field. Six-man games are played on 80, but the recordings repeatedly mention 45, 48 and 50 yard lines and describe 48 as past midfield, which only works at 100."
+  "fieldNote": "Practice happens on a 100-yard field. Six-man games are played on 80, but the recordings repeatedly mention 45, 48 and 50 yard lines and describe 48 as past midfield, which only works at 100.",
+  "games": [
+    {
+      "id": "g0828",
+      "date": "2026-08-28",
+      "kickoff": "22:05",
+      "opponent": "Fredericksburg Heritage",
+      "opponentNote": "Fredericksburg Heritage — the Eagles. Maddie used both names on the night; they are the same school.",
+      "us": 6,
+      "them": 57,
+      "map": [
+        [
+          "1",
+          "Cooper Dailey",
+          "12",
+          ""
+        ],
+        [
+          "2",
+          "David Followell",
+          "31",
+          ""
+        ],
+        [
+          "3",
+          "Alex Houston",
+          "8",
+          "Fredericksburg also wore 3 — theirs was Stewart."
+        ],
+        [
+          "4",
+          "Kitt Phelan",
+          "64",
+          "The team sheet lists 4 as Ash Vrielink, but Maddie confirms 4 is Kitt."
+        ],
+        [
+          "5",
+          "Major Howard",
+          "5A",
+          "The only player whose game and practice numbers match."
+        ],
+        [
+          "6",
+          "Cash Gilliand",
+          "—",
+          "No practice number on file for him yet."
+        ],
+        [
+          "7",
+          "Marshall Mehrens",
+          "19",
+          "Fredericksburg also wore 7 — theirs was Toby Prescott."
+        ],
+        [
+          "10",
+          "Caleb Arrington",
+          "50",
+          "Note the swap: our 50 in a game is Southworth."
+        ],
+        [
+          "11",
+          "Casen Nash",
+          "4",
+          ""
+        ],
+        [
+          "12",
+          "Elijah Boyd-Sanders",
+          "23",
+          ""
+        ],
+        [
+          "13",
+          "Valor Menn",
+          "40",
+          "The team sheet lists 13 twice. Maddie confirms 13 is Valor."
+        ],
+        [
+          "15",
+          "Mason Litt",
+          "81",
+          ""
+        ],
+        [
+          "20",
+          "Jacob Becker",
+          "13",
+          ""
+        ],
+        [
+          "21",
+          "Landon Douglass",
+          "5B",
+          "Was #34 at practice until 18 Aug, then 5B."
+        ],
+        [
+          "22",
+          "Raine Marsh",
+          "6",
+          ""
+        ],
+        [
+          "25",
+          "Aiden Lee",
+          "25A",
+          "Surname now known."
+        ],
+        [
+          "27",
+          "Dylan Cavazos",
+          "0",
+          "Surname now known. Still no practice number — #0 is our stand-in."
+        ],
+        [
+          "41",
+          "Siwoo Ahn",
+          "—",
+          "The kicker. No practice number."
+        ],
+        [
+          "50",
+          "James Southworth",
+          "33",
+          ""
+        ],
+        [
+          "51",
+          "Ash Vrielink",
+          "—",
+          "Confirmed by Maddie. No practice number on file."
+        ],
+        [
+          "55",
+          "Cooper Clark",
+          "10",
+          ""
+        ],
+        [
+          "71",
+          "Dom Knight",
+          "75 / 85",
+          ""
+        ],
+        [
+          "77",
+          "Mickey McGuinness",
+          "66",
+          ""
+        ],
+        [
+          "88",
+          "Jax Bishop",
+          "80",
+          ""
+        ]
+      ],
+      "unmapped": [],
+      "scoring": [
+        [
+          "1st",
+          "Fredericksburg",
+          "Stewart runs it in. Two Bears got hands on him and neither brought him down. Point after no good.",
+          "0–6"
+        ],
+        [
+          "1st",
+          "Fredericksburg",
+          "Touchdown, plus a personal foul on the Eagles. Kick good.",
+          "0–14"
+        ],
+        [
+          "1st",
+          "SMA",
+          "Cooper Dailey breaks through from midfield. Kick blocked, no point.",
+          "6–14"
+        ],
+        [
+          "1st",
+          "Fredericksburg",
+          "Kickoff caught and returned the length of the field — nobody able to make the tackle.",
+          "6–20"
+        ],
+        [
+          "2nd",
+          "Fredericksburg",
+          "Prescott to Stewart. Conversion good.",
+          "6–27"
+        ],
+        [
+          "2nd",
+          "Fredericksburg",
+          "An 11-yard run after a lost kickoff was recovered on the SMA 22. Extra point good.",
+          "6–35"
+        ],
+        [
+          "2nd",
+          "Fredericksburg",
+          "Turnover on downs from the SMA 5, then a touchdown. Point after good.",
+          "6–43"
+        ],
+        [
+          "2nd",
+          "Fredericksburg",
+          "A dropped ball picked up off the ground and taken to the end zone. Their extra point came back off the crossbar, so no point — SMA did nothing to stop it.",
+          "6–49"
+        ],
+        [
+          "2nd",
+          "Fredericksburg",
+          "Long pass for a touchdown; the extra point stood after a flag on SMA.",
+          "6–57"
+        ]
+      ],
+      "notable": [
+        [
+          "",
+          "Valor Menn",
+          "Targeted deep on 4th down of the opening drive and could not reach it, then caught the next kickoff at the 15 and returned it to the 35. Nothing after that — see the note on his injury."
+        ],
+        [
+          "",
+          "Cooper Dailey",
+          "The touchdown, the 4th-and-1 conversion, and an 11-yard carry late in the half."
+        ],
+        [
+          "",
+          "Casen Nash",
+          "Two tackles, including the stop that held Culver to 10 yards."
+        ],
+        [
+          "",
+          "Elijah Boyd-Sanders",
+          "Tackle at about the 43."
+        ],
+        [
+          "",
+          "Jacob Becker",
+          "Two tackles, one on Evans near midfield."
+        ],
+        [
+          "",
+          "Raine Marsh",
+          "Lost a kickoff that Fredericksburg recovered, and was hurt on the play. Walked off on his own and was fine. He took over the deep return role for the rest of the night."
+        ],
+        [
+          "",
+          "Siwoo Ahn",
+          "Kicked for SMA. His extra-point attempt after the touchdown was stopped and did not score."
+        ],
+        [
+          "",
+          "Mickey McGuinness",
+          "Got a hand on Evans, who brushed the tackle off on his way to a touchdown."
+        ],
+        [
+          "",
+          "Major Howard",
+          "Every snap at quarterback. Several long attempts with nobody able to come down with the ball."
+        ]
+      ],
+      "maddie": "“Today is a really bad catching balls day. We haven't done that very well today. We need to practise catching.” Game finished at 11:14pm after a full week of practices.",
+      "unmappedNote": "Every number on the team sheet is now accounted for.",
+      "worked": [
+        [
+          "Cooper Dailey",
+          "Every point SMA scored. He broke through from midfield for the touchdown, converted the 4th-and-1 that kept that drive alive, and carried for 11 late in the half."
+        ],
+        [
+          "Valor Menn",
+          "Caught the kickoff at the 15 and took it to the 35 — the best field position SMA had all night. It was one of only two things he did before he was hurt."
+        ],
+        [
+          "Casen Nash",
+          "Stopped Culver after a 10-yard gain and was in on a second tackle. The most reliable open-field tackling on the team."
+        ],
+        [
+          "David Followell",
+          "Caught at the 35 for a first down when the drive had stalled."
+        ],
+        [
+          "Elijah Boyd-Sanders and Jacob Becker",
+          "A tackle each, Jacob's on Evans near midfield."
+        ]
+      ],
+      "didnt": [
+        [
+          "Catching the deep ball",
+          "Major threw long repeatedly and almost nothing was caught. One of those drops was picked up off the ground by Fredericksburg and run in for a touchdown. Maddie's own words on the night: “Today is a really bad catching balls day.”"
+        ],
+        [
+          "Kick coverage",
+          "Two Fredericksburg kickoff returns were run back the length of the field with nobody able to make the tackle. That is 14 points from special teams alone."
+        ],
+        [
+          "Receiving kicks",
+          "Raine Marsh lost one; Fredericksburg recovered it on the SMA 22 and scored from there. He was hurt on the play and walked off fine."
+        ],
+        [
+          "Open-field tackling",
+          "Evans brushed off Mickey McGuinness on the way to a touchdown, and Stewart went through two tacklers on the first score."
+        ],
+        [
+          "Fourth downs",
+          "Four turnovers on downs. Every one of them followed an incomplete deep attempt."
+        ]
+      ],
+      "shape": "Three of Fredericksburg's nine scores came on kick returns or a fumble recovery rather than against the defence. The pattern is not that SMA was outplayed everywhere — it is that the deep passing game produced nothing and special teams gave points away.",
+      "injuries": [
+        [
+          "Valor Menn",
+          "Carried off on a stretcher. Maddie did not catch the moment, and the announcer's call of it is buried under her own narration. What the recording does show: he was targeted on 4th down of SMA's opening drive, then caught the kickoff after Fredericksburg's first score and returned it to the 35. He is not named in a single lineup after that, and Raine Marsh takes over as the deep man for every later kickoff. His game was two plays in the first quarter."
+        ],
+        [
+          "Raine Marsh",
+          "Hurt in the second quarter losing a kickoff. Walked off unaided and returned — a temporary knock."
+        ]
+      ],
+      "yardage": {
+        "note": "Taken from the play-by-play. Every play here was checked against the recording to make sure the same one is not counted twice — Maddie often describes a play, then repeats Mr. Hall's call of it, and the two can look like separate plays. Where the recording contradicts itself, the play is left out rather than guessed at.",
+        "plays": [
+          [
+            "Cooper Dailey",
+            2,
+            "First possession, from the 30. Caught from Major and tackled at the 32."
+          ],
+          [
+            "Cooper Dailey",
+            4,
+            "Second possession. Handoff from Major — “Dailey makes it four yards before he's tackled by number three.”"
+          ],
+          [
+            "Cooper Dailey",
+            1,
+            "Fourth and one. Put his head down and got the first down. A floor, not a measurement — the recording only says he made it."
+          ],
+          [
+            "Cooper Dailey",
+            50,
+            "The touchdown. Took the handoff at midfield and went the whole way."
+          ],
+          [
+            "Cooper Dailey",
+            1,
+            "Second quarter. Pushed out of bounds “after a gain of about a yard.”"
+          ],
+          [
+            "Cooper Dailey",
+            11,
+            "End of the half, after a personal foul moved the ball to the 35. “A gain of 11 yards.”"
+          ],
+          [
+            "David Followell",
+            20,
+            "Ball out to Major and back to him; carried to the 30. “We got back 20 yards.”"
+          ],
+          [
+            "Raine Marsh",
+            9,
+            "Caught on the right side. “That's another five yards. Or nine.” — nine is her correction."
+          ],
+          [
+            "Major Howard",
+            -5,
+            "Lost his footing behind the line and went down for about five."
+          ]
+        ],
+        "returns": [
+          [
+            "Valor Menn",
+            20,
+            "Caught the kickoff at the 15 and returned it to the 35. His last play of the night."
+          ],
+          [
+            "Raine Marsh",
+            17,
+            "Caught the kickoff at the 25, tried for the 50 and was tackled at about the 42."
+          ]
+        ],
+        "wiped": [
+          [
+            "Cooper Dailey",
+            8,
+            "Around the right side for about eight, brought back by a flag on SMA."
+          ]
+        ],
+        "missing": "Roughly thirty SMA offensive snaps were called and nine produced a number solid enough to use. Most of the rest were incomplete deep passes, where there is no gain to record — which is itself the story of the night. One more is deliberately left out: the pass to Ash Vrielink that he carried towards the 48. The recording says the next down was fourth and one, which cannot be true if he gained that much, so the two accounts contradict each other and neither is used."
+      }
+    }
+  ]
 };
 
 /* ==========================================================================
@@ -6037,13 +10511,23 @@ const linesOf = id => LINES().filter(l => l.drillId === id);
 function numFromName(word) {
   if (!word || /^\d+$/.test(word)) return null;
   const w = String(word).toLowerCase();
+  const strip = t => t.toLowerCase().replace(/[^a-z]/g, "");
   const hit = BASELINE.players.filter(p => p.num && p.name &&
-    p.name.toLowerCase().split(/\s+/).some(part => part === w));
+    p.name.split(/\s+/).some(part => strip(part) === strip(w)));
   return hit.length === 1 ? String(hit[0].num) : null;   // only if unambiguous
 }
 const findNum = n => (n === "" || n == null) ? null
   : BASELINE.players.find(p => p.num &&
-      String(p.num).toUpperCase() === String(n).toUpperCase()) || null;
+      (String(p.num).toUpperCase() === String(n).toUpperCase() ||
+       (p.alias || []).some(a => String(a).toUpperCase() === String(n).toUpperCase()))) || null;
+/* Dom wears 75 some days and 85 others. An alias folds the second number into
+   the first so his stat line is one player, not two half-players. */
+const ALIASMAP = () => { const m = {};
+  BASELINE.players.forEach(p => (p.alias || []).forEach(a =>
+    m[String(a).toUpperCase()] = String(p.num)));
+  return m; };
+const canonNum = n => (n == null || n === "") ? n
+  : (ALIASMAP()[String(n).toUpperCase()] || n);
 const isJersey = n => !!findNum(n);
 const nameOf = n => { const p = findNum(n); return p ? p.name : null; };
 const practiceOf = id => BASELINE.practices.find(p => p.id === id) || null;
@@ -6163,12 +10647,13 @@ const PHRASES = [
   [/\b(?:just )?outside (?:of )?the end ?zone\b|\bshort of the end ?zone\b/g, " oob "],
   [/\btook it to the house\b|\bto the house\b|\bin for six\b|\bpay ?dirt\b|\bcrossed the goal ?line\b|\bfound the end ?zone\b|\b(?:in|into) the end ?zone\b/g, " touchdown "],
   [/\b(?:by|with) (?:just )?one hand\b/g, " "],
-  [/\b(?:rams?|rammed|powers?|powered|bursts?|burst|plows?|plowed|ran|runs?|rushes?|rushed|jukes?|juked|juking|dodges?|dodged|spun|spins?)\s+(?:through|past|around|by)\s+#?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})*/g, " "],
+  [/\b(?:rams?|rammed|powers?|powered|bursts?|burst|plows?|plowed|ran|runs?|rushes?|rushed|jukes?|juked|juking|dodges?|dodged|spun|spins?|makes? it|made it|gets?|got|breaks?|broke)\s+(?:through|past|around|by)\s+#?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})*/g, " "],
   [/\b(?:rams?|rammed|powers?|powered|bursts?|burst|plows?|plowed)\s+through\s+#?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})*/g, " "],
   [/\bpicked off\b|\bpick six\b|\bjumped the route\b|\btook it away\b|\bpicked it\b/g, " int "],
   [/\bcoughed it up\b|\bput it on the ground\b|\bball came out\b|\bknocked it loose\b|\bstripped\b|\bpunched out\b|\bmuffed\b|\blost the (?:ball|handle)\b/g, " fumble "],
   [/\bbrought (?:him )?down\b|\btaken down\b|\bwrapped up\b|\bdragged down\b|\bblown up\b|\bstuffed\b|\btackled for (?:a )?loss\b|\bmet him\b|\bran into\b/g, " tackled "],
   [/\bdoes ?n.?t catch\b|\bdid ?n.?t catch\b|\bmisses it\b|\bmissed it\b|\bnever caught\b|\bcould ?n.?t get\b/g, " incomplete "],
+  [/\bnobody catches it\b|\bno one catches it\b|\bnobody caught it\b|\bnobody was near it\b|\bnobody there to catch it\b/g, " incomplete "],
   [/\bbroken up\b|\bbroke it up\b|\bknocked (?:it )?down\b|\bbatted (?:it )?down\b|\bpass defended\b|\bdefended\b|\bno good\b|\bthrew it away\b|\bmissed him\b|\bincompletion\b/g, " incomplete "],
   [/\bcouldn.?t hang on\b|\bthrough his hands\b|\boff his hands\b|\balligator arms\b|\blet it go through\b|\bbobbled it\b|\bbobbled\b/g, " drop "],
   [/\bhauled it in\b|\bbrought it in\b|\breeled it in\b|\bpulled it in\b|\bmade the catch\b|\bright on the money\b|\bon the money\b|\bon target\b|\bgood ball\b/g, " caught "],
@@ -6191,8 +10676,14 @@ const PHRASES = [
   [/\bwith \S+ in pursuit(?: of \S+)?/g, " "],
   [/\b\S+ (?:is |was |are |were )?in pursuit(?: of \S+)?/g, " "],
   [/\bunder (?:chase|pursuit) from (?:player number )?\S+(?: and \S+)?/g, " "],
-  [/\b(?:is |was |being |been )?chas(?:ed|ing) by #?\w+(?: and #?\w+)*/g, " "],
-  [/\bunder chase from #?\w+(?: and #?\w+)*/g, " "],
+  [/\b(?:is |was |being |been )?chas(?:ed|ing) by #?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})*/g, " "],
+  [/\bunder chase from #?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})*/g, " "],
+  /* covering a man is not tackling him — nobody is credited */
+  [/\b(?:is |was |being |been )?cover(?:ed|ing) by #?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})*/g, " "],
+  [/\bwith #?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})*\s+(?:providing|on|in|for|giving)\s+(?:defensive\s+)?cover\b/g, " "],
+  [/\b#?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})*\s+(?:is|are|was|were)?\s*there\s+(?:to\s+)?(?:provide|providing|for)\s+(?:defensive\s+)?cover\b/g, " "],
+  [/\bwith #?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})* (?:running )?(?:defensive )?(?:cover|defence|defense)\b/g, " "],
+  [/\bwith #?\d{1,3}(?:\s*,?\s*(?:and\s+)?#?\d{1,3})* cover(?:ing|ed)\b/g, " "],
   [/\bwith \S+ attempting to tackle/g, " "],
   [/\b(?:does |did )?attempts? to tackle\b|\battempted to tackle\b|\btries? to tackle\b|\bfails? to tackle\b|\bin an attempt to tackle\b/g, " triedtotackle "],
   /* These clauses name a defender who was beaten or who contested the ball.
@@ -6240,7 +10731,7 @@ const OUTCOMES = {
   touchdown: ["td", "touchdown", "scored", "score", "six", "endzone"],
   incomplete: ["incomplete", "inc", "overthrown", "overthrew", "underthrown", "missed", "wide", "short", "sailed", "pbu"],
   drop: ["drop", "dropped", "drops", "d"],
-  int: ["int", "interception", "intercepted", "pick", "picked"],
+  int: ["int", "interception", "intercepted", "intercepts", "picks", "pick", "picked"],
   fumble: ["fumble", "fumbled", "fumbles", "f"],
   whistle: ["whistle", "blown", "dead", "blew"]
 };
@@ -6361,33 +10852,39 @@ function parseLine(text, ctx) {
       wantYard = false; continue; }
     if (/^#?\d{1,3}[ab]?$/.test(tok)) {
       const n = tok.replace("#", "").replace(/([ab])$/, c => c.toUpperCase());
+      const pn = canonNum(n);                        // who he is, if this is a person
       /* "25b" can only be a boy — there is no 25b yard line */
       const said = tok[0] === "#" || /[ab]$/.test(n);
       const nx = words[i + 1] || "", nx2 = words[i + 2] || "";
       /* "the 15 yard line" is a place; "15 yards" is a distance travelled */
       const isSpot = SPOTNEXT.includes(nx) || (YARDNEXT.includes(nx) && SPOTNEXT.includes(nx2));
       const isDist = !isSpot && YARDNEXT.includes(nx);
-      if (wantBy) {
-        tacklers.push(n); wantBy = false; expectMore = true; lastWasTackler = true;
+      /* "caught it over by the 40 yard line" — a number wearing "yard line"
+         is a place, never a man, however the sentence got there. */
+      if (wantBy && !isSpot) {
+        tacklers.push(pn); wantBy = false; expectMore = true; lastWasTackler = true;
         if (!isJersey(n)) w.push("#" + n + " isn't on the roster"); continue; }
+      if (wantBy && isSpot) wantBy = false;
       if (expectMore && (andJustNow || wasTackler)) {   /* "by 12 and 4", "by 33, 13, 80 and 4" */
-        tacklers.push(n); andJustNow = false; lastWasTackler = true;
+        tacklers.push(pn); andJustNow = false; lastWasTackler = true;
         if (!isJersey(n)) w.push("#" + n + " isn't on the roster"); continue; }
-      if (said) { chain.push(n); verbs.push(handoff ? "hand" : "pass"); handoff = false;
+      if (said) { chain.push(pn); verbs.push(handoff ? "hand" : "pass"); handoff = false;
         if (!isJersey(n)) w.push("#" + n + " isn't on the roster"); continue; }
       /* "stopped at 13 yards" is a distance; "at the 13 yard line" is a place.
          isSpot already caught the second, so a trailing "yards" now wins. */
       if (beaten) { beaten = false; continue; }   /* he ran over him; nothing to credit */
       if ((words[i + 1] || "") === "triedtotackle") { missedTackle = true; continue; }
-      if ((words[i + 1] || "") === "recoveredit") { tacklers.push(n); recovered = true; continue; }
+      if ((words[i + 1] || "") === "recoveredit") { tacklers.push(pn); recovered = true; continue; }
       /* "past all three coaches" — three is a count of people, not a jersey */
-      if (/^(coaches|coach|guys|men|players|kids|times|others|defenders)$/.test(words[i + 1] || "")) continue;
+      if (/^(coaches|coach|guys|men|players|kids|times|others|defenders)$/.test(words[i + 1] || "")
+       || (/^(separate|different|whole|more|other)$/.test(words[i + 1] || "")
+           && /^(coaches|coach|guys|men|players|kids|others|defenders)$/.test(words[i + 2] || ""))) continue;
       if ((isDist || (wantGain && !isSpot))) {
         gainN = negative ? -(+n) : +n; wantGain = false; wantYard = false; continue; }
       /* "14 brought him down" — but only if nothing already marked this as a place */
       const prev = words[i - 1] || "", nextOut = outOf(nx);
       if (!wantYard && !isSpot && !PASSTO.includes(prev) && chain.length && !tacklers.length &&
-          (nextOut === "tackled" || nextOut === "int")) { tacklers.push(n); expectMore = true; continue; }
+          (nextOut === "tackled" || nextOut === "int")) { tacklers.push(pn); expectMore = true; continue; }
       if (wantYard || isSpot) {
         /* "...though 40 tried to tackle him right at the 20" — that's where the
            attempt happened, not where the ball finished. */
@@ -6402,8 +10899,8 @@ function parseLine(text, ctx) {
          locked by six" — naming him again to start a clause is the same man, not
          another pass. Only counts as a fresh touch if the ball was just sent to him. */
       const prevTok = words[i - 1] || "";
-      if (chain.indexOf(n) > -1 && !PASSTO.includes(prevTok)) { handoff = false; continue; }
-      if (isJersey(n)) { chain.push(n); verbs.push(handoff ? "hand" : "pass"); handoff = false; continue; }
+      if (chain.indexOf(pn) > -1 && !PASSTO.includes(prevTok)) { handoff = false; continue; }
+      if (isJersey(n)) { chain.push(pn); verbs.push(handoff ? "hand" : "pass"); handoff = false; continue; }
       endN = resolveYard(+n, ctx.startAbs);
       w.push("Heard " + n + " as a yard line \u2014 #" + n + " isn't on the roster");
       continue;
@@ -6490,14 +10987,14 @@ function readTally(words) {
   if (words.length >= 2 && nums.length === 1 && res.length >= 1 &&
       /^#?\d{1,3}[ab]?$/.test(words[words.length - 1])) {
     const code = res[res.length - 1];        // "fumble but ultimately a catch" -> catch
-    const who2 = words[words.length - 1].replace("#", "").replace(/([ab])$/, c => c.toUpperCase());
+    const who2 = canonNum(words[words.length - 1].replace("#", "").replace(/([ab])$/, c => c.toUpperCase()));
     const counts2 = { catch: 0, drop: 0, bad_throw: 0 };
     counts2[code === "drop_fumble" ? "drop" : code] = 1;
     const w2 = isJersey(who2) ? [] : ["#" + who2 + " isn't on the roster"];
     return { kind: "tally", who: who2, counts: counts2, warnings: w2, notes: [] };
   }
   if (!words.length || !/^#?\d{1,3}[ab]?$/.test(words[0])) return null;
-  const who = words[0].replace("#", "").replace(/([ab])$/, c => c.toUpperCase());
+  const who = canonNum(words[0].replace("#", "").replace(/([ab])$/, c => c.toUpperCase()));
   const counts = { catch: 0, drop: 0, bad_throw: 0 };
   const w = [], seen = {};
   let found = false;
@@ -6955,7 +11452,7 @@ function render() {
     ? BASELINE.practices.length + " practices · " + LINES().length + " plays"
       + (n ? " · " + n + " correction" + (n === 1 ? "" : "s") : "")
     : "waiting for your first practice";
-  ({ coach: renderCoach, plays: renderPlays, more: renderMore }[VIEW] || renderCoach)();
+  ({ coach: renderCoach, plays: renderPlays, game: renderGame, more: renderMore }[VIEW] || renderCoach)();
 }
 
 function editBanner() {
@@ -6969,6 +11466,93 @@ function editBanner() {
 }
 
 /* ---------- for coaches ---------- */
+/* ==========================================================================
+   YARDAGE — gains and losses.
+
+   Only from drills where a yard number means something. Two kinds are thrown
+   out on purpose:
+     · movingStart — the ball advances between plays, so start and end are not
+       on the same footing and a "gain" is meaningless
+     · reversed    — the goal line drill ran the other way down the field, so a
+       yard number could belong to either end
+   Everything excluded is counted and shown, so the number is never quietly
+   smaller than the football that actually happened.
+   ========================================================================== */
+function yardsUsable(d) { return !!d && !d.movingStart && !d.reversed && !d.noYards; }
+
+function yardTotals(week) {
+  const per = {}, get = n => (per[n] = per[n] || {
+    touches: 0, yds: 0, best: null, worst: null, tds: 0, noRead: 0 });
+  let plays = 0, measured = 0, dropped = 0, skippedDrills = [];
+
+  BASELINE.drills.forEach(d => {
+    const pr = practiceOf(d.practiceId);
+    if (!pr) return;
+    if (week && mondayOf(pr.date) !== week) return;
+    if (!yardsUsable(d)) { skippedDrills.push(d.name + " (" + dateLabel(pr.date) + ")"); return; }
+    readDrill(d.id).forEach(r => {
+      const p = r.p;
+      if (!p || p.kind !== "play" || !p.chain || !p.chain.length) return;
+      plays++;
+      const carrier = p.chain[p.chain.length - 1];
+      const y = playYards(p);
+      if (y == null) { dropped++; get(carrier).noRead++; return; }
+      measured++;
+      const s = get(carrier);
+      s.touches++; s.yds += y;
+      if (s.best === null || y > s.best) s.best = y;
+      if (s.worst === null || y < s.worst) s.worst = y;
+      if (p.outcome === "touchdown") s.tds++;
+    });
+  });
+  return { per, plays, measured, dropped, skipped: Array.from(new Set(skippedDrills)) };
+}
+
+function yardageCard(week) {
+  const t = yardTotals(week);
+  const nums = Object.keys(t.per).filter(n => t.per[n].touches > 0)
+    .sort((a, b) => t.per[b].yds - t.per[a].yds);
+  if (!nums.length) return "";
+  const total = nums.reduce((a, n) => a + t.per[n].yds, 0);
+  const touches = nums.reduce((a, n) => a + t.per[n].touches, 0);
+  const sign = v => (v > 0 ? "+" : "") + v;
+
+  return `<div class="card">
+    <h2 style="margin-top:0">Yardage</h2>
+    <p class="muted">How far the ball actually moved, and who moved it. A gain is
+      measured from where the ball started that rep to where it finished, so a play
+      that ends behind the start shows as a loss.</p>
+
+    <div class="scroll"><table>
+      <tr><th>Player</th><th class="n">Touches</th><th class="n">Yards</th>
+          <th class="n">Per touch</th><th class="n">Best</th><th class="n">Worst</th></tr>
+      ${nums.map(n => { const s = t.per[n];
+        return `<tr><td>#${esc(n)} ${esc(nameOf(n) || "")}</td>
+          <td class="n">${s.touches}</td>
+          <td class="n"><b>${sign(s.yds)}</b></td>
+          <td class="n">${Math.round(s.yds / s.touches * 10) / 10}</td>
+          <td class="n">${sign(s.best)}</td>
+          <td class="n">${s.worst < 0 ? `<span style="color:var(--bad)">${sign(s.worst)}</span>`
+                                      : sign(s.worst)}</td></tr>`; }).join("")}
+      <tr><td><b>All told</b></td><td class="n"><b>${touches}</b></td>
+          <td class="n"><b>${sign(total)}</b></td>
+          <td class="n"><b>${Math.round(total / touches * 10) / 10}</b></td>
+          <td class="n"></td><td class="n"></td></tr>
+    </table></div>
+
+    <div class="mv" style="background:#f6f6f4;margin-top:10px">
+      <b>What is not in this table.</b>
+      ${t.dropped} of ${t.plays} plays had no readable finish — an incompletion, a drop,
+      an interception, or a play where the yard line never got said — so they count as
+      nothing rather than as zero.
+      ${t.skipped.length ? `<br><br>These drills are left out altogether, because a yard
+        number in them cannot be trusted: ${esc(t.skipped.join("; "))}. The ball moves
+        between reps or the play runs the other way down the field, so a “gain” would be
+        an arithmetic accident rather than football.` : ""}
+    </div>
+  </div>`;
+}
+
 function renderCoach() {
   const el = $("#coachArea"), ws = weeks();
   if (!ws.length) {
@@ -7043,6 +11627,8 @@ function renderCoach() {
       : `<p class="muted">First week in this file — no earlier week to compare against yet.</p>`}
   </div>
 
+  ${yardageCard(WEEK)}
+
   ${(() => {
     /* Every coach note lives here and nowhere else, so a season of them stays
        readable. Grouped by player rather than scattered down the page. */
@@ -7106,9 +11692,14 @@ function renderCoach() {
         ${st !== "active" ? `<span class="tag warn">${esc(noteOf(n) || st)}</span>` : ""}</div>
       ${role ? `<p class="muted" style="margin:2px 0 6px">This week: ${esc(role)}</p>` : ""}
       ${(() => { const pl = BASELINE.players.find(x => String(x.num) === String(n));
-        return pl && pl.method
+        if (!pl) return "";
+        let out = pl.method
           ? `<div class="mv" style="background:#eef2ff;border-color:#6366f1">
                <b>Affects how this is measured:</b> ${esc(pl.method)}</div>` : "";
+        /* jersey bookkeeping is Maddie's working, not something coaches need */
+        if (pl.admin && isOwner()) out += `<div class="mv noprint muted"
+               style="background:#f6f6f4"><b>Note to self:</b> ${esc(pl.admin)}</div>`;
+        return out;
       })()}
       <div class="scroll"><table>
         <tr><th>Area</th><th class="n">This week</th><th class="n">${prev ? "Last week" : ""}</th>
@@ -7578,6 +12169,109 @@ function sendCorrections() {
     };
     $("#cx").onclick = closeModal;
   });
+}
+
+/* ==========================================================================
+   GAMES — a walled garden.
+
+   Game jerseys are not practice jerseys, and the other team wears some of the
+   same numbers. So none of this touches players[], LINES(), or any statistic
+   on the other tabs. It is rendered straight from BASELINE.games and nothing
+   reads back out of it.
+   ========================================================================== */
+function renderGame() {
+  const gs = BASELINE.games || [];
+  if (!gs.length) { $("#gameArea").innerHTML = "<p class=\"muted\">No games recorded yet.</p>"; return; }
+  $("#gameArea").innerHTML = gs.map(g => {
+    const pct = (c, d) => (c + d) ? Math.round(c / (c + d) * 100) + "%" : "—";
+    const NAME = {}; g.map.forEach(m => NAME[m[0]] = m[1]);
+    const PRAC = {}; g.map.forEach(m => PRAC[m[0]] = m[2]);
+    const who = nm => NAME[nm] ? esc(NAME[nm]) : "<span class=\"muted\">not on the team sheet</span>";
+
+    return `
+    <div class="card">
+      <div class="spread"><h2 style="margin:0">${esc(BASELINE.team)} v ${esc(g.opponent)}</h2>
+        <div style="font-size:26px;font-weight:800">${g.us}–${g.them}</div></div>
+      <p class="muted" style="margin:2px 0 0">${esc(dateLabel(g.date))}${g.kickoff ? " · kickoff " + esc(g.kickoff) : ""}</p>
+      <p class="muted" style="margin:6px 0 0">${esc(g.opponentNote || "")}</p>
+    </div>
+
+
+    ${(g.nameConflicts || []).length ? `<div class="card"><h3 style="margin-top:0">Two spellings, one boy</h3>
+      <p class="muted">Your practice roster and your team sheet disagree. Tell me which is right and I will fix both.</p>
+      <table class="tbl"><thead><tr><th>Who</th><th>Practice roster</th><th>Team sheet</th><th></th></tr></thead>
+      <tbody>${g.nameConflicts.map(c => `<tr><th>${esc(c[0])}</th><td>${esc(c[1])}</td>
+        <td>${esc(c[2])}</td><td class="muted">${esc(c[3])}</td></tr>`).join("")}</tbody></table>
+    </div>` : ""}
+
+
+    <div class="card"><h3 style="margin-top:0">How the scoring went</h3>
+      <table class="tbl"><thead><tr><th>Qtr</th><th>Who</th><th>What happened</th><th>Score</th></tr></thead>
+      <tbody>${g.scoring.map(r => `<tr><td>${esc(r[0])}</td><th>${esc(r[1])}</th>
+        <td>${esc(r[2])}</td><td><b>${esc(r[3])}</b></td></tr>`).join("")}</tbody></table>
+    </div>
+
+    ${!g.yardage ? "" : (() => {
+      const Y = g.yardage, sign = v => (v > 0 ? "+" : "") + v;
+      const tot = {};
+      Y.plays.forEach(r => { const t = tot[r[0]] = tot[r[0]] || { n: 0, y: 0, best: null };
+        t.n++; t.y += r[1]; if (t.best === null || r[1] > t.best) t.best = r[1]; });
+      const who = Object.keys(tot).sort((a, z) => tot[z].y - tot[a].y);
+      const carried = Y.plays.reduce((a, r) => a + r[1], 0);
+      return `<div class="card">
+      <h3 style="margin-top:0">Yardage</h3>
+      <p class="muted">${esc(Y.note)}</p>
+
+      <div class="scroll"><table>
+        <tr><th>Player</th><th class="n">Plays</th><th class="n">Yards</th>
+            <th class="n">Per play</th><th class="n">Best</th></tr>
+        ${who.map(w => { const t = tot[w];
+          return `<tr><td>${esc(w)}</td><td class="n">${t.n}</td>
+            <td class="n"><b>${sign(t.y)}</b></td>
+            <td class="n">${Math.round(t.y / t.n * 10) / 10}</td>
+            <td class="n">${sign(t.best)}</td></tr>`; }).join("")}
+        <tr><td><b>Offensive plays</b></td><td class="n"><b>${Y.plays.length}</b></td>
+            <td class="n"><b>${sign(carried)}</b></td><td class="n"></td><td class="n"></td></tr>
+      </table></div>
+
+      <h3>Every one of them</h3>
+      ${Y.plays.slice().sort((a, z) => z[1] - a[1]).map(r =>
+        `<div class="mv" style="margin:3px 0"><b>${sign(r[1])}</b> &nbsp;${esc(r[0])}
+          <span class="muted">— ${esc(r[2])}</span></div>`).join("")}
+
+      ${(Y.returns || []).length ? `<h3>Kick returns</h3>
+        ${Y.returns.map(r => `<div class="mv" style="margin:3px 0"><b>${sign(r[1])}</b> &nbsp;${esc(r[0])}
+          <span class="muted">— ${esc(r[2])}</span></div>`).join("")}` : ""}
+
+      ${(Y.wiped || []).length ? `<h3>Taken off the board</h3>
+        ${Y.wiped.map(r => `<div class="mv" style="margin:3px 0">${sign(r[1])} &nbsp;${esc(r[0])}
+          <span class="muted">— ${esc(r[2])}</span></div>`).join("")}` : ""}
+
+      <div class="mv" style="background:#f6f6f4;margin-top:10px">
+        <b>What is not in this table.</b> ${esc(Y.missing)}</div>
+    </div>`; })()}
+
+    <div class="card"><h3 style="margin-top:0">What worked</h3>
+      ${(g.worked || []).map(r => `<div style="margin:9px 0"><b>${esc(r[0])}</b> — ${esc(r[1])}</div>`).join("")}
+    </div>
+
+    <div class="card"><h3 style="margin-top:0">What didn't</h3>
+      ${(g.didnt || []).map(r => `<div style="margin:9px 0"><b>${esc(r[0])}</b> — ${esc(r[1])}</div>`).join("")}
+      ${g.shape ? `<div class="mv" style="background:#eef2ff;border-color:#6366f1;margin-top:10px">
+        ${esc(g.shape)}</div>` : ""}
+    </div>
+
+    ${(g.injuries || []).length ? `<div class="card"><h3 style="margin-top:0">Injuries</h3>
+      ${g.injuries.map(r => `<div style="margin:9px 0"><b>${esc(r[0])}</b> — ${esc(r[1])}</div>`).join("")}
+    </div>` : ""}
+
+    <div class="card"><h3 style="margin-top:0">Individual moments</h3>
+      ${g.notable.map(r => `<div style="margin:7px 0"><b>${esc(r[1])}</b> — ${esc(r[2])}</div>`).join("")}
+    </div>
+
+    <div class="card"><h3 style="margin-top:0">Maddie's note</h3>
+      <p>${esc(g.maddie)}</p></div>`;
+  }).join("");
 }
 
 function renderMore() {

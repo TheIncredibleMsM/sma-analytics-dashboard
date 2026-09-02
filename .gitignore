@@ -14,3 +14,6 @@ npm-debug.log*
 .vscode/
 .idea/
 coverage/
+
+# build artefacts: one snapshot per publish, identical to the dashboard html
+PASTE*.txt
