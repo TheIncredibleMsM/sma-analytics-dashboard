@@ -105,7 +105,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-03a",
+  "version": "2026-09-08a",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -141,8 +141,10 @@ const BASELINE = {
       "name": "Valor Menn",
       "classOf": "2028",
       "year": "Jr",
-      "status": "active",
-      "method": "Quarterback in the passing drills — he takes the relay and catches nearly everything, so a high catch rate here does not mean what it means for a receiver."
+      "status": "out — injured",
+      "method": "Quarterback in the passing drills — he takes the relay and catches nearly everything, so a high catch rate here does not mean what it means for a receiver.",
+      "note": "On crutches since the game. Not at practice.",
+      "admin": "Injured at the 28 Aug game and on crutches. Anything wearing #40 from 2 Sep is somebody else — see #40B."
     },
     {
       "num": "33",
@@ -291,7 +293,7 @@ const BASELINE = {
       "classOf": "",
       "year": "",
       "status": "active",
-      "admin": "Was guessed to be Siwoo Ahn. Withdrawn 25 Aug. Unidentified."
+      "admin": "Maddie decided at the end of 2 Sep that “62 is Elijah today”, but #23 is Elijah Boyd-Sanders and #23 also played that day. Both cannot be him. Unresolved — do not treat #62 as Elijah."
     },
     {
       "num": "2",
@@ -434,6 +436,14 @@ const BASELINE = {
       "year": "",
       "status": "active",
       "admin": "Seen in a transcript, not yet identified."
+    },
+    {
+      "num": "40B",
+      "name": "",
+      "classOf": "",
+      "year": "",
+      "status": "active",
+      "admin": "NOT Valor Menn. Valor was absent on crutches on 2 Sep and another boy wore his #40 that day. Every #40 play from that practice is filed here so Valor's record stays clean. We do not know who this is."
     }
   ],
   "practices": [
@@ -571,6 +581,15 @@ const BASELINE = {
       "session": "Morning",
       "weather": {},
       "note": "6am. Ash confirmed his practice number is now 22. The purple penny today was Mickey (#66). The shock-and-lock and donut drills were run but not charted — Coach has asked her not to. Almost nothing was caught on long balls all morning, and Coach said so out loud twice."
+    },
+    {
+      "id": "p0902",
+      "date": "2026-09-02",
+      "session": "Afternoon",
+      "weather": {
+        "tempF": 97
+      },
+      "note": "About 97°F and the middle school had the field, so practice started with the passing machine rather than a Pat-N-Go. Valor was absent on crutches and ANOTHER PLAYER WORE #40 — those plays are filed under 40B, not Valor. Ash and Mickey left early for youth group. Cooper Dailey came off partway through and Casen took his place. Several players told Maddie that Major's throws were off, and Coach asked him whether he was warm."
     }
   ],
   "drills": [
@@ -1197,6 +1216,56 @@ const BASELINE = {
       "endedAt": null,
       "movingStart": true,
       "note": "#81 snapping throughout. Ball advances between plays, so yardage here is not measured."
+    },
+    {
+      "id": "g1",
+      "practiceId": "p0902",
+      "name": "Machine catching",
+      "kind": "rep",
+      "startedAt": "16:57",
+      "endedAt": "17:05",
+      "style": "short",
+      "noYards": true,
+      "note": "The passing machine, which throws a perfect spiral every time, so these are the cleanest balls anyone gets all week. Counted in a run rather than rep by rep."
+    },
+    {
+      "id": "g2",
+      "practiceId": "p0902",
+      "name": "Machine long balls v cover",
+      "kind": "play",
+      "startedAt": "17:05",
+      "endedAt": "17:25",
+      "noSnap": true,
+      "noYards": true,
+      "note": "The machine, and later Coach, threw long from a standing spot while defenders shadowed the receiver. No tackling again — Maddie was explicit that they were only standing near the man. No snap and no fixed line of scrimmage, so no yardage is measured."
+    },
+    {
+      "id": "g3",
+      "practiceId": "p0902",
+      "name": "4x4",
+      "kind": "play",
+      "startedAt": "17:30",
+      "endedAt": "17:55",
+      "note": "#81 snapping to Major throughout, ball on the 15. Still no real tackling."
+    },
+    {
+      "id": "g4",
+      "practiceId": "p0902",
+      "name": "Snap and run",
+      "kind": "play",
+      "startedAt": "18:00",
+      "endedAt": "18:10",
+      "note": "#25 snapping, ball on the 10. Short drill either side of a water break."
+    },
+    {
+      "id": "g5",
+      "practiceId": "p0902",
+      "name": "Moving 4x4",
+      "kind": "play",
+      "startedAt": "18:12",
+      "endedAt": null,
+      "movingStart": true,
+      "note": "#81 snapping. The ball advances between plays and the team turned around partway through, so no yardage is measured here."
     }
   ],
   "lines": [
@@ -9251,6 +9320,361 @@ const BASELINE = {
       "id": "E169",
       "drillId": "e4",
       "raw": "81 snaps to 5, who passes to 80, who catches it at the 40 yard mark and takes it to the 50 yard mark"
+    },
+    {
+      "id": "G001",
+      "drillId": "g1",
+      "raw": "22 caught 8, dropped 0*"
+    },
+    {
+      "id": "G002",
+      "drillId": "g1",
+      "raw": "80 caught 11, dropped 0"
+    },
+    {
+      "id": "G003",
+      "drillId": "g2",
+      "raw": "the machine passes long to the 50 yard line, but neither 6 nor 25 catches it; 25 recovers it off the ground and runs to the 40 yard line*"
+    },
+    {
+      "id": "G004",
+      "drillId": "g2",
+      "raw": "the machine passes again and nobody catches it at about the 40 yard line*"
+    },
+    {
+      "id": "G005",
+      "drillId": "g2",
+      "raw": "the machine passes to 22, who catches it on the 50 yard line and runs to about the 25 yard line"
+    },
+    {
+      "id": "G006",
+      "drillId": "g2",
+      "raw": "the ball is passed down to 22, who catches it at the 50 yard line and runs to the 35 yard line before the whistle"
+    },
+    {
+      "id": "G007",
+      "drillId": "g2",
+      "raw": "the machine passes to 22, who catches it at the 50 yard line and takes it to the 15 yard line before the whistle"
+    },
+    {
+      "id": "G008",
+      "drillId": "g2",
+      "raw": "the machine passes to 6 at the 50 yard line, but 6 does not catch it"
+    },
+    {
+      "id": "G009",
+      "drillId": "g2",
+      "raw": "a clean catch from 6 right at the 45 yard line, who takes it to the 30 yard line"
+    },
+    {
+      "id": "G010",
+      "drillId": "g2",
+      "raw": "Coach passes from the 10 yard line to 80, who catches it on the 45 yard line before the whistle"
+    },
+    {
+      "id": "G011",
+      "drillId": "g2",
+      "raw": "Coach throws a low ball that 50 catches at the 25 yard line and covers up"
+    },
+    {
+      "id": "G012",
+      "drillId": "g2",
+      "raw": "Coach kicks from the 10 yard line to the 50, where 6 catches it and runs to the 30 yard line"
+    },
+    {
+      "id": "G013",
+      "drillId": "g3",
+      "raw": "start 15"
+    },
+    {
+      "id": "G014",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 31 at the 35 yard line, but 31 does not catch it"
+    },
+    {
+      "id": "G015",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who throws long and low; 6 dives for it and does not catch it"
+    },
+    {
+      "id": "G016",
+      "drillId": "g3",
+      "raw": "*******81 snaps to 5, who passes and the ball lands on the 25 yard line — I could not tell who it was meant for"
+    },
+    {
+      "id": "G017",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 40B, who catches it on the 22 yard hash and takes it to about the 25 yard line"
+    },
+    {
+      "id": "G018",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 6, who catches it on the 25 yard line and takes it to the 30 yard line"
+    },
+    {
+      "id": "G019",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 6, who catches it on the 16 yard line and takes it to about the 34 yard hash"
+    },
+    {
+      "id": "G020",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who hands it off to 12, who takes it to the 25 yard line*"
+    },
+    {
+      "id": "G021",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who hands it off to 12, who takes it to the 20 yard line"
+    },
+    {
+      "id": "G022",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 31, who catches it at the 25 yard line and takes it to the 35 yard line"
+    },
+    {
+      "id": "G023",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who throws very high to 80 at the 50 yard line, but 80 does not catch it"
+    },
+    {
+      "id": "G024",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 6, who catches it on the 20 yard line and takes it to the 25 yard line"
+    },
+    {
+      "id": "G025",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 22 at the 50 yard line, but 22 does not catch it"
+    },
+    {
+      "id": "G026",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 6, who catches it at the 20 yard line and takes it to the 40 yard line"
+    },
+    {
+      "id": "G027",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 6, who catches it at the 29 yard hash"
+    },
+    {
+      "id": "G028",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 6, who catches it on the 27 yard hash"
+    },
+    {
+      "id": "G029",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 80 on the 20 yard mark, who runs to the 25 yard mark"
+    },
+    {
+      "id": "G030",
+      "drillId": "g3",
+      "raw": "81 snaps to 5, who passes to 12, who catches it at the 20 yard mark and takes it to the 25 yard mark"
+    },
+    {
+      "id": "G031",
+      "drillId": "g4",
+      "raw": "start 10"
+    },
+    {
+      "id": "G032",
+      "drillId": "g4",
+      "raw": "*******"
+    },
+    {
+      "id": "G033",
+      "drillId": "g4",
+      "raw": "*******"
+    },
+    {
+      "id": "G034",
+      "drillId": "g4",
+      "raw": "25 snaps to 5, who takes it all the way to the 40 yard line"
+    },
+    {
+      "id": "G035",
+      "drillId": "g4",
+      "raw": "25 snaps to 5, who passes to 4, who drops it at the 25 yard line"
+    },
+    {
+      "id": "G036",
+      "drillId": "g4",
+      "raw": "25 snaps to 12, who passes to 5, who takes it all the way down to the 25 yard line"
+    },
+    {
+      "id": "G037",
+      "drillId": "g4",
+      "raw": "*******25 snaps to 5, who passes to 23, whose throw hits 62 in the gut"
+    },
+    {
+      "id": "G038",
+      "drillId": "g4",
+      "raw": "25 snaps to 5, who tries to pass to 80 at the 35 yard line but is stopped by 6 and 31"
+    },
+    {
+      "id": "G039",
+      "drillId": "g5",
+      "raw": "start 15"
+    },
+    {
+      "id": "G040",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 6 standing on the 50 yard line, but 6 does not catch it"
+    },
+    {
+      "id": "G041",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 12, who takes it to the 25 yard line"
+    },
+    {
+      "id": "G042",
+      "drillId": "g5",
+      "raw": "start 25"
+    },
+    {
+      "id": "G043",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 31, who takes it to the 38 yard hash"
+    },
+    {
+      "id": "G044",
+      "drillId": "g5",
+      "raw": "start 38"
+    },
+    {
+      "id": "G045",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 6, who takes it to the 40 yard line"
+    },
+    {
+      "id": "G046",
+      "drillId": "g5",
+      "raw": "start 48"
+    },
+    {
+      "id": "G047",
+      "drillId": "g5",
+      "raw": "81 does a low snap to 5, who passes to 6, who dives for it and does not catch it"
+    },
+    {
+      "id": "G048",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 6, who catches it at about the 36 yard hash"
+    },
+    {
+      "id": "G049",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 6, who catches it and then fumbles it right at the 15 yard line"
+    },
+    {
+      "id": "G050",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who hands it off to 12, who takes it to the 35 yard mark"
+    },
+    {
+      "id": "G051",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 12, who takes it to the 35 yard mark where the whole defence stops him"
+    },
+    {
+      "id": "G052",
+      "drillId": "g5",
+      "raw": "start 25"
+    },
+    {
+      "id": "G053",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 40B, who takes it into the end zone"
+    },
+    {
+      "id": "G054",
+      "drillId": "g5",
+      "raw": "*******81 snaps to 5, who tries to pass at about the 40 yard line, but nobody catches it"
+    },
+    {
+      "id": "G055",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 31, who catches it on the 30 yard line and runs to the 35 yard line before the whistle"
+    },
+    {
+      "id": "G056",
+      "drillId": "g5",
+      "raw": "start 35"
+    },
+    {
+      "id": "G057",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 12, who is stopped by 10 and 19 at the 34 yard hash"
+    },
+    {
+      "id": "G058",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 31, who catches it on the 40 yard line and takes it to the 50 yard line"
+    },
+    {
+      "id": "G059",
+      "drillId": "g5",
+      "raw": "start 50"
+    },
+    {
+      "id": "G060",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 25, who catches it at the 29 yard hash*"
+    },
+    {
+      "id": "G061",
+      "drillId": "g5",
+      "raw": "5 passes to 6, who catches it on the 30 yard line and takes it to about the 15 yard line"
+    },
+    {
+      "id": "G062",
+      "drillId": "g5",
+      "raw": "start 22"
+    },
+    {
+      "id": "G063",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 12, who takes it into the end zone"
+    },
+    {
+      "id": "G064",
+      "drillId": "g5",
+      "raw": "start 20"
+    },
+    {
+      "id": "G065",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 31, who takes it to about the 29 yard hash"
+    },
+    {
+      "id": "G066",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 6, but 62 bats the ball out of the air at about the 40 yard line"
+    },
+    {
+      "id": "G067",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 40B, who takes it to the 30 yard line"
+    },
+    {
+      "id": "G068",
+      "drillId": "g5",
+      "raw": "start 40"
+    },
+    {
+      "id": "G069",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who passes to 6, who catches it on the 45 yard line and takes it to about the 35 yard line"
+    },
+    {
+      "id": "G070",
+      "drillId": "g5",
+      "raw": "start 29"
+    },
+    {
+      "id": "G071",
+      "drillId": "g5",
+      "raw": "81 snaps to 5, who tries to pass to 81 in the end zone, but 81 does not catch it"
     }
   ],
   "coachNotes": [
@@ -10035,6 +10459,66 @@ const BASELINE = {
       "tone": "praise",
       "text": "A good breakthrough, got past #13.",
       "during": "Tackling practice"
+    },
+    {
+      "id": "cn79",
+      "date": "2026-09-02",
+      "practiceId": "p0902",
+      "by": "Coach Tinker",
+      "num": "6",
+      "tone": "praise",
+      "text": "“Good job, Raine” — and the whole team clapped.",
+      "during": "Moving 4x4"
+    },
+    {
+      "id": "cn80",
+      "date": "2026-09-02",
+      "practiceId": "p0902",
+      "by": "Coach Tinker",
+      "num": "6",
+      "tone": "praise",
+      "text": "“Good catch.”",
+      "during": "4x4"
+    },
+    {
+      "id": "cn81",
+      "date": "2026-09-02",
+      "practiceId": "p0902",
+      "by": "Coach Tinker",
+      "num": "5",
+      "tone": "coaching",
+      "text": "Asked whether he was warm. Several players had told Maddie his throws were off, and she noted the same herself.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn82",
+      "date": "2026-09-02",
+      "practiceId": "p0902",
+      "by": "Coach Tinker",
+      "num": "4",
+      "tone": "coaching",
+      "text": "Push-ups after dropping the ball at the 25.",
+      "during": "Snap and run"
+    },
+    {
+      "id": "cn83",
+      "date": "2026-09-02",
+      "practiceId": "p0902",
+      "by": "Coach Tinker",
+      "num": "6",
+      "tone": "coaching",
+      "text": "Push-ups after not coming down with a catchable ball.",
+      "during": "Moving 4x4"
+    },
+    {
+      "id": "cn84",
+      "date": "2026-09-02",
+      "practiceId": "p0902",
+      "by": "Maddie",
+      "num": "80",
+      "tone": "praise",
+      "text": "Eleven straight catches off the machine without a miss.",
+      "during": "Machine catching"
     }
   ],
   "glossary": [
