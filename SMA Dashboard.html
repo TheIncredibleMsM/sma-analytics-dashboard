@@ -105,7 +105,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-08d",
+  "version": "2026-09-15b",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -133,7 +133,8 @@ const BASELINE = {
     "4x4": 30,
     "Saber": 10,
     "Moving ball": 10,
-    "Kick return v opponent defence": 30
+    "Kick return v opponent defence": 30,
+    "Snap and pass": 10
   },
   "players": [
     {
@@ -187,7 +188,9 @@ const BASELINE = {
       "name": "Mason Litt",
       "classOf": "2028",
       "year": "Jr",
-      "status": "active"
+      "status": "out — injured",
+      "note": "Knees gave out at the Lutheran game on 4 Sep. Not seen at practice since.",
+      "method": "Out injured since 4 Sep. He has more snaps than anyone else on the team, so his absence changes who is snapping rather than just removing a player."
     },
     {
       "num": "5",
@@ -604,6 +607,48 @@ const BASELINE = {
       "session": "Evening",
       "weather": {},
       "note": "Warm-up before the away game at Lutheran High School. Recorded in game jerseys and translated back to practice numbers so it sits with the rest of the season. Ash wore 51, Aiden wore 25 — the same number he wears at practice. #41 (Siwoo) kicked throughout and was repeatedly good. The game itself is on the Games tab."
+    },
+    {
+      "id": "p0907",
+      "date": "2026-09-07",
+      "session": "—",
+      "weather": {},
+      "note": "Labor Day. No school and no practice — not a gap in the record, there was simply nothing to record."
+    },
+    {
+      "id": "p0908",
+      "date": "2026-09-08",
+      "session": "Morning",
+      "weather": {},
+      "note": "6am. Mickey (the purple penny today) alternating with #10 snapping to Coach on the left, Dom to Major on the right, and Aiden Lee took over snapping later — Maddie confirmed on the recording that the #25 who has been snapping is Aiden. Ash arrived late and missed the Pat-N-Go entirely."
+    },
+    {
+      "id": "p0909",
+      "date": "2026-09-09",
+      "session": "Morning",
+      "weather": {},
+      "note": "Practice happened. Maddie could not attend and asked an injured player to record it for her, but he forgot — about ten minutes of audio exists. A gap in the data, not a day off."
+    },
+    {
+      "id": "p0910",
+      "date": "2026-09-10",
+      "session": "Afternoon",
+      "weather": {},
+      "note": "Walkthrough. No jersey numbers, so no stats could be taken — a gap in the data, not a day off."
+    },
+    {
+      "id": "p0911",
+      "date": "2026-09-11",
+      "session": "Afternoon",
+      "weather": {},
+      "note": "Walkthrough. No jersey numbers, so no stats could be taken — a gap in the data, not a day off."
+    },
+    {
+      "id": "p0912",
+      "date": "2026-09-12",
+      "session": "Evening",
+      "weather": {},
+      "note": "Warm-up before the away game at Prairie Lee. Recorded in game jerseys and translated back to practice numbers. #66 and #10 snapping to Coach on the left; Dom and Aiden to Major on the right. Five sets: short, outs, long, outs again, then super long. The game itself is on the Games tab."
     }
   ],
   "drills": [
@@ -1307,6 +1352,62 @@ const BASELINE = {
       "startedAt": "18:11",
       "endedAt": null,
       "note": "#81 snapping to Major, ball on the 30. A pre-game warm-up, so nobody was tackling — they were saving their legs. Several plays are missing because four balls were in the air at once on a shared field."
+    },
+    {
+      "id": "j1",
+      "practiceId": "p0908",
+      "name": "Pat-N-Go",
+      "kind": "rep",
+      "startedAt": "06:01",
+      "endedAt": "06:26",
+      "style": "short",
+      "feeders": [
+        "66",
+        "10",
+        "75",
+        "25A"
+      ],
+      "relays": [
+        "5"
+      ],
+      "note": "#66 alternating with #10 to Coach on the left, Dom to Major on the right, and Aiden (25A) taking a turn snapping later. Three sets: short, outs, long."
+    },
+    {
+      "id": "j2",
+      "practiceId": "p0908",
+      "name": "4x4",
+      "kind": "play",
+      "startedAt": "06:26",
+      "endedAt": "07:02",
+      "note": "Ball on the 10. Snapping started with Mickey, then Dom — but partway through Maddie worked out that #75 was only PRETENDING to snap and the ball was actually starting with #31. Every play from that point on is credited to 31. The reps before it are as she called them at the time and may be wrong."
+    },
+    {
+      "id": "j3",
+      "practiceId": "p0908",
+      "name": "Snap and pass",
+      "kind": "play",
+      "startedAt": "07:02",
+      "endedAt": null,
+      "note": "Aiden Lee (25A) snapping to Major throughout, ball on the 10. His first practice snap was far too high and the second was much better."
+    },
+    {
+      "id": "k1",
+      "practiceId": "p0912",
+      "name": "Pat-N-Go",
+      "kind": "rep",
+      "startedAt": "18:04",
+      "endedAt": "18:50",
+      "style": "short",
+      "feeders": [
+        "66",
+        "10",
+        "75",
+        "25A"
+      ],
+      "relays": [
+        "5"
+      ],
+      "note": "Straight through five styles with no break. The last set was only three reps before they moved off the field."
     }
   ],
   "lines": [
@@ -9199,7 +9300,7 @@ const BASELINE = {
     {
       "id": "E137",
       "drillId": "e3",
-      "raw": "0 snaps to 5, who hands it off to 12, who takes it to about the 25A yard line",
+      "raw": "0 snaps to 5, who hands it off to 12, who takes it to about the 25 yard line",
       "uncertain": "snapper"
     },
     {
@@ -9320,7 +9421,7 @@ const BASELINE = {
     {
       "id": "E161",
       "drillId": "e4",
-      "raw": "81 snaps to 5, who passes to 23 on the 25A yard line, but 23 does not catch it"
+      "raw": "81 snaps to 5, who passes to 23 on the 25 yard line, but 23 does not catch it"
     },
     {
       "id": "E162",
@@ -10426,6 +10527,1361 @@ const BASELINE = {
       "id": "H142",
       "drillId": "h2",
       "raw": "*******"
+    },
+    {
+      "id": "J001",
+      "drillId": "j1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "J002",
+      "drillId": "j1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "J003",
+      "drillId": "j1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "J004",
+      "drillId": "j1",
+      "raw": "Drop from 25A"
+    },
+    {
+      "id": "J005",
+      "drillId": "j1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "J006",
+      "drillId": "j1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "J007",
+      "drillId": "j1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "J008",
+      "drillId": "j1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "J009",
+      "drillId": "j1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "J010",
+      "drillId": "j1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "J011",
+      "drillId": "j1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "J012",
+      "drillId": "j1",
+      "raw": "Catch from 5"
+    },
+    {
+      "id": "J013",
+      "drillId": "j1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "J014",
+      "drillId": "j1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "J015",
+      "drillId": "j1",
+      "raw": "Catch from 18*"
+    },
+    {
+      "id": "J016",
+      "drillId": "j1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "J017",
+      "drillId": "j1",
+      "raw": "Catch from 2"
+    },
+    {
+      "id": "J018",
+      "drillId": "j1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "J019",
+      "drillId": "j1",
+      "raw": "Catch from 50*"
+    },
+    {
+      "id": "J020",
+      "drillId": "j1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "J021",
+      "drillId": "j1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "J022",
+      "drillId": "j1",
+      "raw": "Catch from 5"
+    },
+    {
+      "id": "J023",
+      "drillId": "j1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "J024",
+      "drillId": "j1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "J025",
+      "drillId": "j1",
+      "raw": "switching to outs"
+    },
+    {
+      "id": "J026",
+      "drillId": "j1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "J027",
+      "drillId": "j1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "J028",
+      "drillId": "j1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "J029",
+      "drillId": "j1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "J030",
+      "drillId": "j1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "J031",
+      "drillId": "j1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "J032",
+      "drillId": "j1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "J033",
+      "drillId": "j1",
+      "raw": "Catch from 2"
+    },
+    {
+      "id": "J034",
+      "drillId": "j1",
+      "raw": "Drop from 50*"
+    },
+    {
+      "id": "J035",
+      "drillId": "j1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "J036",
+      "drillId": "j1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "J037",
+      "drillId": "j1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "J038",
+      "drillId": "j1",
+      "raw": "Catch from 5"
+    },
+    {
+      "id": "J039",
+      "drillId": "j1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "J040",
+      "drillId": "j1",
+      "raw": "Drop from 25A"
+    },
+    {
+      "id": "J041",
+      "drillId": "j1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "J042",
+      "drillId": "j1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "J043",
+      "drillId": "j1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "J044",
+      "drillId": "j1",
+      "raw": "Catch from 2"
+    },
+    {
+      "id": "J045",
+      "drillId": "j1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "J046",
+      "drillId": "j1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "J047",
+      "drillId": "j1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "J048",
+      "drillId": "j1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "J049",
+      "drillId": "j1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "J050",
+      "drillId": "j1",
+      "raw": "A bad snap from 66"
+    },
+    {
+      "id": "J051",
+      "drillId": "j1",
+      "raw": "A low snap from 75"
+    },
+    {
+      "id": "J052",
+      "drillId": "j1",
+      "raw": "Drop from 5"
+    },
+    {
+      "id": "J053",
+      "drillId": "j1",
+      "raw": "switching to long"
+    },
+    {
+      "id": "J054",
+      "drillId": "j1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "J055",
+      "drillId": "j1",
+      "raw": "Drop from 6"
+    },
+    {
+      "id": "J056",
+      "drillId": "j1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "J057",
+      "drillId": "j1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "J058",
+      "drillId": "j1",
+      "raw": "Drop from 12"
+    },
+    {
+      "id": "J059",
+      "drillId": "j1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "J060",
+      "drillId": "j1",
+      "raw": "Drop from 2"
+    },
+    {
+      "id": "J061",
+      "drillId": "j1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "J062",
+      "drillId": "j1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "J063",
+      "drillId": "j1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "J064",
+      "drillId": "j1",
+      "raw": "Catch from 80*"
+    },
+    {
+      "id": "J065",
+      "drillId": "j1",
+      "raw": "Drop from 5"
+    },
+    {
+      "id": "J066",
+      "drillId": "j1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "J067",
+      "drillId": "j1",
+      "raw": "A bad snap from 25A"
+    },
+    {
+      "id": "J068",
+      "drillId": "j1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "J069",
+      "drillId": "j1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "J070",
+      "drillId": "j1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "J071",
+      "drillId": "j1",
+      "raw": "Drop from 2"
+    },
+    {
+      "id": "J072",
+      "drillId": "j1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "J073",
+      "drillId": "j1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "J074",
+      "drillId": "j1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "J075",
+      "drillId": "j1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "J076",
+      "drillId": "j1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "J077",
+      "drillId": "j1",
+      "raw": "Drop from 5"
+    },
+    {
+      "id": "J078",
+      "drillId": "j1",
+      "raw": "Catch from 10"
+    },
+    {
+      "id": "J079",
+      "drillId": "j1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "J080",
+      "drillId": "j1",
+      "raw": "Drop from 6"
+    },
+    {
+      "id": "J081",
+      "drillId": "j1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "J082",
+      "drillId": "j1",
+      "raw": "Catch from 12*"
+    },
+    {
+      "id": "J083",
+      "drillId": "j1",
+      "raw": "Catch from 2"
+    },
+    {
+      "id": "J084",
+      "drillId": "j1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "J085",
+      "drillId": "j1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "J086",
+      "drillId": "j1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "J087",
+      "drillId": "j1",
+      "raw": "Drop from 5"
+    },
+    {
+      "id": "J088",
+      "drillId": "j1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "J089",
+      "drillId": "j1",
+      "raw": "Drop from 10"
+    },
+    {
+      "id": "J090",
+      "drillId": "j1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "J091",
+      "drillId": "j1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "J092",
+      "drillId": "j1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "J093",
+      "drillId": "j1",
+      "raw": "Catch from 2"
+    },
+    {
+      "id": "J094",
+      "drillId": "j1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "J095",
+      "drillId": "j1",
+      "raw": "Catch from 2"
+    },
+    {
+      "id": "J096",
+      "drillId": "j1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "J097",
+      "drillId": "j1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "J098",
+      "drillId": "j1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "J099",
+      "drillId": "j1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "J100",
+      "drillId": "j1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "J101",
+      "drillId": "j1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "J102",
+      "drillId": "j1",
+      "raw": "Catch from 5"
+    },
+    {
+      "id": "J103",
+      "drillId": "j1",
+      "raw": "Catch from 10"
+    },
+    {
+      "id": "J104",
+      "drillId": "j1",
+      "raw": "Catch from 66"
+    },
+    {
+      "id": "J105",
+      "drillId": "j1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "J106",
+      "drillId": "j2",
+      "raw": "start 10"
+    },
+    {
+      "id": "J107",
+      "drillId": "j2",
+      "raw": "66 snaps to 5, who hands it off to 19, who takes it to the 15 yard line"
+    },
+    {
+      "id": "J108",
+      "drillId": "j2",
+      "raw": "*******"
+    },
+    {
+      "id": "J109",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who passes to 19, who takes it to approximately the 17 yard hash before the whistle"
+    },
+    {
+      "id": "J110",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who passes to 12, who is stopped by 8 and 5B at about the 7 yard hash"
+    },
+    {
+      "id": "J111",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who tries to hand it off to 13 but drops it on the ground"
+    },
+    {
+      "id": "J112",
+      "drillId": "j2",
+      "raw": "*******75 snaps to 5, who passes to 13, who took it to about the 10 yard line"
+    },
+    {
+      "id": "J113",
+      "drillId": "j2",
+      "raw": "*******12 went to the ground to protect the ball and the play was stopped"
+    },
+    {
+      "id": "J114",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who passes to 12, who takes it to approximately the 18 yard hash"
+    },
+    {
+      "id": "J115",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who hands it off to 12, who takes it to the 20 yard line"
+    },
+    {
+      "id": "J116",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who hands it off to 12, who takes it to the 15 yard line"
+    },
+    {
+      "id": "J117",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who takes the ball himself to the 40 yard line"
+    },
+    {
+      "id": "J118",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who takes the ball to the 20 yard line"
+    },
+    {
+      "id": "J119",
+      "drillId": "j2",
+      "raw": "75 snaps to 31, who passes to 5, who runs to about the 14 yard hash"
+    },
+    {
+      "id": "J120",
+      "drillId": "j2",
+      "raw": "75 snaps to 5, who passes to 19, who catches it at about the 13 yard hash"
+    },
+    {
+      "id": "J121",
+      "drillId": "j2",
+      "raw": "*******"
+    },
+    {
+      "id": "J122",
+      "drillId": "j2",
+      "raw": "*******"
+    },
+    {
+      "id": "J123",
+      "drillId": "j2",
+      "raw": "31 passes to 12, who takes it to the 30 yard line"
+    },
+    {
+      "id": "J124",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, but 5 does not catch it and the ball goes dead on the ground"
+    },
+    {
+      "id": "J125",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who passes to 4, who takes it to the 25 yard line"
+    },
+    {
+      "id": "J126",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who hands it off to 12, who takes it to approximately the 19 yard hash"
+    },
+    {
+      "id": "J127",
+      "drillId": "j2",
+      "raw": "*******6 dived for the ball and did not get it"
+    },
+    {
+      "id": "J128",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who hands it off to 12, who runs to the 15 yard line before being stopped by 6"
+    },
+    {
+      "id": "J129",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who hands it off to 6, who is stopped by 5B at the 5 yard line"
+    },
+    {
+      "id": "J130",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who passes to 6, who takes it to the 15 yard line"
+    },
+    {
+      "id": "J131",
+      "drillId": "j2",
+      "raw": "*******the ball was passed to 6, who took it to the 30 yard line"
+    },
+    {
+      "id": "J132",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who passes to 6, who takes it back to the 10 yard line before being stopped by a group of defenders"
+    },
+    {
+      "id": "J133",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who hands it off to 6, who is blocked by 5B at the 10 yard line"
+    },
+    {
+      "id": "J134",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who passes to 6, who is blocked by 5B at the 10 yard line"
+    },
+    {
+      "id": "J135",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who passes to 6, who takes it to the 15 yard line"
+    },
+    {
+      "id": "J136",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who hands it off to 12, who takes it to the 20 yard line"
+    },
+    {
+      "id": "J137",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who passes to 12, who takes it to the 20 yard line"
+    },
+    {
+      "id": "J138",
+      "drillId": "j2",
+      "raw": "31 snaps to 5, who passes to 12, who takes it to the 25 yard line"
+    },
+    {
+      "id": "J139",
+      "drillId": "j3",
+      "raw": "start 10"
+    },
+    {
+      "id": "J140",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 8, who catches it at the 10 yard line and takes it to the 20 yard line"
+    },
+    {
+      "id": "J141",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 12, who catches it at about the 10 yard line and takes it to about the 30 yard line"
+    },
+    {
+      "id": "J142",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 80, who catches it on the 20 yard line"
+    },
+    {
+      "id": "J143",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 31, who catches it on the 15 yard line and takes it to the 20 yard line"
+    },
+    {
+      "id": "J144",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 6, who catches it at the 20 yard mark and takes it to the 25 yard mark"
+    },
+    {
+      "id": "J145",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 12, who takes it from about the 18 yard hash to about the 35 yard line"
+    },
+    {
+      "id": "J146",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 31, who does not catch it at about the 14 yard hash"
+    },
+    {
+      "id": "J147",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 12, who catches it at the 10 yard line, gets around 10, and takes it to about the 15 yard line"
+    },
+    {
+      "id": "J148",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 80, who takes the ball to approximately the 27 yard hash"
+    },
+    {
+      "id": "J149",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who throws long to about the 40 yard line, but nobody catches it"
+    },
+    {
+      "id": "J150",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 6, who takes it to the 30 yard line before being stopped by 2"
+    },
+    {
+      "id": "J151",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 6, who catches it at the 50 yard line"
+    },
+    {
+      "id": "J152",
+      "drillId": "j3",
+      "raw": "*******the boys tried something clever and it did not work"
+    },
+    {
+      "id": "J153",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 80, who takes the ball to the 25 yard line"
+    },
+    {
+      "id": "J154",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 6 at the 50 yard line, but 6 does not catch it"
+    },
+    {
+      "id": "J155",
+      "drillId": "j3",
+      "raw": "25A snaps to 5, who passes to 8, who catches it at the 25 yard line and takes it to the 40 yard line"
+    },
+    {
+      "id": "K001",
+      "drillId": "k1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "K002",
+      "drillId": "k1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "K003",
+      "drillId": "k1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "K004",
+      "drillId": "k1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "K005",
+      "drillId": "k1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "K006",
+      "drillId": "k1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "K007",
+      "drillId": "k1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "K008",
+      "drillId": "k1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "K009",
+      "drillId": "k1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "K010",
+      "drillId": "k1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "K011",
+      "drillId": "k1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "K012",
+      "drillId": "k1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "K013",
+      "drillId": "k1",
+      "raw": "Catch from 0"
+    },
+    {
+      "id": "K014",
+      "drillId": "k1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "K015",
+      "drillId": "k1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "K016",
+      "drillId": "k1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "K017",
+      "drillId": "k1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "K018",
+      "drillId": "k1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "K019",
+      "drillId": "k1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "K020",
+      "drillId": "k1",
+      "raw": "Catch from 0"
+    },
+    {
+      "id": "K021",
+      "drillId": "k1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "K022",
+      "drillId": "k1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "K023",
+      "drillId": "k1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "K024",
+      "drillId": "k1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "K025",
+      "drillId": "k1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "K026",
+      "drillId": "k1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "K027",
+      "drillId": "k1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "K028",
+      "drillId": "k1",
+      "raw": "switching to outs"
+    },
+    {
+      "id": "K029",
+      "drillId": "k1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "K030",
+      "drillId": "k1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "K031",
+      "drillId": "k1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "K032",
+      "drillId": "k1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "K033",
+      "drillId": "k1",
+      "raw": "Catch from 80*"
+    },
+    {
+      "id": "K034",
+      "drillId": "k1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "K035",
+      "drillId": "k1",
+      "raw": "Catch from 31"
+    },
+    {
+      "id": "K036",
+      "drillId": "k1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "K037",
+      "drillId": "k1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "K038",
+      "drillId": "k1",
+      "raw": "Catch from 33*"
+    },
+    {
+      "id": "K039",
+      "drillId": "k1",
+      "raw": "Catch from 12*"
+    },
+    {
+      "id": "K040",
+      "drillId": "k1",
+      "raw": "Drop from 66"
+    },
+    {
+      "id": "K041",
+      "drillId": "k1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "K042",
+      "drillId": "k1",
+      "raw": "Catch from 0"
+    },
+    {
+      "id": "K043",
+      "drillId": "k1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "K044",
+      "drillId": "k1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "K045",
+      "drillId": "k1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "K046",
+      "drillId": "k1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "K047",
+      "drillId": "k1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "K048",
+      "drillId": "k1",
+      "raw": "Drop from 5B"
+    },
+    {
+      "id": "K049",
+      "drillId": "k1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "K050",
+      "drillId": "k1",
+      "raw": "Catch from 0"
+    },
+    {
+      "id": "K051",
+      "drillId": "k1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "K052",
+      "drillId": "k1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "K053",
+      "drillId": "k1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "K054",
+      "drillId": "k1",
+      "raw": "Drop from 25A*"
+    },
+    {
+      "id": "K055",
+      "drillId": "k1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "K056",
+      "drillId": "k1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "K057",
+      "drillId": "k1",
+      "raw": "switching to long"
+    },
+    {
+      "id": "K058",
+      "drillId": "k1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "K059",
+      "drillId": "k1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "K060",
+      "drillId": "k1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "K061",
+      "drillId": "k1",
+      "raw": "Drop from 64"
+    },
+    {
+      "id": "K062",
+      "drillId": "k1",
+      "raw": "Drop from 13"
+    },
+    {
+      "id": "K063",
+      "drillId": "k1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "K064",
+      "drillId": "k1",
+      "raw": "Drop from 23"
+    },
+    {
+      "id": "K065",
+      "drillId": "k1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "K066",
+      "drillId": "k1",
+      "raw": "Catch from 33"
+    },
+    {
+      "id": "K067",
+      "drillId": "k1",
+      "raw": "Catch from 4"
+    },
+    {
+      "id": "K068",
+      "drillId": "k1",
+      "raw": "Drop from 0"
+    },
+    {
+      "id": "K069",
+      "drillId": "k1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "K070",
+      "drillId": "k1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "K071",
+      "drillId": "k1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "K072",
+      "drillId": "k1",
+      "raw": "Drop from 19"
+    },
+    {
+      "id": "K073",
+      "drillId": "k1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "K074",
+      "drillId": "k1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "K075",
+      "drillId": "k1",
+      "raw": "Drop from 31"
+    },
+    {
+      "id": "K076",
+      "drillId": "k1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "K077",
+      "drillId": "k1",
+      "raw": "Drop from 33*"
+    },
+    {
+      "id": "K078",
+      "drillId": "k1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "K079",
+      "drillId": "k1",
+      "raw": "Drop from 0"
+    },
+    {
+      "id": "K080",
+      "drillId": "k1",
+      "raw": "Drop from 80"
+    },
+    {
+      "id": "K081",
+      "drillId": "k1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "K082",
+      "drillId": "k1",
+      "raw": "Catch from 50"
+    },
+    {
+      "id": "K083",
+      "drillId": "k1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "K084",
+      "drillId": "k1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "K085",
+      "drillId": "k1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "K086",
+      "drillId": "k1",
+      "raw": "Catch from 4*"
+    },
+    {
+      "id": "K087",
+      "drillId": "k1",
+      "raw": "switching to outs"
+    },
+    {
+      "id": "K088",
+      "drillId": "k1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "K089",
+      "drillId": "k1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "K090",
+      "drillId": "k1",
+      "raw": "Drop from 8"
+    },
+    {
+      "id": "K091",
+      "drillId": "k1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "K092",
+      "drillId": "k1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "K093",
+      "drillId": "k1",
+      "raw": "Catch from 80"
+    },
+    {
+      "id": "K094",
+      "drillId": "k1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "K095",
+      "drillId": "k1",
+      "raw": "Drop from 4"
+    },
+    {
+      "id": "K096",
+      "drillId": "k1",
+      "raw": "Drop from 33*"
+    },
+    {
+      "id": "K097",
+      "drillId": "k1",
+      "raw": "Catch from 12"
+    },
+    {
+      "id": "K098",
+      "drillId": "k1",
+      "raw": "Catch from 0"
+    },
+    {
+      "id": "K099",
+      "drillId": "k1",
+      "raw": "Catch from 64"
+    },
+    {
+      "id": "K100",
+      "drillId": "k1",
+      "raw": "Catch from 13"
+    },
+    {
+      "id": "K101",
+      "drillId": "k1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "K102",
+      "drillId": "k1",
+      "raw": "Catch from 23"
+    },
+    {
+      "id": "K103",
+      "drillId": "k1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "K104",
+      "drillId": "k1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "K105",
+      "drillId": "k1",
+      "raw": "Drop from 6"
+    },
+    {
+      "id": "K106",
+      "drillId": "k1",
+      "raw": "Catch from 0"
+    },
+    {
+      "id": "K107",
+      "drillId": "k1",
+      "raw": "Drop from 50"
+    },
+    {
+      "id": "K108",
+      "drillId": "k1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "K109",
+      "drillId": "k1",
+      "raw": "Catch from 19"
+    },
+    {
+      "id": "K110",
+      "drillId": "k1",
+      "raw": "Catch from 25A"
+    },
+    {
+      "id": "K111",
+      "drillId": "k1",
+      "raw": "Catch from 5B"
+    },
+    {
+      "id": "K112",
+      "drillId": "k1",
+      "raw": "Catch from 6"
+    },
+    {
+      "id": "K113",
+      "drillId": "k1",
+      "raw": "switching to super long"
+    },
+    {
+      "id": "K114",
+      "drillId": "k1",
+      "raw": "Catch from 8"
+    },
+    {
+      "id": "K115",
+      "drillId": "k1",
+      "raw": "Catch from 6*"
+    },
+    {
+      "id": "K116",
+      "drillId": "k1",
+      "raw": "Catch from 25A*"
     }
   ],
   "coachNotes": [
@@ -11290,6 +12746,126 @@ const BASELINE = {
       "tone": "praise",
       "text": "A jumping catch on an outs ball that Maddie called awesome.",
       "during": "Pat-N-Go, outs"
+    },
+    {
+      "id": "cn87",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Coach Tinker",
+      "num": "4",
+      "tone": "praise",
+      "text": "“Let's go, Nash.”",
+      "during": "Pat-N-Go, short"
+    },
+    {
+      "id": "cn88",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Coach Tinker",
+      "num": "5B",
+      "tone": "praise",
+      "text": "“Let's go, Landon.”",
+      "during": "Pat-N-Go, short"
+    },
+    {
+      "id": "cn89",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Coach Tinker",
+      "num": "13",
+      "tone": "praise",
+      "text": "“Let's go, Jacob” — said with real optimism.",
+      "during": "Pat-N-Go, short"
+    },
+    {
+      "id": "cn90",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Coach Tinker",
+      "num": "19",
+      "tone": "praise",
+      "text": "“Good hands, Marshall.”",
+      "during": "Pat-N-Go, short"
+    },
+    {
+      "id": "cn91",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Coach Tinker",
+      "num": "6",
+      "tone": "coaching",
+      "text": "“Wake up, Raine.”",
+      "during": "Pat-N-Go, long"
+    },
+    {
+      "id": "cn92",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Coach Tinker",
+      "num": "19",
+      "tone": "praise",
+      "text": "All of the coaches agreed it was a really good play.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn93",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Coach Tinker",
+      "num": "31",
+      "tone": "coaching",
+      "text": "Coach was frustrated with his hustle. Maddie's own note is that he was moving like someone carrying an injury.",
+      "during": "4x4"
+    },
+    {
+      "id": "cn94",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Coach Tinker",
+      "num": "",
+      "tone": "coaching",
+      "text": "“If y'all are going to do cute stuff like that, it had better work.”",
+      "during": "Snap and pass"
+    },
+    {
+      "id": "cn95",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Maddie",
+      "num": "25A",
+      "tone": "coaching",
+      "text": "First practice snap was far too high; the second was much better.",
+      "during": "Snap and pass"
+    },
+    {
+      "id": "cn96",
+      "date": "2026-09-08",
+      "practiceId": "p0908",
+      "by": "Maddie",
+      "num": "5",
+      "tone": "coaching",
+      "text": "Dropped a handoff to 13 outright — Maddie's note: “that is 100% Major's fault.”",
+      "during": "4x4"
+    },
+    {
+      "id": "cn97",
+      "date": "2026-09-12",
+      "practiceId": null,
+      "by": "Maddie",
+      "num": "",
+      "tone": "coaching",
+      "text": "Mason Litt is injured and has not been seen since the Lutheran game. With him out, Aiden Lee is snapping in a game on 16 practice snaps. Mason has 155. The next most experienced snappers available are Dom (89), Cooper Clark (68) and David Followell (51). How GOOD any of those snaps were is deliberately not part of this comparison — see the note on the snapper table.",
+      "during": "Season note"
+    },
+    {
+      "id": "cn98",
+      "date": "2026-09-12",
+      "practiceId": "p0912",
+      "by": "Maddie",
+      "num": "25A",
+      "tone": "coaching",
+      "text": "First game on snap duty and he took nearly every snap of the half. Maddie's impression was that his snaps were consistently low — recorded here as an observation, not a measurement, since snap quality is not something she is able to track reliably while following tackles.",
+      "during": "Prairie Lee, first half"
     }
   ],
   "glossary": [
@@ -11310,7 +12886,7 @@ const BASELINE = {
       "means": "line of scrimmage"
     }
   ],
-  "fieldNote": "Practice happens on a 100-yard field. Six-man games are played on 80, but the recordings repeatedly mention 45, 48 and 50 yard lines and describe 48 as past midfield, which only works at 100.",
+  "fieldNote": "Practice happens on a 100-yard field. Six-man GAMES are played on 80, and a drill or game can now declare its own field length so a yard number never has to be converted by hand. Where a spot says which side of midfield it is on, that is used exactly; where it doesn't, the last side named carries forward and the line says so.",
   "games": [
     {
       "id": "g0828",
@@ -12092,8 +13668,376 @@ const BASELINE = {
           "88",
           "Marish"
         ]
+      ]
+    },
+    {
+      "id": "g0912",
+      "date": "2026-09-12",
+      "kickoff": "19:00",
+      "opponent": "Prairie Lee",
+      "opponentNote": "The Indians. Away game on real grass, and the first road win.",
+      "us": 36,
+      "them": 20,
+      "map": [
+        [
+          "1",
+          "Cooper Dailey",
+          "12",
+          ""
+        ],
+        [
+          "2",
+          "David Followell",
+          "31",
+          ""
+        ],
+        [
+          "3",
+          "Alex Houston",
+          "8",
+          "Fredericksburg also wore 3 — theirs was Stewart."
+        ],
+        [
+          "4",
+          "Kitt Phelan",
+          "64",
+          "The team sheet lists 4 as Ash Vrielink, but Maddie confirms 4 is Kitt."
+        ],
+        [
+          "5",
+          "Major Howard",
+          "5A",
+          "The only player whose game and practice numbers match."
+        ],
+        [
+          "6",
+          "Cash Gilliand",
+          "—",
+          "No practice number on file for him yet."
+        ],
+        [
+          "7",
+          "Marshall Mehrens",
+          "19",
+          "Fredericksburg also wore 7 — theirs was Toby Prescott."
+        ],
+        [
+          "10",
+          "Caleb Arrington",
+          "50",
+          "Note the swap: our 50 in a game is Southworth."
+        ],
+        [
+          "11",
+          "Casen Nash",
+          "4",
+          ""
+        ],
+        [
+          "12",
+          "Elijah Boyd-Sanders",
+          "23",
+          ""
+        ],
+        [
+          "13",
+          "Valor Menn",
+          "40",
+          "The team sheet lists 13 twice. Maddie confirms 13 is Valor."
+        ],
+        [
+          "15",
+          "Mason Litt",
+          "81",
+          ""
+        ],
+        [
+          "20",
+          "Jacob Becker",
+          "13",
+          ""
+        ],
+        [
+          "21",
+          "Landon Douglass",
+          "5B",
+          "Was #34 at practice until 18 Aug, then 5B."
+        ],
+        [
+          "22",
+          "Raine Marsh",
+          "6",
+          ""
+        ],
+        [
+          "25",
+          "Aiden Lee",
+          "25A",
+          ""
+        ],
+        [
+          "27",
+          "Dylan Cavazos",
+          "0",
+          "Surname now known. Still no practice number — #0 is our stand-in."
+        ],
+        [
+          "41",
+          "Siwoo Ahn",
+          "—",
+          "The kicker. No practice number."
+        ],
+        [
+          "50",
+          "James Southworth",
+          "33",
+          ""
+        ],
+        [
+          "51",
+          "Ash Vrielink",
+          "—",
+          "Confirmed by Maddie. No practice number on file."
+        ],
+        [
+          "55",
+          "Cooper Clark",
+          "10",
+          ""
+        ],
+        [
+          "71",
+          "Dom Knight",
+          "75 / 85",
+          ""
+        ],
+        [
+          "77",
+          "Mickey McGuinness",
+          "66",
+          ""
+        ],
+        [
+          "88",
+          "Jax Bishop",
+          "80",
+          ""
+        ]
       ],
-      "maddie": "Mr. Hall announced Maddie's analytics over the PA at halftime and told the crowd to scan the QR code on the fence — “help Maddie make us not only a better school but an outstanding athletic program.”"
+      "unmapped": [],
+      "unmappedNote": "",
+      "scoring": [
+        [
+          "1st",
+          "SMA",
+          "Cooper Dailey took it in on the opening drive. He was pushed out at the pylon and the call went SMA's way because the ball crossed before he did. Kick blocked.",
+          "6–0"
+        ],
+        [
+          "1st",
+          "Prairie Lee",
+          "Touchdown after a long gain, with a flag on SMA after the score. Kick good.",
+          "6–8"
+        ],
+        [
+          "2nd",
+          "SMA",
+          "Major to Raine Marsh for the touchdown. Good kick from Siwoo.",
+          "14–8"
+        ],
+        [
+          "2nd",
+          "Prairie Lee",
+          "Touchdown from the 5 with 17 seconds left in the half. Kick no good.",
+          "14–14"
+        ],
+        [
+          "3rd",
+          "Prairie Lee",
+          "Touchdown on their opening drive of the half. A false start, and the kick was no good.",
+          "14–20"
+        ],
+        [
+          "3rd",
+          "SMA",
+          "Aiden snapped, Major found Raine Marsh again. Siwoo's kick was good.",
+          "22–20"
+        ],
+        [
+          "4th",
+          "SMA",
+          "David Followell snapping now. Handoff to Raine Marsh, who ran it in clean. Kick blocked.",
+          "28–20"
+        ],
+        [
+          "4th",
+          "SMA",
+          "Major to Raine Marsh, fumbled at the goal line and recovered by a Bear a hash short — then punched in on the next play. Siwoo good.",
+          "36–20"
+        ]
+      ],
+      "worked": [
+        [
+          "Raine Marsh",
+          "Three touchdowns — two caught from Major, one run in clean off a handoff — and he was the man on the play that produced the fourth, fumbling at the goal line before a teammate recovered a hash short. Plus the kick return at the end of the half that he took from deep to the 24 with four seconds left."
+        ],
+        [
+          "Kitt Phelan",
+          "Every single loose ball in this game. Maddie's note: “every time somebody's dropped a ball this game, 4 was the one to grab it off the ground.” Two recoveries in the fourth quarter alone, plus a tackle in the open field."
+        ],
+        [
+          "Siwoo Ahn",
+          "Two extra points, a touchback, and a string of kicks to the goal line. Two of his attempts were blocked, neither through anything he did."
+        ],
+        [
+          "Landon Douglass",
+          "Tackles that ended three separate Indian drives, one of them for a loss."
+        ],
+        [
+          "David Followell",
+          "Snapped a full quarter after two other snappers went down or moved, and caught passes on top of it."
+        ],
+        [
+          "The goal-line defence",
+          "Prairie Lee reached scoring range four times in the second half and were held out on three of them."
+        ]
+      ],
+      "didnt": [
+        [
+          "Injuries",
+          "Five Bears went down: Cooper Dailey, Jax Bishop, Jacob Becker carried off, Alex Houston, and Raine Marsh who got back up. Maddie's own line: “it's like chess pieces — we keep injuring each other, and at some point there's going to be no pieces left on the board.”"
+        ],
+        [
+          "Penalties",
+          "Holding twice, offside, a face mask, a personal foul after a score, and an inadvertent whistle that wiped out a long David Followell gain. Several drives died on flags rather than on defence."
+        ],
+        [
+          "The third quarter passing",
+          "Six incompletions in a row at one point, including two long balls to Jax that fell untouched."
+        ],
+        [
+          "Giving up the big play",
+          "Twice the Indians were held to almost nothing for several downs and then broke a long gain — once around 29 yards."
+        ]
+      ],
+      "shape": "Won from behind twice. Down 14–20 early in the third and 20–22 late, and scored 22 unanswered points in the second half with four different players taking snaps because the regular snapper is injured.",
+      "notable": [
+        [
+          "",
+          "Raine Marsh",
+          "Three touchdowns, a hand in the fourth, and the best run of the night. The most productive individual game in this file."
+        ],
+        [
+          "",
+          "Kitt Phelan",
+          "Recovered every loose ball in the game and made the tackle two other players had missed."
+        ],
+        [
+          "",
+          "Cooper Dailey",
+          "Scored the opening touchdown, then limped off before the first quarter was out."
+        ],
+        [
+          "",
+          "Jacob Becker",
+          "Tackles all through the first half, then carried off injured in the third and walked away with a limp."
+        ],
+        [
+          "",
+          "Aiden Lee",
+          "Snapped most of the first three quarters in his first game on snap duty."
+        ],
+        [
+          "",
+          "David Followell",
+          "Snapped the whole fourth quarter, caught passes, and had a long gain wiped out by an inadvertent whistle."
+        ],
+        [
+          "",
+          "Siwoo Ahn",
+          "Two extra points and a touchback."
+        ],
+        [
+          "",
+          "Casen Nash",
+          "Tackles in the open field through both halves."
+        ],
+        [
+          "",
+          "Marshall Mehrens",
+          "The tackle at the 35 that gave SMA the ball back in the closing minute."
+        ]
+      ],
+      "injuries": [
+        [
+          "Cooper Dailey",
+          "Limped off with seven seconds left in the first quarter, having scored the opening touchdown."
+        ],
+        [
+          "Jacob Becker",
+          "Badly hurt in the third quarter. Had to be lifted up and carried off, then walked with a limp. The worst of the night."
+        ],
+        [
+          "Alex Houston",
+          "Went down at the very start of the fourth quarter."
+        ],
+        [
+          "Jax Bishop",
+          "Injury timeout in the first quarter. Walked off on his own and returned."
+        ],
+        [
+          "Raine Marsh",
+          "Took a knock in the third and got straight back up, limping. Scored twice more afterwards."
+        ]
+      ],
+      "yardage": {
+        "note": "Very little here, and the reason is worth reading. Maddie realised at kickoff that Prairie Lee plays on a six-man field and switched to six-man yard numbers mid-recording. Every other number in this dashboard — all 2,091 practice entries and both earlier games — is on full-field numbers. The two cannot be reconciled afterwards, so a gain is only recorded here where she said the number of yards out loud.",
+        "plays": [
+          [
+            "Cooper Dailey",
+            4,
+            "Caught from Major and taken down at the 11. “That's a four yard gain.”"
+          ],
+          [
+            "Jax Bishop",
+            2,
+            "Caught from Major and tackled immediately by 26. “One yard gain. No, two yards.”"
+          ]
+        ],
+        "returns": [],
+        "wiped": [
+          [
+            "Raine Marsh",
+            0,
+            "A long first-down gain wiped out by a penalty on SMA."
+          ],
+          [
+            "David Followell",
+            0,
+            "A major gain wiped out by an inadvertent whistle, then pushed further back by a holding call."
+          ]
+        ],
+        "missing": "Everything else, including all eight touchdowns. The field notation changed partway through the recording. Touchdowns, tackles, recoveries and penalties are unaffected and are all recorded above."
+      },
+      "opponentPlayers": [
+        [
+          "26",
+          "—"
+        ],
+        [
+          "20",
+          "—"
+        ],
+        [
+          "12",
+          "—"
+        ],
+        [
+          "1",
+          "—"
+        ]
+      ],
+      "maddie": "Her read while it was tied: “The issue is not in our capability. The issue was in our confidence. This is a head game and we're losing the head game.” And the tactical note worth passing on: “These guys' strategy is to tackle us or push us out of bounds. We need to get better at defending against that.”"
     }
   ]
 };
@@ -12425,7 +14369,11 @@ function parseLine(text, ctx) {
   const numCount = (raw.match(/\b\d{1,3}\b/g) || []).length;
   if (sg && numCount <= 1) {
     const word = sg[1], token = sg[2];
-    const who = /^\d+$/.test(token) ? token : numFromName(token);
+    /* "a bad snap from 25A" — the suffix has to be folded the same way it is
+       everywhere else, or he ends up as a second, lowercase player. */
+    const who = /^\d{1,3}[ab]?$/.test(token)
+      ? canonNum(token.replace(/([ab])$/, c => c.toUpperCase()))
+      : numFromName(token);
     const bad = /terrible|awful|really bad|^bad$|poor|rough|low|high|wide|off/.test(word) && word !== "mid";
     const w = [];
     if (!who) w.push("Couldn't tell who \u201c" + token + "\u201d is");
@@ -12433,6 +14381,19 @@ function parseLine(text, ctx) {
     return { kind: "snapgrade", who: who || token, grade: bad ? word : "clean",
       word: word, off: bad, warnings: w, notes: [] };
   }
+  /* "Good tackle from 20", "beautiful tackle, 80", "21 does a really good tackle".
+     The coaches asked for these. They are NOT a count of tackles — they are the
+     ones she saw and thought were worth saying out loud. */
+  const gt = raw.toLowerCase().replace(/[.,]/g, " ").replace(/\s+/g, " ").trim();
+  const gtHit = gt.match(new RegExp("^(?:that(?:(?:'|\u2019)?s| is|(?:'|\u2019)?s a| was) )?(?:an? )?(?:really |very |pretty |absolutely )?(?:good|great|nice|beautiful|strong|clean|solid|excellent|awesome)\\s+(?:tackle|tackles|hit|stop|block|shock ?(?:and|n) ?lock|pushback|push back)\\b(?:\\s+(?:from|by|on))?\\s+#?(\\d{1,3}[ab]?)(?:\\s+and\\s+#?(\\d{1,3}[ab]?))?"))
+    || gt.match(new RegExp("^#?(\\d{1,3}[ab]?)(?:\\s+and\\s+#?(\\d{1,3}[ab]?))?\\s+(?:does|did|makes|made|got|with|had)\\s+(?:an? )?(?:really |very |pretty |absolutely )?(?:good|great|nice|beautiful|strong|clean|solid|excellent|awesome)\\s+(?:tackle|tackles|hit|stop|block|shock ?(?:and|n) ?lock|pushback|push back)\\b"));
+  if (gtHit) {
+    const men = [gtHit[1], gtHit[2]].filter(Boolean)
+      .map(x => canonNum(x.replace(/([ab])$/, c => c.toUpperCase())));
+    const w = men.filter(x => !isJersey(x)).map(x => "#" + x + " isn't on the roster");
+    return { kind: "goodtackle", men, text: raw.trim(), warnings: w, notes: [] };
+  }
+
   /* "13 past 12, through, donut" — one man against one man. Deliberately not
      scored: whether a juke is good or bad is a coaching call, not a stat. */
   const mu = raw.toLowerCase()
@@ -12465,6 +14426,15 @@ function parseLine(text, ctx) {
   const partial = /^\?/.test(bare) || starred;
   raw = raw.replace(/\*+/g, " ");             /* strip them before reading the words */
   let pre = " " + String(raw).toLowerCase().replace(/[,.;!?]/g, " ").replace(/-/g, " ") + " ";
+  /* "the 35 yard line on the left side of midfield" is an exact spot. Pull the
+     side out before the phrase machinery eats it as filler — which is what used
+     to happen, and why a yard number ever had to be guessed at. */
+  let saidSide = null;
+  const sideHit = pre.match(/\b(left|right)\s+side\s+(?:of\s+)?(?:mid ?field|the field)?/);
+  if (sideHit) saidSide = sideHit[1];
+  else if (/\bpast mid ?field\b|\bover mid ?field\b/.test(pre)) saidSide = "opp";
+  pre = pre.replace(/\b(?:on\s+)?the\s+(left|right)\s+side\s+(?:of\s+)?(?:mid ?field|the field)\b/g, " ")
+           .replace(/\b(?:on\s+)?the\s+(left|right)\s+side\b/g, " ");
   PHRASES.forEach(function (x) { pre = pre.replace(x[0], x[1]); });
   const norm = normalizeNumbers(pre);
   const out = { warnings: [] };
@@ -12541,7 +14511,17 @@ function parseLine(text, ctx) {
         /* "...though 40 tried to tackle him right at the 20" — that's where the
            attempt happened, not where the ball finished. */
         if (missedTackle) { missedTackle = false; wantYard = false; continue; }
-        if (+n > half()) w.push("There's no " + n + "-yard line on an " + DB.fieldLen + "-yard field");
+        const FL = (ctx && ctx.fieldLen) || DB.fieldLen;
+        const useSide = saidSide || (ctx && ctx.side) || null;
+        if (useSide) {
+          endN = clampAbs(useSide === "left" ? +n : FL - (+n));
+          if (!saidSide) note.push("You didn't say which side, so I've used the "
+            + useSide + " side — the last one you named");
+          if (isJersey(n)) note.push("Read " + n + " as the yard line, not #" + n
+            + " \u2014 say \u201cnumber " + n + "\u201d if you meant the player");
+          wantYard = false; continue;
+        }
+        if (+n > half()) w.push("There's no " + n + "-yard line on an " + FL + "-yard field");
         /* she has a kid wearing this number, so make the choice visible */
         if (isJersey(n)) note.push("Read " + n + " as the yard line, not #" + n
           + " \u2014 say \u201cnumber " + n + "\u201d if you meant the player");
@@ -12617,7 +14597,11 @@ function parseLine(text, ctx) {
   if (!outcome && repres === "catch" && chain.length > 1) outcome = "down";
   if (!outcome && repres === "drop" && chain.length > 1) outcome = "drop";
   const tackler = tacklers[0] || null;
-  const o = { kind: "play", chain, verbs, sawSnap, snapGrade, partial, startAbs: ctx.startAbs, endAbs: endN,
+  /* "...tackled by 80 at the 10. Beautiful tackle, 80." — the praise rides on
+     the play, so whoever made the stop gets named in the tackles section too. */
+  const praised = new RegExp("(?:really |very |pretty |absolutely )?(?:good|great|nice|beautiful|strong|clean|solid|excellent|awesome)\\s+(?:tackle|tackles|hit|stop|block|shock ?(?:and|n) ?lock|pushback|push back)\\b").test(String(raw).toLowerCase());
+  const o = { kind: "play", side: saidSide === "opp" ? null : saidSide,
+    goodTackles: praised ? tacklers.slice() : [], chain, verbs, sawSnap, snapGrade, partial, startAbs: ctx.startAbs, endAbs: endN,
     outcome, tackler, tacklers, warnings: w, notes: note };
   if (partial) o.warnings.push(starred
     ? "You marked this one \u2014 part of it is missing or may be wrong"
@@ -12749,10 +14733,16 @@ function readDrill(drillId) {
   const kind = d && d.kind ? d.kind : (d && /pass/i.test(d.name) ? "rep" : "play");
   let startAbs = startFor(d), n = 0;
   let style = (d && d.style) || null;
+  /* Which half of the field the spot is in. She says it most of the time and
+     forgets sometimes, so the last one she DID say carries forward until she
+     says a different one — which is exactly how she corrects herself. */
+  let side = (d && d.side) || null;
+  const fieldLen = (d && d.fieldLen) || DB.fieldLen;
   return linesOf(drillId).map(l => {
-    const p = parseLine(l.raw, { kind, startAbs });
+    const p = parseLine(l.raw, { kind, startAbs, side, fieldLen });
     if (p && l.uncertain === "snapper" && !l.edited) p.uncertainSnapper = true;
     if (p && d && d.noSnap) p.noSnap = true;
+    if (p && p.side) side = p.side;              /* remember it for the next one */
     if (p && p.kind === "set") startAbs = p.value;
     if (p && p.kind === "style") style = p.value;
     else if (p) p.style = l.style || style;      /* a line can name its own */
@@ -12991,6 +14981,16 @@ function itemsInWeek(mon) {
   return out;
 }
 const prevWeek = mon => { const w = weeks(), i = w.indexOf(mon); return i >= 0 && i < w.length - 1 ? w[i + 1] : null; };
+/* Everything the boy has done BEFORE this week, all of it, so a week is
+   measured against his own normal rather than against one earlier week that
+   might itself have been unusual. */
+function itemsBefore(mon) {
+  const ids = BASELINE.practices.filter(p => mondayOf(p.date) < mon).map(p => p.id);
+  let out = [];
+  BASELINE.drills.filter(d => ids.includes(d.practiceId)).forEach(d => { out = out.concat(readDrill(d.id)); });
+  return out;
+}
+const hasBefore = mon => BASELINE.practices.some(p => mondayOf(p.date) < mon);
 
 /* ==========================================================================
    AREAS — with gates, because 15 reps a drill moves a percentage around a lot
@@ -12998,12 +14998,10 @@ const prevWeek = mon => { const w = weeks(), i = w.indexOf(mon); return i >= 0 &
    ========================================================================== */
 const MIN_SHOW = 3, MIN_TREND = 6;
 const AREAS = [
-  { key:"snapreached", label:"Snaps that reached him", unit:"%",
-    att:s=>s.snaps, val:s=>pct(s.snaps - s.badSnaps, s.snaps),
-    detail:s=>s.snaps+" snaps, "+s.badSnaps+" never got there", better:"up" },
-  { key:"snapproblems", label:"Snap problems noticed", unit:"",
-    att:s=>s.snaps, val:s=>s.snapsOff,
-    detail:s=>s.snapsOff+" noted in "+s.snaps+" snaps", better:"down" },
+  /* Snap QUALITY used to live here. It is gone on purpose: a snap only gets
+     written down as bad when it was noticed, and Maddie has said she does not
+     reliably catch bad ones — the coaches have her watching tackles, which is
+     the other end of the play. Counts stay, judgements go. */
   { key:"throwing", label:"Throwing", unit:"%",
     att:s=>s.att, val:s=>pct(s.comp,s.att),
     detail:s=>s.comp+"/"+s.att+" completed"+(s.intThrown?", "+s.intThrown+" picked off":""), better:"up" },
@@ -13160,6 +15158,65 @@ function yardTotals(week) {
   return { per, plays, measured, dropped, skipped: Array.from(new Set(skippedDrills)) };
 }
 
+/* ==========================================================================
+   TACKLES WORTH NAMING
+   Coach asked for these. They are NOT a tackle count — Maddie cannot see every
+   tackle and has said so. These are the ones she watched, thought were good,
+   and said out loud. A boy missing from this list has not failed to tackle;
+   he has failed to be looked at while doing it.
+   ========================================================================== */
+function goodTackles(week) {
+  const per = {};
+  const add = (num, text, date, drill) => {
+    (per[num] = per[num] || []).push({ text, date, drill });
+  };
+  BASELINE.drills.forEach(d => {
+    const pr = practiceOf(d.practiceId);
+    if (!pr) return;
+    if (week && mondayOf(pr.date) !== week) return;
+    readDrill(d.id).forEach(r => {
+      const p = r.p;
+      if (!p) return;
+      if (p.kind === "goodtackle") (p.men || []).forEach(m => add(m, p.text, pr.date, d.name));
+      else if (p.goodTackles && p.goodTackles.length)
+        (p.goodTackles).forEach(m => add(m, r.line.raw, pr.date, d.name));
+    });
+  });
+  /* Some of these were written down as notes rather than as plays, before there
+     was a section for them. Same observation, same person, so they belong here. */
+  (BASELINE.coachNotes || []).forEach(c => {
+    if (!c.num || !c.text) return;
+    if (week && mondayOf(c.date) !== week) return;
+    if (!/tackle|hit\b|shock ?(?:and|n) ?lock|pushback|push back|block|brought him down|stop(?:ped)?\b/i.test(c.text)) return;
+    if (!/good|great|nice|beautiful|strong|clean|solid|excellent|awesome|commend/i.test(c.text)) return;
+    add(c.num, c.text + (c.by && c.by !== "Maddie" ? " — " + c.by : ""), c.date, c.during || "");
+  });
+  return per;
+}
+
+function goodTackleCard(week) {
+  const per = goodTackles(week);
+  const nums = Object.keys(per).sort((a, b) => per[b].length - per[a].length
+    || (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
+  return `<div class="card">
+    <h2 style="margin-top:0">Tackles worth naming</h2>
+    <div class="warnbox" style="margin-bottom:12px">
+      <b>This is not a count of tackles.</b> Maddie watches one thing at a time and cannot see
+      every tackle on the field — she has been clear about that. These are the ones she saw,
+      thought were good, and said so about. A boy who is not on this list has not failed to
+      tackle anybody; he was tackling while she was looking somewhere else. Read it as a list
+      of moments, never as a ranking.
+    </div>
+    ${!nums.length ? `<p class="muted">None called out this week.</p>` : nums.map(n => `
+      <h3 style="margin-bottom:2px">#${esc(n)} ${esc(nameOf(n) || "")}
+        <span class="muted" style="font-weight:400">— ${per[n].length}
+        ${per[n].length === 1 ? "moment" : "moments"}</span></h3>
+      ${per[n].map(x => `<div class="mv" style="margin:3px 0">${esc(x.text)}
+        <span class="muted">— ${esc(dateLabel(x.date))}, ${esc(x.drill)}</span></div>`).join("")}
+    `).join("")}
+  </div>`;
+}
+
 function yardageCard(week) {
   const t = yardTotals(week);
   const nums = Object.keys(t.per).filter(n => t.per[n].touches > 0)
@@ -13218,9 +15275,9 @@ function renderCoach() {
     return;
   }
   if (!WEEK || !ws.includes(WEEK)) WEEK = ws[0];
-  const prev = prevWeek(WEEK);
+  const prev = hasBefore(WEEK) ? "before" : null;
   const now = statsFor(itemsInWeek(WEEK), WEEK);
-  const was = prev ? statsFor(itemsInWeek(prev), prev) : {};
+  const was = prev ? statsFor(itemsBefore(WEEK)) : {};
   const nums = Array.from(new Set(Object.keys(now).concat(Object.keys(was))))
     .sort((a, b) => (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
   const pracs = BASELINE.practices.filter(p => mondayOf(p.date) === WEEK);
@@ -13257,7 +15314,7 @@ function renderCoach() {
     <h2 style="margin-bottom:2px">${esc(BASELINE.team)} — week of ${esc(weekLabel(WEEK))}</h2>
     <p class="muted">${pracs.map(p => dateLabel(p.date)).join(" · ")} ·
       ${items.filter(x => x.p && x.p.kind !== "set").length} plays recorded${
-      prev ? " · compared with " + weekLabel(prev) : ""}</p>
+      prev ? " · compared with his season up to this week" : ""}</p>
 
 
     ${(() => {
@@ -13276,10 +15333,12 @@ function renderCoach() {
         ${esc(u.r.a.label.toLowerCase())} ${esc(u.m.txt)}
         <span class="muted">(${esc(u.r.detail)})</span></div>`).join("")
         : `<p class="muted">Nothing slipped far enough on enough reps to call it real.</p>`}`
-      : `<p class="muted">First week in this file — no earlier week to compare against yet.</p>`}
+      : `<p class="muted">First week in this file — nothing earlier to compare against yet.</p>`}
   </div>
 
   ${yardageCard(WEEK)}
+
+  ${goodTackleCard(WEEK)}
 
   ${(() => {
     /* Every coach note lives here and nowhere else, so a season of them stays
@@ -13326,7 +15385,7 @@ function renderCoach() {
             st !== "active" ? ` <span class="tag warn">${esc(st)}</span>` : ""}</td>
           <td>${up ? `<span class="up" title="praised by a coach">${"★".repeat(Math.min(up, 3))}</span>` : ""}</td>
           <td class="muted">${esc(roleOf(s) || "—")}</td>
-          <td class="n">${s.snaps || "—"}${s.badSnaps ? ` <span class="dn">(${s.badSnaps} bad)</span>` : ""}${s.snapsShared ? ` <span class="muted" title="He was on snap duty for feeding drills. Who took which rep was never called out, so the drill's reps are split evenly between the boys named on duty — an estimate, not a count.">+≈${s.snapsShared} shared</span>` : ""}</td>
+          <td class="n">${s.snaps || "—"}${s.snapsShared ? ` <span class="muted" title="He was on snap duty for feeding drills. Who took which rep was never called out, so the drill's reps are split evenly between the boys named on duty — an estimate, not a count.">+≈${s.snapsShared} shared</span>` : ""}</td>
           <td class="n">${s.att ? s.comp + "/" + s.att : "—"}</td>
           <td class="n">${cp}</td>
           <td class="n">${(s.carries + s.rec) || "—"}</td>
@@ -13354,7 +15413,7 @@ function renderCoach() {
         return out;
       })()}
       <div class="scroll"><table>
-        <tr><th>Area</th><th class="n">This week</th><th class="n">${prev ? "Last week" : ""}</th>
+        <tr><th>Area</th><th class="n">This week</th><th class="n">${prev ? "Season so far" : ""}</th>
           <th class="n">${prev ? "Change" : ""}</th><th>From</th></tr>
         ${rows.map(r => { const m = moveWord(r);
           return `<tr><td>${esc(r.a.label)}</td><td class="n"><b>${esc(fmtVal(r))}</b></td>
@@ -13480,12 +15539,14 @@ function renderCoach() {
           Both #5 and #40 catch nearly anything, so <b>"reached him"</b> sits near 100%
           for every snapper and separates nobody.<br><br>`;
       })()}
-        <b>Problems noticed</b> is a count, not a rate, and it is deliberately not shown as a
-        percentage: you remarked on the snaps that looked wrong, so the ones you described are
-        almost all bad ones. Treat these as a <b>floor</b> — at least this many were off.</div>
+        <b>How good the snaps were is not shown, on purpose.</b> A snap only gets written down
+        as bad when somebody noticed it, and Maddie has said plainly that she does not reliably
+        catch bad ones — the coaches have asked her to follow tackles closely, which is the other
+        end of the play. So an absence of problems means she was watching something else, not that
+        the snapping was clean. What IS reliable is who took the snaps and how many, and that is
+        what this table shows.</div>
       <div class="scroll"><table>
-        <tr><th>Snapper</th><th>Snapping to</th><th class="n">Snaps</th><th class="n">Reached him</th>
-        <th class="n">Problems noticed</th><th class="n">Per 10</th></tr>
+        <tr><th>Snapper</th><th>Snapping to</th><th class="n">Snaps</th></tr>
         ${snappers.map(n => { const s = now[n];
           const to = {};
           BASELINE.drills.filter(d => d.kind !== "rep" && pracIds.includes(d.practiceId)).forEach(d => {
@@ -13500,10 +15561,16 @@ function renderCoach() {
           return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}</td>
             <td class="muted">${toList}</td>
             <td class="n">${s.snaps}</td>
-            <td class="n">${Math.round((s.snaps - s.badSnaps) / s.snaps * 100)}%</td>
-            <td class="n"><b>${s.snapsOff}</b></td>
-            <td class="n">${(s.snapsOff / s.snaps * 10).toFixed(1)}</td></tr>`; }).join("")}
+            </tr>`; }).join("")}
       </table></div>
+      <div class="warnbox noprint" style="margin:10px 0">
+        <b>Do not read the snap-quality columns as a ranking.</b> A snap only gets written down as bad
+        when it was noticed, and Maddie has said plainly that she does not reliably catch bad snaps —
+        the coaches have asked her to follow tackles closely, which takes her attention away from the
+        exchange. So a snapper with no problems recorded may simply have been snapping while she was
+        watching something else. The <b>number of snaps</b> each boy has taken is solid; the quality
+        figures are not, and nobody should be moved on or off snap duty because of them.
+      </div>
       <p class="muted" style="margin-top:8px">This ordering comes from the counts above and
         nothing else — no one's opinion of anyone is recorded here.</p>
       <p class="muted" style="margin-top:8px">Say one word about how each snap arrived —
@@ -13642,9 +15709,9 @@ const tag = n => "#" + n + (surname(n) ? " " + surname(n) : "");
 
 function debriefText(week) {
   const W = week || WEEK || weeks()[0];
-  const prev = prevWeek(W);
+  const prev = hasBefore(W) ? "before" : null;
   const now = statsFor(itemsInWeek(W), W);
-  const was = prev ? statsFor(itemsInWeek(prev), prev) : {};
+  const was = prev ? statsFor(itemsBefore(W)) : {};
   const pracs = BASELINE.practices.filter(p => mondayOf(p.date) === W);
   const pracIds = pracs.map(p => p.id);
   const items = itemsInWeek(W);
@@ -13679,23 +15746,11 @@ function debriefText(week) {
         + worst + " (" + Math.round(rate(worst) * 100) + "%). Biggest gap we have.");
   }
 
-  // snappers, if we have graded snaps
-  const snap = nums.filter(n => now[n].snaps >= 5 || now[n].snapsGraded >= 3)
-    .sort((a, b) => (now[b].snaps - now[b].snapsOff) / now[b].snaps - (now[a].snaps - now[a].snapsOff) / now[a].snaps);
+  /* Who snapped and how often. Never how well — see the snapper table for why. */
+  const snap = nums.filter(n => now[n].snaps >= 5).sort((a, b) => now[b].snaps - now[a].snaps);
   if (snap.length >= 2) {
-    /* Whether these are grades or just complaints is a question about how she
-       recorded the week, not about one player. If she called any snap good that
-       week, she was grading both ways — so a man who went 0 for 5 really did.
-       If nothing was ever called good, these are flagged problems, not a rate. */
-    const twoSided = nums.some(n => now[n].snapsGraded > now[n].snapsOff);
-    const graded = twoSided ? snap.filter(n => now[n].snapsGraded >= 3) : [];
-    if (graded.length) {
-      found.push("Snapping, of the ones I could judge: " + graded.map(n => tag(n) + " "
-        + (now[n].snapsGraded - now[n].snapsOff) + " of " + now[n].snapsGraded + " on target").join(" · ") + ".");
-    } else {
-      found.push("Snapping: " + snap.slice(0, 3).map(n => tag(n) + " " + now[n].snaps + " snaps"
-        + (now[n].snapsOff ? ", " + now[n].snapsOff + " I flagged" : "")).join(" · ") + ".");
-    }
+    found.push("Snapping this week: " + snap.slice(0, 4)
+      .map(n => tag(n) + " " + now[n].snaps).join(" · ") + ".");
   }
 
   // anyone with a clean sheet on real volume
@@ -13834,7 +15889,8 @@ function sendCorrections() {
 function renderGame() {
   const gs = BASELINE.games || [];
   if (!gs.length) { $("#gameArea").innerHTML = "<p class=\"muted\">No games recorded yet.</p>"; return; }
-  $("#gameArea").innerHTML = gs.map(g => {
+  /* newest game first — a coach opening this wants last night, not August */
+  $("#gameArea").innerHTML = gs.slice().sort((a, z) => (z.date || "").localeCompare(a.date || "")).map(g => {
     const pct = (c, d) => (c + d) ? Math.round(c / (c + d) * 100) + "%" : "—";
     const NAME = {}; g.map.forEach(m => NAME[m[0]] = m[1]);
     const PRAC = {}; g.map.forEach(m => PRAC[m[0]] = m[2]);
