@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-25d",
+  "version": "2026-09-25f",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -13884,7 +13884,8 @@ const BASELINE = {
           ]
         ],
         "missing": "Roughly thirty SMA offensive snaps were called and nine produced a number solid enough to use. Most of the rest were incomplete deep passes, where there is no gain to record — which is itself the story of the night. One more is deliberately left out: the pass to Ash Vrielink that he carried towards the 48. The recording says the next down was fourth and one, which cannot be true if he gained that much, so the two accounts contradict each other and neither is used."
-      }
+      },
+      "takeaways": []
     },
     {
       "id": "g0904",
@@ -14312,6 +14313,23 @@ const BASELINE = {
           "88",
           "Marish"
         ]
+      ],
+      "takeaways": [
+        [
+          "Raine Marsh",
+          "interception",
+          "Stepped in front of a pass and took it back for a touchdown."
+        ],
+        [
+          "Ash Vrielink",
+          "interception",
+          "Caught at the 40 and returned to the 50, setting up a score."
+        ],
+        [
+          "Cooper Clark",
+          "fumble recovery",
+          "Recovered a Mustang fumble."
+        ]
       ]
     },
     {
@@ -14701,7 +14719,19 @@ const BASELINE = {
           "—"
         ]
       ],
-      "maddie": "Her read while it was tied: “The issue is not in our capability. The issue was in our confidence. This is a head game and we're losing the head game.” And the tactical note worth passing on: “These guys' strategy is to tackle us or push us out of bounds. We need to get better at defending against that.”"
+      "maddie": "Her read while it was tied: “The issue is not in our capability. The issue was in our confidence. This is a head game and we're losing the head game.” And the tactical note worth passing on: “These guys' strategy is to tackle us or push us out of bounds. We need to get better at defending against that.”",
+      "takeaways": [
+        [
+          "Kitt Phelan",
+          "fumble recovery",
+          "Two loose balls in the fourth quarter alone."
+        ],
+        [
+          "Kitt Phelan",
+          "fumble recovery",
+          "Every dropped ball in the game came back to him."
+        ]
+      ]
     },
     {
       "id": "g0918",
@@ -15192,7 +15222,44 @@ const BASELINE = {
           "—"
         ]
       ],
-      "maddie": "“I was worried I wasn't going to get to see any good football. And look at this, a comeback for my favourite team.” Also worth passing on: she noted #20 give up on a chase in the first quarter while five yards behind — the only effort note she made all night."
+      "maddie": "“I was worried I wasn't going to get to see any good football. And look at this, a comeback for my favourite team.” Also worth passing on: she noted #20 give up on a chase in the first quarter while five yards behind — the only effort note she made all night.",
+      "takeaways": [
+        [
+          "Jacob Becker",
+          "forced fumble",
+          "Wrapped him up inside the SMA 15 with two minutes left and knocked it loose."
+        ],
+        [
+          "Alex Houston",
+          "fumble recovery",
+          "Fell on a loose snap in the second half."
+        ],
+        [
+          "Alex Houston",
+          "kick recovery",
+          "Shared the recovery of a short Runge kick in the third."
+        ],
+        [
+          "Raine Marsh",
+          "kick recovery",
+          "Recovered a Runge kick at the SMA 38 in the first quarter."
+        ],
+        [
+          "Raine Marsh",
+          "fumble recovery",
+          "Fell on a loose snap in the fourth to kill a disaster."
+        ],
+        [
+          "Landon Douglass",
+          "fumble recovery",
+          "Recovered a loose ball on a Runge drive."
+        ],
+        [
+          "Jacob Becker",
+          "kick recovery",
+          "Caught a Runge kick and took it out to about the 47."
+        ]
+      ]
     }
   ]
 };
@@ -16457,12 +16524,9 @@ function boardTable(title, blurb, rows) {
 
 function renderBoard() {
   const el = $("#boardArea");
-  const all = [];
-  BASELINE.drills.forEach(d => all.push(...readDrill(d.id)));
-  const S = statsFor(all);
   const gs = gameScores();
-  const nm = n => "#" + n + " " + (nameOf(n) || "");
-  const top = (arr, k) => arr.slice(0, k || 6);
+  const top = (arr, k) => arr.slice(0, k || 8);
+  const games = BASELINE.games || [];
 
   /* touchdowns — the thing they asked for first */
   const tdRows = top(Object.keys(gs.td).sort((a, b) => gs.td[b] - gs.td[a])
@@ -16473,48 +16537,41 @@ function renderBoard() {
       return [who, gs.td[who], detail];
     }), 8);
 
-  /* catching — ratio, not percentage */
-  const catchRows = top(Object.keys(S).filter(n => S[n].targets >= 10)
-    .sort((a, b) => S[b].catches - S[a].catches)
-    .map(n => [nm(n), S[n].catches, "caught " + S[n].catches + " of " + S[n].targets + " thrown at him"]), 8);
-
-  /* tackles */
-  const tackleRows = top(Object.keys(S).filter(n => S[n].tackles > 0)
-    .sort((a, b) => S[b].tackles - S[a].tackles)
-    .map(n => [nm(n), S[n].tackles, S[n].tackles + " stops recorded"]), 8);
-
-  /* snaps — the unglamorous job nobody counts */
-  const snapRows = top(Object.keys(S).filter(n => S[n].snaps > 0)
-    .sort((a, b) => S[b].snaps - S[a].snaps)
-    .map(n => [nm(n), S[n].snaps, S[n].snaps + " balls put in play"]), 6);
-
   /* kicking */
   const kickRows = Object.keys(gs.kick).sort((a, b) => gs.kick[b].made - gs.kick[a].made)
     .map(k => [k, gs.kick[k].made + " of " + gs.kick[k].tried, "extra points in games"]);
 
-  /* carrying */
-  const carryRows = top(Object.keys(S).filter(n => (S[n].carries + S[n].rec) > 0)
-    .sort((a, b) => (S[b].carries + S[b].rec) - (S[a].carries + S[a].rec))
-    .map(n => [nm(n), S[n].carries + S[n].rec, S[n].carries + " carries, " + S[n].rec + " catches with the ball live"]), 6);
+  /* takeaways and recoveries, from games only */
+  const take = {}, takeHow = {};
+  games.forEach(g => (g.takeaways || []).forEach(t => {
+    take[t[0]] = (take[t[0]] || 0) + 1;
+    (takeHow[t[0]] = takeHow[t[0]] || []).push(t[1]);
+  }));
+  const takeRows = top(Object.keys(take).sort((a, b) => take[b] - take[a]).map(w => {
+    const ways = {}; (takeHow[w] || []).forEach(x => ways[x] = (ways[x] || 0) + 1);
+    return [w, take[w], Object.keys(ways).map(x => ways[x] + " " + x).join(", ")];
+  }));
 
-  /* takeaways */
-  const takeRows = Object.keys(S).filter(n => S[n].ints > 0)
-    .sort((a, b) => S[b].ints - S[a].ints)
-    .map(n => [nm(n), S[n].ints, "ball taken off the other team"]);
+  /* measured yards, games only */
+  const yds = {}, ydPlays = {};
+  games.forEach(g => ((g.yardage && g.yardage.plays) || []).forEach(r => {
+    yds[r[0]] = (yds[r[0]] || 0) + r[1]; ydPlays[r[0]] = (ydPlays[r[0]] || 0) + 1;
+  }));
+  const ydRows = top(Object.keys(yds).filter(w => w !== "\u2014")
+    .sort((a, b) => yds[b] - yds[a])
+    .map(w => [w, (yds[w] > 0 ? "+" : "") + yds[w],
+      "across " + ydPlays[w] + " plays we could measure \u2014 a sample, not his total"]));
 
   el.innerHTML = `
     <div class="card" style="background:var(--brand);color:#fff">
       <h2 style="margin:0;color:#fff">The board</h2>
-      <p style="margin:6px 0 0;opacity:.92">Season so far, across every practice and all
-        ${(BASELINE.games || []).length} games. Counting stats and ratios — a boy who catches 136 of 159
-        is ahead of one who caught 2 of 2, because he did more.</p>
+      <p style="margin:6px 0 0;opacity:.92">Games only — all ${games.length} of them. Nothing from practice
+        is on this page. Counting stats and ratios, never percentages.</p>
     </div>
 
-    ${boardTable("Touchdowns", "In games only. This is the one everybody wanted.", tdRows)}
-    ${boardTable("Catching", "Ranked by balls caught, not by percentage.", catchRows)}
-    ${boardTable("Touches", "Carries plus catches with the ball live.", carryRows)}
-    ${boardTable("Stops", "Tackles recorded. Not every tackle was seen — see the coaches' page.", tackleRows)}
-    ${boardTable("Snaps", "Every play starts here and nobody ever counts it.", snapRows)}
+    ${boardTable("Touchdowns", "The one everybody wanted.", tdRows)}
+    ${boardTable("Takeaways and recoveries", "Balls won back off the other team, and loose balls fallen on.", takeRows)}
+    ${boardTable("Yards", "Only the carries and catches with a yard number solid enough to trust. Nobody's real total is this low.", ydRows)}
     ${(() => {
       /* A blocked kick is a blocking problem, not a kicking one. Saying "15 of 21"
          without that is unfair to the only specialist on the team. */
@@ -16527,7 +16584,6 @@ function renderBoard() {
         + (blocked ? " Of the ones that did not go through, " + blocked + " were BLOCKED and only "
           + other + " missed — that is the line in front of him, not the kicker." : ""), kickRows);
     })()}
-    ${boardTable("Takeaways", "Interceptions.", takeRows)}
   `;
 }
 
