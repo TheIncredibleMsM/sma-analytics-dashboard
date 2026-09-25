@@ -87,13 +87,15 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
   <button class="gear" id="btnMore">⚙</button>
 </header>
 <main>
-  <section class="view on" id="v-coach"><div id="coachArea"></div></section>
+  <section class="view on" id="v-board"><div id="boardArea"></div></section>
+  <section class="view" id="v-coach"><div id="coachArea"></div></section>
   <section class="view" id="v-plays"><div id="playsArea"></div></section>
   <section class="view" id="v-game"><div id="gameArea"></div></section>
   <section class="view" id="v-more"><div id="moreArea"></div></section>
 </main>
 <nav class="tabs">
-  <button data-view="coach" class="on"><span class="ic">▲</span>For coaches</button>
+  <button data-view="board" class="on"><span class="ic">◆</span>The board</button>
+  <button data-view="coach"><span class="ic">▲</span>For coaches</button>
   <button data-view="plays"><span class="ic">≡</span>Every play</button>
   <button data-view="game"><span class="ic">★</span>Games</button>
 </nav>
@@ -105,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-25a",
+  "version": "2026-09-25c",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -13654,7 +13656,11 @@ const BASELINE = {
           "1st",
           "Fredericksburg",
           "Stewart runs it in. Two Bears got hands on him and neither brought him down. Point after no good.",
-          "0–6"
+          "0–6",
+          "Cooper Dailey",
+          "rush",
+          "Siwoo Ahn",
+          "blocked"
         ],
         [
           "1st",
@@ -14041,37 +14047,61 @@ const BASELINE = {
           "1st",
           "SMA",
           "Mason snapped, Major handed to Cooper Dailey, and he went in. Siwoo's kick was blocked.",
-          "6–0"
+          "6–0",
+          "Cooper Dailey",
+          "rush",
+          "Siwoo Ahn",
+          "blocked"
         ],
         [
           "1st",
           "SMA",
           "Raine Marsh stepped in front of a Mustang pass and took it back the other way. Perfect kick from Siwoo.",
-          "14–0"
+          "14–0",
+          "Raine Marsh",
+          "interception return",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "1st",
           "SMA",
           "Mason to Major to Raine Marsh, who did everything in his power to get in — and did. Kick good.",
-          "22–0"
+          "22–0",
+          "Raine Marsh",
+          "catch",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "1st",
           "SMA",
           "Cooper Dailey rammed through several men into the end zone with 48 seconds left in the quarter. A flag, but it stood. Kick good.",
-          "30–0"
+          "30–0",
+          "Cooper Dailey",
+          "rush",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "2nd",
           "SMA",
           "Ash Vrielink intercepted at the 40 and ran it to the 50; Alex Houston then ran it the rest of the way in. Kick wide.",
-          "36–0"
+          "36–0",
+          "Alex Houston",
+          "rush",
+          "Siwoo Ahn",
+          "wide"
         ],
         [
           "2nd",
           "SMA",
           "Touchdown to David Followell. Kick good.",
-          "44–0"
+          "44–0",
+          "David Followell",
+          "catch",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "2nd",
@@ -14083,7 +14113,11 @@ const BASELINE = {
           "2nd",
           "SMA",
           "Mason snapped to Major and got it straight back — and took it in himself. Great kick from Siwoo.",
-          "52–8"
+          "52–8",
+          "Mason Litt",
+          "rush",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "2nd",
@@ -14095,7 +14129,11 @@ const BASELINE = {
           "2nd",
           "SMA",
           "Dom snapping now. Major to Raine Marsh, caught in the end zone. Cooper Dailey ran in the extra point.",
-          "59–14"
+          "59–14",
+          "Raine Marsh",
+          "catch",
+          "Cooper Dailey",
+          "run good"
         ]
       ],
       "worked": [
@@ -14437,7 +14475,11 @@ const BASELINE = {
           "1st",
           "SMA",
           "Cooper Dailey took it in on the opening drive. He was pushed out at the pylon and the call went SMA's way because the ball crossed before he did. Kick blocked.",
-          "6–0"
+          "6–0",
+          "Cooper Dailey",
+          "rush",
+          "Siwoo Ahn",
+          "blocked"
         ],
         [
           "1st",
@@ -14449,7 +14491,11 @@ const BASELINE = {
           "2nd",
           "SMA",
           "Major to Raine Marsh for the touchdown. Good kick from Siwoo.",
-          "14–8"
+          "14–8",
+          "Raine Marsh",
+          "catch",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "2nd",
@@ -14467,19 +14513,31 @@ const BASELINE = {
           "3rd",
           "SMA",
           "Aiden snapped, Major found Raine Marsh again. Siwoo's kick was good.",
-          "22–20"
+          "22–20",
+          "Raine Marsh",
+          "catch",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "4th",
           "SMA",
           "David Followell snapping now. Handoff to Raine Marsh, who ran it in clean. Kick blocked.",
-          "28–20"
+          "28–20",
+          "Raine Marsh",
+          "rush",
+          "Siwoo Ahn",
+          "blocked"
         ],
         [
           "4th",
           "SMA",
           "Major to Raine Marsh, fumbled at the goal line and recovered by a Bear a hash short — then punched in on the next play. Siwoo good.",
-          "36–20"
+          "36–20",
+          "",
+          "rush",
+          "Siwoo Ahn",
+          "good"
         ]
       ],
       "worked": [
@@ -14818,19 +14876,31 @@ const BASELINE = {
           "1st",
           "SMA",
           "Aiden snapped, Major found Jax Bishop in the end zone. Siwoo good.",
-          "8–12"
+          "8–12",
+          "Jax Bishop",
+          "catch",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "1st",
           "SMA",
           "Aiden to David Followell to Major, who ran it in himself. Siwoo good.",
-          "16–12"
+          "16–12",
+          "Major Howard",
+          "rush",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "1st",
           "SMA",
           "Aiden to Major to Raine Marsh, who ran it in. Perfect kick from Siwoo.",
-          "24–12"
+          "24–12",
+          "Raine Marsh",
+          "rush",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "1st",
@@ -14848,7 +14918,11 @@ const BASELINE = {
           "2nd",
           "SMA",
           "Fourth down. Aiden to Major, who ran it in. Siwoo's kick was blocked.",
-          "30–24"
+          "30–24",
+          "Major Howard",
+          "rush",
+          "Siwoo Ahn",
+          "blocked"
         ],
         [
           "2nd",
@@ -14866,13 +14940,21 @@ const BASELINE = {
           "2nd",
           "SMA",
           "Aiden to Major to Alex Houston, who took it in. Siwoo good — level at the half.",
-          "38–38"
+          "38–38",
+          "Alex Houston",
+          "catch",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "3rd",
           "SMA",
           "Touchdown out of the break — Maddie was writing up the first half and missed the build-up. Siwoo good.",
-          "46–38"
+          "46–38",
+          "",
+          "rush",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "3rd",
@@ -14884,7 +14966,11 @@ const BASELINE = {
           "3rd",
           "SMA",
           "Aiden to Major to Raine Marsh, caught in the end zone. Siwoo good.",
-          "54–46"
+          "54–46",
+          "Raine Marsh",
+          "catch",
+          "Siwoo Ahn",
+          "good"
         ],
         [
           "3rd",
@@ -14896,13 +14982,21 @@ const BASELINE = {
           "4th",
           "SMA",
           "Aiden snapped and it worked its way to Raine Marsh for the score. Major ran in one extra point.",
-          "61–52"
+          "61–52",
+          "Raine Marsh",
+          "rush",
+          "Major Howard",
+          "run good"
         ],
         [
           "4th",
           "SMA",
           "Aiden snapped straight back to David Followell, who ran it in. Siwoo good.",
-          "69–52"
+          "69–52",
+          "David Followell",
+          "rush",
+          "Siwoo Ahn",
+          "good"
         ]
       ],
       "worked": [
@@ -16151,7 +16245,7 @@ function moveWord(r) {
 /* ==========================================================================
    VIEWS
    ========================================================================== */
-let VIEW = "coach", WEEK = null, OPENDRILL = null;
+let VIEW = "board", WEEK = null, OPENDRILL = null;
 function go(v) {
   VIEW = v;
   $$(".view").forEach(s => s.classList.toggle("on", s.id === "v-" + v));
@@ -16165,7 +16259,7 @@ function render() {
     ? BASELINE.practices.length + " practices · " + LINES().length + " plays"
       + (n ? " · " + n + " correction" + (n === 1 ? "" : "s") : "")
     : "waiting for your first practice";
-  ({ coach: renderCoach, plays: renderPlays, game: renderGame, more: renderMore }[VIEW] || renderCoach)();
+  ({ board: renderBoard, coach: renderCoach, plays: renderPlays, game: renderGame, more: renderMore }[VIEW] || renderBoard)();
 }
 
 function editBanner() {
@@ -16324,6 +16418,106 @@ function yardageCard(week) {
         an arithmetic accident rather than football.` : ""}
     </div>
   </div>`;
+}
+
+/* ==========================================================================
+   THE BOARD
+   The players asked for this and they were right: they already know how the
+   touchdowns happened. What nobody knew was who has the most of anything.
+   Counting stats and ratios, never percentages — a boy who catches 136 of 159
+   should not be ranked below one who caught 2 of 2.
+   ========================================================================== */
+function gameScores() {
+  const td = {}, kick = {}, how = {};
+  (BASELINE.games || []).forEach(g => (g.scoring || []).forEach(r => {
+    if (r[4]) { td[r[4]] = (td[r[4]] || 0) + 1;
+      (how[r[4]] = how[r[4]] || []).push(r[5] || "score"); }
+    if (r[6]) { const k = kick[r[6]] = kick[r[6]] || { made: 0, tried: 0 };
+      k.tried++; if (/good/.test(r[7] || "")) k.made++; }
+  }));
+  return { td, kick, how };
+}
+
+function boardRow(rank, who, big, small) {
+  const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : "";
+  return `<tr><td style="width:34px;text-align:center;font-size:17px">${medal || `<span class="muted">${rank}</span>`}</td>
+    <td><b>${esc(who)}</b></td>
+    <td class="n" style="font-size:19px;font-weight:800">${esc(String(big))}</td>
+    <td class="muted">${esc(small || "")}</td></tr>`;
+}
+
+function boardTable(title, blurb, rows) {
+  if (!rows.length) return "";
+  return `<div class="card">
+    <h2 style="margin-top:0">${esc(title)}</h2>
+    ${blurb ? `<p class="muted" style="margin-top:-4px">${esc(blurb)}</p>` : ""}
+    <table>${rows.map((r, k) => boardRow(k + 1, r[0], r[1], r[2])).join("")}</table>
+  </div>`;
+}
+
+function renderBoard() {
+  const el = $("#boardArea");
+  const all = [];
+  BASELINE.drills.forEach(d => all.push(...readDrill(d.id)));
+  const S = statsFor(all);
+  const gs = gameScores();
+  const nm = n => "#" + n + " " + (nameOf(n) || "");
+  const top = (arr, k) => arr.slice(0, k || 6);
+
+  /* touchdowns — the thing they asked for first */
+  const tdRows = top(Object.keys(gs.td).sort((a, b) => gs.td[b] - gs.td[a])
+    .map(who => {
+      const ways = {};
+      (gs.how[who] || []).forEach(w => ways[w] = (ways[w] || 0) + 1);
+      const detail = Object.keys(ways).map(w => ways[w] + " " + w).join(", ");
+      return [who, gs.td[who], detail];
+    }), 8);
+
+  /* catching — ratio, not percentage */
+  const catchRows = top(Object.keys(S).filter(n => S[n].targets >= 10)
+    .sort((a, b) => S[b].catches - S[a].catches)
+    .map(n => [nm(n), S[n].catches, "caught " + S[n].catches + " of " + S[n].targets + " thrown at him"]), 8);
+
+  /* tackles */
+  const tackleRows = top(Object.keys(S).filter(n => S[n].tackles > 0)
+    .sort((a, b) => S[b].tackles - S[a].tackles)
+    .map(n => [nm(n), S[n].tackles, S[n].tackles + " stops recorded"]), 8);
+
+  /* snaps — the unglamorous job nobody counts */
+  const snapRows = top(Object.keys(S).filter(n => S[n].snaps > 0)
+    .sort((a, b) => S[b].snaps - S[a].snaps)
+    .map(n => [nm(n), S[n].snaps, S[n].snaps + " balls put in play"]), 6);
+
+  /* kicking */
+  const kickRows = Object.keys(gs.kick).sort((a, b) => gs.kick[b].made - gs.kick[a].made)
+    .map(k => [k, gs.kick[k].made + " of " + gs.kick[k].tried, "extra points in games"]);
+
+  /* carrying */
+  const carryRows = top(Object.keys(S).filter(n => (S[n].carries + S[n].rec) > 0)
+    .sort((a, b) => (S[b].carries + S[b].rec) - (S[a].carries + S[a].rec))
+    .map(n => [nm(n), S[n].carries + S[n].rec, S[n].carries + " carries, " + S[n].rec + " catches with the ball live"]), 6);
+
+  /* takeaways */
+  const takeRows = Object.keys(S).filter(n => S[n].ints > 0)
+    .sort((a, b) => S[b].ints - S[a].ints)
+    .map(n => [nm(n), S[n].ints, "ball taken off the other team"]);
+
+  el.innerHTML = `
+    <div class="card" style="background:var(--brand);color:#fff">
+      <h2 style="margin:0;color:#fff">The board</h2>
+      <p style="margin:6px 0 0;opacity:.92">Season so far, across every practice and all
+        ${(BASELINE.games || []).length} games. Counting stats and ratios — a boy who catches 136 of 159
+        is ahead of one who caught 2 of 2, because he did more.</p>
+    </div>
+
+    ${boardTable("Touchdowns", "In games only. This is the one everybody wanted.", tdRows)}
+    ${boardTable("Catching", "Ranked by balls caught, not by percentage.", catchRows)}
+    ${boardTable("Touches", "Carries plus catches with the ball live.", carryRows)}
+    ${boardTable("Stops", "Tackles recorded. Not every tackle was seen — see the coaches' page.", tackleRows)}
+    ${boardTable("Snaps", "Every play starts here and nobody ever counts it.", snapRows)}
+    ${boardTable("Kicking", "Extra points in games.", kickRows)}
+    ${boardTable("Takeaways", "Interceptions.", takeRows)}
+  `;
 }
 
 function renderCoach() {
