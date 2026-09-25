@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-25c",
+  "version": "2026-09-25d",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -16515,7 +16515,18 @@ function renderBoard() {
     ${boardTable("Touches", "Carries plus catches with the ball live.", carryRows)}
     ${boardTable("Stops", "Tackles recorded. Not every tackle was seen — see the coaches' page.", tackleRows)}
     ${boardTable("Snaps", "Every play starts here and nobody ever counts it.", snapRows)}
-    ${boardTable("Kicking", "Extra points in games.", kickRows)}
+    ${(() => {
+      /* A blocked kick is a blocking problem, not a kicking one. Saying "15 of 21"
+         without that is unfair to the only specialist on the team. */
+      let blocked = 0, other = 0;
+      (BASELINE.games || []).forEach(g => (g.scoring || []).forEach(r => {
+        if (!r[6] || /good/.test(r[7] || "")) return;
+        if (/block/.test(r[7] || "")) blocked++; else other++;
+      }));
+      return boardTable("Kicking", "Extra points in games."
+        + (blocked ? " Of the ones that did not go through, " + blocked + " were BLOCKED and only "
+          + other + " missed — that is the line in front of him, not the kicker." : ""), kickRows);
+    })()}
     ${boardTable("Takeaways", "Interceptions.", takeRows)}
   `;
 }
