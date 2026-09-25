@@ -105,7 +105,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-21b",
+  "version": "2026-09-25a",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -15066,7 +15066,7 @@ const BASELINE = {
             "A sequence in the third lost roughly twenty yards to compounding flags — offside on Runge, holding on SMA, and an unsportsmanlike call."
           ]
         ],
-        "missing": "The touchdowns and most of the middle-drive carries. Both teams scored seventeen times between them and the box was loud; Maddie corrected her own yard numbers out loud several times, so anything she revised more than once is left out rather than picked between."
+        "missing": "Everything not listed above — which is most of the game. Raine Marsh alone carried or caught on far more plays than the five measured here; his two touchdowns are not in the figure at all, because the recording gives the score without a start and a finish. Both teams scored seventeen times between them and the box was loud. Treat these rows as evidence that a player was productive, never as a count of how productive."
       },
       "opponentPlayers": [
         [
@@ -16296,7 +16296,8 @@ function yardageCard(week) {
       that ends behind the start shows as a loss.</p>
 
     <div class="scroll"><table>
-      <tr><th>Player</th><th class="n">Touches</th><th class="n">Yards</th>
+      <tr><th>Player</th><th class="n">Touches<br><span class="muted" style="font-weight:400">measured</span></th>
+          <th class="n">Yards<br><span class="muted" style="font-weight:400">on those</span></th>
           <th class="n">Per touch</th><th class="n">Best</th><th class="n">Worst</th></tr>
       ${nums.map(n => { const s = t.per[n];
         return `<tr><td>#${esc(n)} ${esc(nameOf(n) || "")}</td>
@@ -16991,21 +16992,28 @@ function renderGame() {
       const carried = Y.plays.reduce((a, r) => a + r[1], 0);
       return `<div class="card">
       <h3 style="margin-top:0">Yardage</h3>
+      <div class="warnbox" style="margin-bottom:10px">
+        <b>These are not game totals. They are a sample.</b> Only the plays where the recording gives a
+        yard number that can be trusted are in here — every other carry and catch is missing, including
+        all of the touchdowns. A player almost certainly gained a great deal more than the figure beside
+        his name. Read a row as “here are some of his plays”, never as “here is his game.”
+      </div>
       <p class="muted">${esc(Y.note)}</p>
 
       <div class="scroll"><table>
-        <tr><th>Player</th><th class="n">Plays</th><th class="n">Yards</th>
+        <tr><th>Player</th><th class="n">Plays<br><span class="muted" style="font-weight:400">measured</span></th>
+            <th class="n">Yards<br><span class="muted" style="font-weight:400">on those plays</span></th>
             <th class="n">Per play</th><th class="n">Best</th></tr>
         ${who.map(w => { const t = tot[w];
           return `<tr><td>${esc(w)}</td><td class="n">${t.n}</td>
             <td class="n"><b>${sign(t.y)}</b></td>
             <td class="n">${Math.round(t.y / t.n * 10) / 10}</td>
             <td class="n">${sign(t.best)}</td></tr>`; }).join("")}
-        <tr><td><b>Offensive plays</b></td><td class="n"><b>${Y.plays.length}</b></td>
+        <tr><td><b>All measured plays</b></td><td class="n"><b>${Y.plays.length}</b></td>
             <td class="n"><b>${sign(carried)}</b></td><td class="n"></td><td class="n"></td></tr>
       </table></div>
 
-      <h3>Every one of them</h3>
+      <h3>The plays these came from</h3>
       ${Y.plays.slice().sort((a, z) => z[1] - a[1]).map(r =>
         `<div class="mv" style="margin:3px 0"><b>${sign(r[1])}</b> &nbsp;${esc(r[0])}
           <span class="muted">— ${esc(r[2])}</span></div>`).join("")}
