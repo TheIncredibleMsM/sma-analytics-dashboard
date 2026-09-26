@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-25m",
+  "version": "2026-09-25n",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -17816,6 +17816,21 @@ function renderBoard() {
     ${boardTable("Snaps", "Every play starts here and nobody ever counts it.", snapRows)}
     ${boardTable("Takeaways and recoveries", "Balls won back off the other team, and loose balls fallen on.", takeRows)}
     ${boardTable("Yards", "Only the carries and catches with a yard number solid enough to trust. Nobody's real total is this low.", ydRows)}
+    <div class="card" style="border-left:4px solid var(--warn)">
+      <h3 style="margin:0 0 6px">Why the yards are a sample</h3>
+      <p style="margin:0 0 8px">Every other number on this page is a count of something that
+      either happened or didn't. Yards are different: a gain needs to know where the ball
+      <i>started</i>, and for the first four games of the season that was not recorded.</p>
+      <p style="margin:0 0 8px">We can estimate it by carrying the ball forward from the previous
+      play. We tried. On the plays where the ball actually moved, that method produces a
+      <b>backwards</b> result 26% of the time &mdash; and real football goes backwards about
+      10% of the time. So roughly half of those are simply wrong, and there is no way to tell
+      which half. Publishing them would put numbers on this page that a coach could disprove
+      from memory, so they are not here.</p>
+      <p style="margin:0">From the Runge game onward the down and distance is being called into
+      the recording before each snap. Two of those in a row give an exact gain with no field
+      position involved at all, so this section fills in from here forward rather than backward.</p>
+    </div>
     ${(() => {
       /* A blocked kick is a blocking problem, not a kicking one. Saying "15 of 21"
          without that is unfair to the only specialist on the team. */
