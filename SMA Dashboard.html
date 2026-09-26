@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-25k",
+  "version": "2026-09-25l",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -16905,7 +16905,7 @@ function parseLine(text, ctx) {
     return o;
   }
   if (endN == null && gainN != null) endN = clampAbs(ctx.startAbs + gainN);
-  if (outcome === "touchdown") endN = DB.fieldLen;
+  if (outcome === "touchdown") endN = (ctx && ctx.fieldLen) || DB.fieldLen;
   if (["incomplete", "drop", "int"].includes(outcome)) endN = null;
   /* You told me where it ended up. That's a whole play — I don't need a verb too. */
   if (recovered && (!outcome || outcome === "drop")) outcome = "fumble";
@@ -16972,9 +16972,17 @@ function readTally(words) {
   return { kind: "tally", who, counts, warnings: w, notes: [] };
 }
 
+/* A gain needs two points. We only have two when the ball was tracked from the
+   previous play — which is true in games and moving-ball drills, where Maddie
+   says where the ball ended up and only names a start when it moved somewhere
+   she didn't just say. In a static rep drill the ball resets every rep, so the
+   distance down the field is not a gain and gets no number. */
 function playYards(p) {
-  if (!p || p.kind !== "play" || p.endAbs == null || p.startAbs == null) return null;
-  if (["incomplete", "drop", "int"].includes(p.outcome)) return null;
+  if (!p || p.kind !== "play") return null;
+  if (!p.chained) return null;                 /* rep drill, or the chain was broken */
+  if (["incomplete", "drop"].includes(p.outcome)) return 0;   /* ball did not move */
+  if (p.outcome === "int") return null;        /* possession changed */
+  if (p.endAbs == null || p.startAbs == null) return null;
   return p.endAbs - p.startAbs;
 }
 function say(p) {
@@ -17058,12 +17066,50 @@ function readDrill(drillId) {
      says a different one — which is exactly how she corrects herself. */
   let side = (d && d.side) || null;
   const fieldLen = (d && d.fieldLen) || DB.fieldLen;
+  /* Does the ball advance from play to play here? In a game and in a moving-ball
+     drill it does. In Pat-N-Go, 4x4 and the other rep drills it goes back to the
+     same spot every time, so there is nothing to chain. */
+  const chains = !!(d && (d.isGame || d.movingStart));
+  let ballAt = chains ? startAbs : null;
   return linesOf(drillId).map(l => {
-    const p = parseLine(l.raw, { kind, startAbs, side, fieldLen });
+    const p = parseLine(l.raw, { kind, startAbs: (chains && ballAt != null) ? ballAt : startAbs, side, fieldLen });
     if (p && l.uncertain === "snapper" && !l.edited) p.uncertainSnapper = true;
     if (p && d && d.noSnap) p.noSnap = true;
     if (p && p.side) side = p.side;              /* remember it for the next one */
-    if (p && p.kind === "set") startAbs = p.value;
+    if (p && p.kind === "set") { startAbs = p.value; if (chains) ballAt = p.value; }
+    if (p && p.kind === "play" && chains) {
+      p.chained = ballAt != null;
+      p.startAbs = ballAt;
+      /* The offence only moves one way. If the spot she named implies the ball
+         went backwards further than any real play, it is the mirror spot on the
+         other half of the field. This happens because "left" and "right" are
+         from where she is standing, and which way SMA is driving flips at the
+         half, so the same words mean opposite ends in the first and third
+         quarters. The direction of travel settles it without her having to. */
+      if (p.chained && p.endAbs != null) {
+        const g0 = p.endAbs - ballAt;
+        if (g0 > 40) (p.warnings = p.warnings || []).push(
+          "This comes out as a " + g0 + " yard play \u2014 check it, the ball may have "
+          + "been spotted somewhere I did not hear");
+      }
+      if (p.chained && p.endAbs != null && p.outcome !== "touchdown") {
+        const gain = p.endAbs - ballAt;
+        if (gain < -15) {
+          const mir = clampAbs(fieldLen - p.endAbs), mg = mir - ballAt;
+          if (mg >= -15 && mg <= 60) {
+            p.endAbs = mir; p.mirrored = true;
+            (p.notes = p.notes || []).push(
+              "Read as the far half of the field \u2014 the spot you named would have "
+              + "meant losing " + Math.abs(gain) + " yards, which the offence did not do");
+          }
+        }
+      }
+      if (p.outcome === "touchdown") ballAt = null;               /* kickoff next */
+      else if (p.outcome === "int") ballAt = null;                /* they have it */
+      else if (["incomplete", "drop"].includes(p.outcome)) { /* ball stays put */ }
+      else if (p.endAbs != null) ballAt = p.endAbs;
+      else ballAt = null;              /* a play we could not place — chain broken */
+    }
     if (p && p.kind === "style") style = p.value;
     else if (p) p.style = l.style || style;      /* a line can name its own */
     const counts = p && p.kind !== "set" && p.kind !== "style";
