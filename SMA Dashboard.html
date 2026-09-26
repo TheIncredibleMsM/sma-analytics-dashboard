@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-25l",
+  "version": "2026-09-25m",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -16672,6 +16672,35 @@ function parseLine(text, ctx) {
   if (!raw) return null;
   /* "switching to super long" — coach changed the ball being thrown. Applies to
      every line after it until it changes again, the same way "start 30" works. */
+  /* ---- Down and distance -------------------------------------------------
+     "second and six", "3rd and 2", "first and 15", "first and goal", "4th and
+     inches". Six-man needs 15 yards for a first down, not 10.
+
+     This is the most reliable distance information on the whole site, because
+     it is measured against the ball rather than against the field: two of these
+     in a row difference into an exact gain, with no yard line, no side of
+     midfield and no halftime direction flip involved. */
+  {
+    const dl = " " + raw.toLowerCase().replace(/[.,!?]/g, " ") + " ";
+    const DOWNW = { first: 1, second: 2, third: 3, fourth: 4, "1": 1, "2": 2, "3": 3, "4": 4 };
+    const m = dl.match(/\b(first|second|third|fourth|1st|2nd|3rd|4th|[1-4])\s*(?:and|&|\+)\s*(goal|inches|inch|g|\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen)\b/);
+    if (m && !/snap|pass|hand|tackle|catch|caught|carries/.test(dl.slice(0, dl.indexOf(m[0])))) {
+      const down = DOWNW[/^\d/.test(m[1]) ? m[1].replace(/(st|nd|rd|th)$/, "") : m[1]];
+      let togo = null, goal = false;
+      if (/goal|^g$/.test(m[2])) { goal = true; }
+      else if (/inch/.test(m[2])) { togo = 1; }
+      else {
+        const nn = normalizeNumbers(m[2]).match(/\d+/);
+        if (nn) togo = +nn[0];
+      }
+      const w = [];
+      if (togo != null && !goal && togo > 15)
+        w.push("More than 15 to go \u2014 six-man needs 15 for a first down, so check this one");
+      else if (down === 1 && togo != null && !goal && togo !== 15)
+        w.push("First and " + togo + " \u2014 six-man is first and 15, so this is either a penalty or a miscall");
+      return { kind: "dnd", down: down, togo: togo, goalToGo: goal, warnings: w, notes: [] };
+    }
+  }
   const st = raw.trim().match(/^(?:switch(?:ing)? to|now (?:doing|on|throwing)|style[: ]|coach calls?(?! the play)|moving to|going to)\s*:?\s*(.+?)\s*(?:passes|balls|throws)?\s*$/i);
   if (st && st[1] && !/\d/.test(st[1]) && st[1].length < 30)
     return { kind: "style", value: st[1].trim().toLowerCase(), warnings: [], notes: [] };
@@ -16979,6 +17008,9 @@ function readTally(words) {
    distance down the field is not a gain and gets no number. */
 function playYards(p) {
   if (!p || p.kind !== "play") return null;
+  /* Best evidence first. A down-and-distance difference beats a field position,
+     because it is measured against the ball instead of against the field. */
+  if (p.dndYards != null) return p.dndYards;
   if (!p.chained) return null;                 /* rep drill, or the chain was broken */
   if (["incomplete", "drop"].includes(p.outcome)) return 0;   /* ball did not move */
   if (p.outcome === "int") return null;        /* possession changed */
@@ -16988,6 +17020,7 @@ function playYards(p) {
 function say(p) {
   if (!p) return "";
   if (p.kind === "set") return "Ball starts at " + yardLabel(p.value);
+  if (p.kind === "dnd") return ordinal(p.down) + " and " + (p.goalToGo ? "goal" : p.togo);
   if (p.kind === "style") return "Coach switched to " + p.value + " passes";
   if (p.kind === "goodtackle") return "A tackle worth naming \u2014 "
     + (p.men || []).map(m => "#" + m + (nameOf(m) ? " " + nameOf(m) : "")).join(" and ");
@@ -17050,6 +17083,7 @@ function say(p) {
   return s + ".";
 }
 /* which line the ball is spotted on for a drill of this name */
+function ordinal(n) { return ["", "1st", "2nd", "3rd", "4th"][n] || String(n); }
 function startFor(d) {
   if (!d) return 40;
   const byName = (BASELINE.drillStarts || {})[d.name];
@@ -17071,12 +17105,37 @@ function readDrill(drillId) {
      same spot every time, so there is nothing to chain. */
   const chains = !!(d && (d.isGame || d.movingStart));
   let ballAt = chains ? startAbs : null;
+  /* the last down-and-distance heard, the play since then, and whether a flag
+     came in between (a penalty moves the ball with no play, so it cannot be
+     differenced) */
+  let dnd = { down: null, togo: null, goalToGo: false }, lastPlay = null, flagged = false;
   return linesOf(drillId).map(l => {
     const p = parseLine(l.raw, { kind, startAbs: (chains && ballAt != null) ? ballAt : startAbs, side, fieldLen });
     if (p && l.uncertain === "snapper" && !l.edited) p.uncertainSnapper = true;
     if (p && d && d.noSnap) p.noSnap = true;
     if (p && p.side) side = p.side;              /* remember it for the next one */
     if (p && p.kind === "set") { startAbs = p.value; if (chains) ballAt = p.value; }
+    /* A second down-and-distance call measures the play that came between them.
+       Same series and the down went up: the distance shrank by exactly the gain.
+       Back to first down: we know the gain cleared what was left, which is a
+       floor rather than a measurement, and an honest one. */
+    if (p && p.kind === "dnd") {
+      if (lastPlay && lastPlay.p && dnd.togo != null && dnd.down != null && !flagged) {
+        if (p.down === dnd.down + 1 && p.togo != null && !p.goalToGo && !dnd.goalToGo) {
+          lastPlay.p.dndYards = dnd.togo - p.togo;
+          (lastPlay.p.notes = lastPlay.p.notes || []).push(
+            "Measured from the down and distance you called \u2014 " + ordinal(dnd.down)
+            + " and " + dnd.togo + " became " + ordinal(p.down) + " and " + p.togo);
+        } else if (p.down === 1 && dnd.togo != null) {
+          lastPlay.p.dndFloor = dnd.togo;
+          (lastPlay.p.notes = lastPlay.p.notes || []).push(
+            "Got the first down from " + ordinal(dnd.down) + " and " + dnd.togo
+            + ", so it gained at least that \u2014 a floor, not a measurement");
+        }
+      }
+      dnd = { down: p.down, togo: p.togo, goalToGo: p.goalToGo };
+      flagged = false;
+    }
     if (p && p.kind === "play" && chains) {
       p.chained = ballAt != null;
       p.startAbs = ballAt;
@@ -17112,8 +17171,14 @@ function readDrill(drillId) {
     }
     if (p && p.kind === "style") style = p.value;
     else if (p) p.style = l.style || style;      /* a line can name its own */
-    const counts = p && p.kind !== "set" && p.kind !== "style";
-    return { line: l, p, no: counts ? ++n : null };
+    /* A penalty moves the ball without a play being run, so the next down and
+       distance cannot be differenced against the last one. */
+    if (/\b(flag|penalt|offside|off ?sides?|holding|false start|face ?mask|pass interference|illegal)\b/i.test(l.raw))
+      flagged = true;
+    const counts = p && p.kind !== "set" && p.kind !== "style" && p.kind !== "dnd";
+    const row = { line: l, p, no: counts ? ++n : null };
+    if (p && p.kind === "play") lastPlay = row;
+    return row;
   });
 }
 const isBad = x => !x.p || (x.p.warnings && x.p.warnings.length);
