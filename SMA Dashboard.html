@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-25j",
+  "version": "2026-09-25k",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -13071,11 +13071,6 @@ const BASELINE = {
       "raw": "81 snaps to 5, who passes to 6, who is stopped at the 25 yard line for a first down"
     },
     {
-      "id": "P035",
-      "drillId": "gm3",
-      "raw": "81 snaps to 5, who hands it off to 12, who takes it into the end zone*"
-    },
-    {
       "id": "P036",
       "drillId": "gm3",
       "raw": "81 snaps to 5, who passes to 25A, but the other team intercepts it"
@@ -17657,7 +17652,13 @@ function renderBoard() {
   const gameItems = [];
   BASELINE.drills.filter(d => d.isGame).forEach(d => gameItems.push(...readDrill(d.id)));
   const G = statsFor(gameItems);
-  const nm = x => "#" + x + " " + (nameOf(x) || "");
+  const seen = Object.keys(G);
+  const lone = x => {
+    const base = x.replace(/[AB]$/, "");
+    if (base === x) return x;
+    return seen.some(y => y !== x && y.replace(/[AB]$/, "") === base) ? x : base;
+  };
+  const nm = x => "#" + lone(x) + " " + (nameOf(x) || "");
   const charted = BASELINE.drills.filter(d => d.isGame).length;
 
   const catchRows = top(Object.keys(G).filter(x => G[x].targets > 0)
