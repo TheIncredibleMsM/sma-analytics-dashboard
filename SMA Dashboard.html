@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-25n",
+  "version": "2026-09-25o",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -17815,22 +17815,10 @@ function renderBoard() {
     ${boardTable("Stops", "Tackles named in the game recordings. Not every tackle was seen.", tackleRows)}
     ${boardTable("Snaps", "Every play starts here and nobody ever counts it.", snapRows)}
     ${boardTable("Takeaways and recoveries", "Balls won back off the other team, and loose balls fallen on.", takeRows)}
-    ${boardTable("Yards", "Only the carries and catches with a yard number solid enough to trust. Nobody's real total is this low.", ydRows)}
-    <div class="card" style="border-left:4px solid var(--warn)">
-      <h3 style="margin:0 0 6px">Why the yards are a sample</h3>
-      <p style="margin:0 0 8px">Every other number on this page is a count of something that
-      either happened or didn't. Yards are different: a gain needs to know where the ball
-      <i>started</i>, and for the first four games of the season that was not recorded.</p>
-      <p style="margin:0 0 8px">We can estimate it by carrying the ball forward from the previous
-      play. We tried. On the plays where the ball actually moved, that method produces a
-      <b>backwards</b> result 26% of the time &mdash; and real football goes backwards about
-      10% of the time. So roughly half of those are simply wrong, and there is no way to tell
-      which half. Publishing them would put numbers on this page that a coach could disprove
-      from memory, so they are not here.</p>
-      <p style="margin:0">From the Runge game onward the down and distance is being called into
-      the recording before each snap. Two of those in a row give an exact gain with no field
-      position involved at all, so this section fills in from here forward rather than backward.</p>
-    </div>
+    <!-- Yards intentionally not shown. The first four games were narrated without a
+         starting spot for the ball, so any per-play gain would be an estimate that is
+         wrong often enough for a coach to catch. It comes back once enough games have
+         been called with the down and distance, which gives an exact gain. -->
     ${(() => {
       /* A blocked kick is a blocking problem, not a kicking one. Saying "15 of 21"
          without that is unfair to the only specialist on the team. */
@@ -18503,52 +18491,9 @@ function renderGame() {
         <td>${esc(r[2])}</td><td><b>${esc(r[3])}</b></td></tr>`).join("")}</tbody></table>
     </div>
 
-    ${!g.yardage ? "" : (() => {
-      const Y = g.yardage, sign = v => (v > 0 ? "+" : "") + v;
-      const tot = {};
-      Y.plays.forEach(r => { const t = tot[r[0]] = tot[r[0]] || { n: 0, y: 0, best: null };
-        t.n++; t.y += r[1]; if (t.best === null || r[1] > t.best) t.best = r[1]; });
-      const who = Object.keys(tot).sort((a, z) => tot[z].y - tot[a].y);
-      const carried = Y.plays.reduce((a, r) => a + r[1], 0);
-      return `<div class="card">
-      <h3 style="margin-top:0">Yardage</h3>
-      <div class="warnbox" style="margin-bottom:10px">
-        <b>These are not game totals. They are a sample.</b> Only the plays where the recording gives a
-        yard number that can be trusted are in here — every other carry and catch is missing, including
-        all of the touchdowns. A player almost certainly gained a great deal more than the figure beside
-        his name. Read a row as “here are some of his plays”, never as “here is his game.”
-      </div>
-      <p class="muted">${esc(Y.note)}</p>
-
-      <div class="scroll"><table>
-        <tr><th>Player</th><th class="n">Plays<br><span class="muted" style="font-weight:400">measured</span></th>
-            <th class="n">Yards<br><span class="muted" style="font-weight:400">on those plays</span></th>
-            <th class="n">Per play</th><th class="n">Best</th></tr>
-        ${who.map(w => { const t = tot[w];
-          return `<tr><td>${esc(w)}</td><td class="n">${t.n}</td>
-            <td class="n"><b>${sign(t.y)}</b></td>
-            <td class="n">${Math.round(t.y / t.n * 10) / 10}</td>
-            <td class="n">${sign(t.best)}</td></tr>`; }).join("")}
-        <tr><td><b>All measured plays</b></td><td class="n"><b>${Y.plays.length}</b></td>
-            <td class="n"><b>${sign(carried)}</b></td><td class="n"></td><td class="n"></td></tr>
-      </table></div>
-
-      <h3>The plays these came from</h3>
-      ${Y.plays.slice().sort((a, z) => z[1] - a[1]).map(r =>
-        `<div class="mv" style="margin:3px 0"><b>${sign(r[1])}</b> &nbsp;${esc(r[0])}
-          <span class="muted">— ${esc(r[2])}</span></div>`).join("")}
-
-      ${(Y.returns || []).length ? `<h3>Kick returns</h3>
-        ${Y.returns.map(r => `<div class="mv" style="margin:3px 0"><b>${sign(r[1])}</b> &nbsp;${esc(r[0])}
-          <span class="muted">— ${esc(r[2])}</span></div>`).join("")}` : ""}
-
-      ${(Y.wiped || []).length ? `<h3>Taken off the board</h3>
-        ${Y.wiped.map(r => `<div class="mv" style="margin:3px 0">${sign(r[1])} &nbsp;${esc(r[0])}
-          <span class="muted">— ${esc(r[2])}</span></div>`).join("")}` : ""}
-
-      <div class="mv" style="background:#f6f6f4;margin-top:10px">
-        <b>What is not in this table.</b> ${esc(Y.missing)}</div>
-    </div>`; })()}
+    <!-- The per-game yardage sample is deliberately not rendered. The data is still in
+         BASELINE under game.yardage; it was only ever a subset of plays and reads as a
+         total, which is worse than showing nothing. -->
 
     <div class="card"><h3 style="margin-top:0">What worked</h3>
       ${(g.worked || []).map(r => `<div style="margin:9px 0"><b>${esc(r[0])}</b> — ${esc(r[1])}</div>`).join("")}
