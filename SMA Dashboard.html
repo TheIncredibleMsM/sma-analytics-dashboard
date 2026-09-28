@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-28e",
+  "version": "2026-09-28f",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -19555,7 +19555,7 @@ function parseLine(text, ctx) {
 
   const chain = [], verbs = [], w = [], note = [];
   let handoff = false, sawSnap = false, snapGrade = null, missedTackle = false, recovered = false;
-  let endN = null, gainN = null, outcome = null, repres = null;
+  let endN = null, gainN = null, outcome = null, repres = null, o_saidGain = null;
   let wantYard = false, wantBy = false, sawBy = false, negative = false, wantGain = false;
   const tacklers = [], blockers = [], takers = [];
   /* Not every defender named after "by" made a tackle. Blocking a runner,
@@ -19697,6 +19697,7 @@ function parseLine(text, ctx) {
     if (unknown.length && (!chain.length || !repres)) o.notes.push("Ignored: " + unknown.join(", "));
     return o;
   }
+  if (gainN != null) o_saidGain = gainN;
   if (endN == null && gainN != null) endN = clampAbs(ctx.startAbs + gainN);
   if (outcome === "touchdown") endN = (ctx && ctx.fieldLen) || DB.fieldLen;
   if (["incomplete", "drop", "int"].includes(outcome)) endN = null;
@@ -19717,7 +19718,7 @@ function parseLine(text, ctx) {
      the play, so whoever made the stop gets named in the tackles section too. */
   const praised = new RegExp("(?:really |very |pretty |absolutely )?(?:good|great|nice|beautiful|strong|clean|solid|excellent|awesome)\\s+(?:tackle|tackles|hit|stop|grip|block|shock ?(?:and|n) ?lock|pushback|push back)\\b").test(String(raw).toLowerCase());
   const o = { kind: "play", side: saidSide === "opp" ? null : saidSide,
-    goodTackles: praised ? tacklers.slice() : [], blockers, takers, chain, verbs, sawSnap, snapGrade, partial, startAbs: ctx.startAbs, endAbs: endN,
+    goodTackles: praised ? tacklers.slice() : [], blockers, takers, saidGain: o_saidGain, chain, verbs, sawSnap, snapGrade, partial, startAbs: ctx.startAbs, endAbs: endN,
     outcome, tackler, tacklers, warnings: w, notes: note };
   if (partial) o.warnings.push(starred
     ? "You marked this one \u2014 part of it is missing or may be wrong"
@@ -19779,6 +19780,7 @@ function playYards(p) {
   if (!p || p.kind !== "play") return null;
   /* Best evidence first. A down-and-distance difference beats a field position,
      because it is measured against the ball instead of against the field. */
+  if (p.saidGain != null) return p.saidGain;      /* she said the number herself */
   if (p.dndYards != null) return p.dndYards;
   if (!p.chained) return null;                 /* rep drill, or the chain was broken */
   if (["incomplete", "drop"].includes(p.outcome)) return 0;   /* ball did not move */
@@ -19953,7 +19955,8 @@ function readDrill(drillId) {
       flagged = true;
     const counts = p && p.kind !== "set" && p.kind !== "style" && p.kind !== "dnd";
     const row = { line: l, p, no: counts ? ++n : null };
-    if (p && p.kind === "play") lastPlay = row;
+    if (p && p.kind === "play" && !p.partial) lastPlay = row;
+    else if (p && p.kind === "play") lastPlay = null;   /* a gap breaks the pairing */
     return row;
   });
 }
