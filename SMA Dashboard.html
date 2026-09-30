@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-09-28h",
+  "version": "2026-09-30a",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -20796,6 +20796,11 @@ function statsFor(items, mon) {
   const S = {}, get = n => (S[n] = S[n] || blank());
   items.forEach(x => {
     const p = x.p; if (!p) return;
+    /* A line Maddie marked with seven asterisks is a note about a gap, or a
+       piece of narration about the other team's possession. It is not a play,
+       and the numbers inside it are scores, clock times and yard lines rather
+       than jerseys. Letting one through invents players and credits them. */
+    if (p.partial) return;
     if (p.kind === "snapgrade") {
       const r = get(p.who);
       r.snaps++; r.snapsGraded++;
