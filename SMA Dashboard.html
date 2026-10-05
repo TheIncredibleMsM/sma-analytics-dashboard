@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-05f",
+  "version": "2026-10-05g",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -25161,16 +25161,11 @@ function renderCoach() {
       <div class="spread"><h2 style="margin:0">${esc(who(n))}</h2>
         ${st !== "active" ? `<span class="tag warn">${esc(noteOf(n) || st)}</span>` : ""}</div>
       ${role ? `<p class="muted" style="margin:2px 0 6px">This week: ${esc(role)}</p>` : ""}
-      ${(() => { const pl = BASELINE.players.find(x => String(x.num) === String(n));
-        if (!pl) return "";
-        let out = pl.method
-          ? `<div class="mv" style="background:#eef2ff;border-color:#6366f1">
-               <b>Affects how this is measured:</b> ${esc(pl.method)}</div>` : "";
-        /* jersey bookkeeping is Maddie's working, not something coaches need */
-        if (pl.admin && isOwner()) out += `<div class="mv noprint muted"
-               style="background:#f6f6f4"><b>Note to self:</b> ${esc(pl.admin)}</div>`;
-        return out;
-      })()}
+      ${/* The "Affects how this is measured" and "Note to self" boxes used to print
+            here. They are Maddie's working — why a number is counted the way it is,
+            and which jersey belongs to whom. Both still live on the player records in
+            BASELINE (`method` and `admin`) and both still govern the parsing; they are
+            simply not shown. A coach wants the number, not the bookkeeping behind it. */ ""}
       <div class="scroll"><table>
         <tr><th>Area</th><th class="n">This week</th><th class="n">${prev ? "Season so far" : ""}</th>
           <th class="n">${prev ? "Change" : ""}</th><th>From</th></tr>
