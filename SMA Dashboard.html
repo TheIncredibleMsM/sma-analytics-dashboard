@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-05d",
+  "version": "2026-10-05e",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -18734,7 +18734,7 @@ const BASELINE = {
     {
       "id": "GG069",
       "drillId": "gm6",
-      "raw": "25A snaps to 5, who passes to 12, who is stopped by two men after about five yards."
+      "raw": "25A snaps to 5, who passes to 12, who is stopped by a pair of defenders after about five yards."
     },
     {
       "id": "GG070",
@@ -19119,7 +19119,7 @@ const BASELINE = {
     {
       "id": "GG146",
       "drillId": "gm6",
-      "raw": "25A snaps to 5, who hands it off to 12, who gains about twenty and is stopped at the 25 for a Bears first down."
+      "raw": "25A snaps to 5, who hands it off to 12, who makes a long gain and is stopped at the 25 for a Bears first down."
     },
     {
       "id": "GG147",
@@ -24572,8 +24572,18 @@ function sharedDuty(mon) {
     Object.keys(out[b]).forEach(n => out[b][n] = Math.round(out[b][n])));
   return out;
 }
+/* A jersey number nobody has been able to put a name to is not a player, and it
+   is not carried into any statistic. Maddie's call: the boys have had a season to
+   come forward about missing stats, and a leaderboard full of anonymous numbers
+   reads as sloppy to the ones who do care. The charted lines keep the number, so
+   if a name turns up the stats come back on their own. */
+function named(n) { return !!n && !!nameOf(n); }
 function statsFor(items, mon) {
-  const S = {}, get = n => (S[n] = S[n] || blank());
+  /* Everything that scores a player goes through get(). An unnamed number gets a
+     scratch object instead of a row, so its numbers are tallied nowhere and it
+     never appears in any list. The play itself is untouched. */
+  const S = {}, sink = blank();
+  const get = n => named(n) ? (S[n] = S[n] || blank()) : sink;
   items.forEach(x => {
     const p = x.p; if (!p) return;
     /* A line Maddie marked with seven asterisks is a note about a gap, or a
