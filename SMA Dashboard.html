@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-05h",
+  "version": "2026-10-06a",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -24860,22 +24860,25 @@ function goodTackleCard(week) {
   const per = goodTackles(week);
   const nums = Object.keys(per).sort((a, b) => per[b].length - per[a].length
     || (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
+  if (!nums.length) return "";
+  /* Over a whole season this used to print every moment for every boy and ran to
+     hundreds of lines — the exact thing the players said made the page unreadable.
+     Counts first, a couple of examples each, the rest on request. */
+  const full = !!week, SHOW = full ? 99 : 2;
   return `<div class="card">
     <h2 style="margin-top:0">Tackles worth naming</h2>
-    <div class="warnbox" style="margin-bottom:12px">
-      <b>This is not a count of tackles.</b> Maddie watches one thing at a time and cannot see
-      every tackle on the field — she has been clear about that. These are the ones she saw,
-      thought were good, and said so about. A boy who is not on this list has not failed to
-      tackle anybody; he was tackling while she was looking somewhere else. Read it as a list
-      of moments, never as a ranking.
-    </div>
-    ${!nums.length ? `<p class="muted">None called out this week.</p>` : nums.map(n => `
-      <h3 style="margin-bottom:2px">#${esc(n)} ${esc(nameOf(n) || "")}
-        <span class="muted" style="font-weight:400">— ${per[n].length}
-        ${per[n].length === 1 ? "moment" : "moments"}</span></h3>
-      ${per[n].map(x => `<div class="mv" style="margin:3px 0">${esc(x.text)}
-        <span class="muted">— ${esc(dateLabel(x.date))}, ${esc(x.drill)}</span></div>`).join("")}
-    `).join("")}
+    <p class="muted" style="margin-bottom:10px"><b>Not a count of tackles.</b> These are the ones
+      Maddie saw and said were good. Nobody is missing from this list because he failed to tackle
+      anyone — he was tackling while she was watching something else.</p>
+    ${nums.map(n => {
+      const list = per[n], extra = list.length - SHOW;
+      return `<div style="margin:0 0 10px">
+        <b>${esc("#" + n + (nameOf(n) ? " " + nameOf(n) : ""))}</b>
+        <span class="muted">— ${list.length} moment${list.length === 1 ? "" : "s"}</span>
+        ${list.slice(0, SHOW).map(t => `<div class="mv" style="margin:3px 0">${esc(t.text)}
+          <span class="muted">— ${esc(dateLabel(t.date))}${t.drill ? ", " + esc(t.drill) : ""}</span></div>`).join("")}
+        ${extra > 0 ? `<div class="muted" style="margin-left:4px">and ${extra} more — pick a single week above to read them all</div>` : ""}
+      </div>`; }).join("")}
   </div>`;
 }
 
@@ -25065,321 +25068,155 @@ function renderBoard() {
   `;
 }
 
+/* ---------- the coaches' and players' page ----------
+   This used to be built around one week at a time: this week, the season before
+   it, and an arrow for the change. That is how an analyst reads a season, and it
+   is not how an eighteen-year-old reads his own name. The boys said it was too
+   much to take in, so the page now leads with season totals and keeps weeks as a
+   filter for anyone who wants one. No change arrows, no "too few reps", no
+   comparison a reader has to hold two numbers in his head to understand. */
+let SCOPE = "season";
+function scopeWeek() { return SCOPE === "season" ? null : SCOPE; }
+function scopeLabel() { return SCOPE === "season" ? "the whole season" : weekLabel(SCOPE); }
+function scopeItems() {
+  if (SCOPE !== "season") return itemsInWeek(SCOPE);
+  let out = [];
+  BASELINE.drills.forEach(d => { out = out.concat(readDrill(d.id)); });
+  return out;
+}
+/* One line that answers the question they actually open the page to ask. */
+function headline(n, s, tds) {
+  const bits = [], touches = s.carries + s.rec, stops = s.tackles + s.ints + s.pbu + s.ff;
+  if (tds) bits.push("<b>" + tds + (tds === 1 ? " touchdown" : " touchdowns") + "</b>");
+  if (s.targets) bits.push("caught <b>" + s.catches + " of " + s.targets + "</b>");
+  if (touches) bits.push("<b>" + touches + "</b> touches");
+  if (s.att) bits.push("threw <b>" + s.comp + " of " + s.att + "</b>");
+  if (s.snaps) bits.push("<b>" + s.snaps + "</b> snaps");
+  if (stops) bits.push("<b>" + stops + (stops === 1 ? "</b> stop" : "</b> stops"));
+  return bits.join(" &nbsp;·&nbsp; ");
+}
 function renderCoach() {
   const el = $("#coachArea"), ws = weeks();
   if (!ws.length) {
     el.innerHTML = `<div class="card"><h2>Nothing in here yet</h2>
-      <p>This dashboard is empty and waiting for your first practice.</p>
-      <p class="muted">Send Maddie's notes, spreadsheet rows or voice-memo transcript to Claude and
-      you'll get this file back with the practice in it. Everything below fills itself in.</p>
-      <h3>What comes back</h3>
-      <p class="muted">Who's improving and who needs work, week over week · a card per player ·
-      every play with how it was read · a Print button for the coaches.</p></div>`;
+      <p>This dashboard is empty and waiting for your first practice.</p></div>`;
     return;
   }
-  if (!WEEK || !ws.includes(WEEK)) WEEK = ws[0];
-  const prev = hasBefore(WEEK) ? "before" : null;
-  const now = statsFor(itemsInWeek(WEEK), WEEK);
-  const was = prev ? statsFor(itemsBefore(WEEK)) : {};
-  const nums = Array.from(new Set(Object.keys(now).concat(Object.keys(was))))
-    .sort((a, b) => (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
-  const pracs = BASELINE.practices.filter(p => mondayOf(p.date) === WEEK);
-  const items = itemsInWeek(WEEK);
+  if (SCOPE !== "season" && !ws.includes(SCOPE)) SCOPE = "season";
+  const wk = scopeWeek();
+  const items = scopeItems();
+  const S = statsFor(items, wk);
+  const gs = gameScores();
+  const tdBy = {};
+  Object.keys(gs.td).forEach(name => { const p = BASELINE.players.find(x => x.name === name);
+    if (p) tdBy[String(p.num)] = gs.td[name]; });
 
-  const ups = [], downs = [];
-  nums.forEach(n => {
-    if (statusOf(n, WEEK) !== "active") return;   /* nobody gets called out for a week he was injured */
-    areaRows(now[n] || blank(), was[n] || blank()).forEach(r => {
-      const m = moveWord(r); if (!m) return;
-      (m.better ? ups : downs).push({ n, r, m });
-    });
-  });
-  const big = (a, b) => Math.abs(b.r.delta) - Math.abs(a.r.delta);
-  ups.sort(big); downs.sort(big);
+  const involved = n => { const s = S[n] || blank();
+    return (s.carries + s.rec) * 3 + s.snaps + (s.tackles + s.ints + s.pbu + s.ff) * 3 + s.targets; };
+  const nums = Object.keys(S).sort((a, b) => involved(b) - involved(a)
+    || (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
+
+  const pracs = wk ? BASELINE.practices.filter(p => mondayOf(p.date) === wk) : BASELINE.practices;
   const who = n => "#" + n + (nameOf(n) ? " " + nameOf(n) : "");
+  const outNow = BASELINE.players.filter(pl => statusOf(pl.num, wk) !== "active");
 
   el.innerHTML = editBanner() + `
   ${BASELINE.note ? `<div class="warnbox noprint" style="margin-bottom:12px">${esc(BASELINE.note)}</div>` : ""}
   ${isOwner() ? `<div class="card noprint">
     <button class="btn primary wide big" onclick="showDebrief()"
       style="min-height:52px;font-size:16px">✉ Write the note for Coach</button>
-    <p class="muted" style="margin-top:7px">A short summary you can paste into a text. Leads with
-      what he can act on and ends by asking him something.</p>
   </div>` : ""}
+
+  <div class="card" style="background:var(--brand);color:#fff">
+    <h2 style="margin:0;color:#fff">${esc(BASELINE.team)}</h2>
+    <p style="margin:6px 0 0;opacity:.92">${SCOPE === "season"
+      ? `Everything recorded this season — ${pracs.length} practices and ${(BASELINE.games || []).length} games.`
+      : `Week of ${esc(weekLabel(SCOPE))} — ${pracs.map(p => dateLabel(p.date)).join(" · ")}.`}
+      ${items.filter(x => x.p && x.p.kind !== "set").length} plays recorded.</p>
+  </div>
+
   <div class="card noprint">
-    <div class="spread"><h2 style="margin:0">Week</h2>
+    <div class="spread"><h2 style="margin:0">Showing</h2>
       <select id="wk" style="width:auto;min-height:40px;padding:7px 9px">
-        ${ws.map(w => `<option value="${w}" ${w === WEEK ? "selected" : ""}>${esc(weekLabel(w))}</option>`).join("")}
+        <option value="season" ${SCOPE === "season" ? "selected" : ""}>The whole season</option>
+        ${ws.map(w => `<option value="${w}" ${w === SCOPE ? "selected" : ""}>Week of ${esc(weekLabel(w))}</option>`).join("")}
       </select></div>
   </div>
 
-  <div class="card">
-    <h2 style="margin-bottom:2px">${esc(BASELINE.team)} — week of ${esc(weekLabel(WEEK))}</h2>
-    <p class="muted">${pracs.map(p => dateLabel(p.date)).join(" · ")} ·
-      ${items.filter(x => x.p && x.p.kind !== "set").length} plays recorded${
-      prev ? " · compared with his season up to this week" : ""}</p>
+  ${outNow.length ? `<div class="card"><h2 style="margin-top:0">Not in these numbers</h2>
+    ${outNow.map(pl => `<div class="mv"><b>#${esc(pl.num)} ${esc(pl.name)}</b> — ${esc(statusOf(pl.num, wk))}</div>`).join("")}
+  </div>` : ""}
 
-
-    ${(() => {
-      const out = BASELINE.players.filter(pl => (pl.status || "active") !== "active");
-      return out.length ? `<h3>Not in these numbers</h3>` + out.map(pl =>
-        `<div class="mv"><b>#${esc(pl.num)} ${esc(pl.name)}</b> — ${esc(pl.note || pl.status)}</div>`).join("") : "";
-    })()}
-    ${prev ? `
-      <h3>Improving</h3>
-      ${ups.length ? ups.slice(0, 5).map(u => `<div class="mv up">▲ <b>${esc(who(u.n))}</b> —
-        ${esc(u.r.a.label.toLowerCase())} ${esc(u.m.txt)}
-        <span class="muted">(${esc(u.r.detail)})</span></div>`).join("")
-        : `<p class="muted">Nothing moved far enough on enough reps to call it real.</p>`}
-      <h3>Needs work</h3>
-      ${downs.length ? downs.slice(0, 5).map(u => `<div class="mv dn">▼ <b>${esc(who(u.n))}</b> —
-        ${esc(u.r.a.label.toLowerCase())} ${esc(u.m.txt)}
-        <span class="muted">(${esc(u.r.detail)})</span></div>`).join("")
-        : `<p class="muted">Nothing slipped far enough on enough reps to call it real.</p>`}`
-      : `<p class="muted">First week in this file — nothing earlier to compare against yet.</p>`}
-  </div>
-
-  ${yardageCard(WEEK)}
-
-  ${goodTackleCard(WEEK)}
+  ${goodTackleCard(wk)}
 
   ${(() => {
-    /* Every coach note lives here and nowhere else, so a season of them stays
-       readable. Grouped by player rather than scattered down the page. */
-    const cn = (BASELINE.coachNotes || []).filter(c => mondayOf(c.date) === WEEK && !c.private);
+    const cn = (BASELINE.coachNotes || []).filter(c =>
+      (!wk || mondayOf(c.date) === wk) && !c.private && !c.num);
     if (!cn.length) return "";
-    const team = cn.filter(c => !c.num);
-    const byNum = {};
-    cn.filter(c => c.num).forEach(c => { (byNum[c.num] = byNum[c.num] || []).push(c); });
-    const order = Object.keys(byNum).sort((a, b) => {
-      const pa = byNum[a].filter(x => x.tone === "praise").length;
-      const pb = byNum[b].filter(x => x.tone === "praise").length;
-      if (pa !== pb) return pb - pa;                       // most praised first
-      return (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999);
-    });
+    /* What a coach said to one boy belongs on that boy's card, not in a second list
+       further up the page. Only things said to the whole team live here. */
     const one = c => `<div style="margin:3px 0 7px">${noteMark(c.tone)}
       ${c.shorthand ? `<code>${esc(c.text)}</code>` : esc(c.text)}
       <span class="muted">— ${esc(c.by)}, ${esc(dateLabel(c.date))}${c.during ? ", " + esc(c.during) : ""}</span></div>`;
     return `<div class="card">
-      <h2>What the coaches said</h2>
-      <p class="muted">The coaches' own words, and the first thing worth reading here.
-        ★ marks praise. A bullet is a coaching point — something to work on, not a mark against anyone.</p>
-      ${team.length ? `<h3>To the whole team</h3>${team.map(one).join("")}` : ""}
-      ${order.map(n => `<h3 style="margin-bottom:2px">#${esc(n)} ${esc(nameOf(n) || "")}
-        ${byNum[n].filter(x => x.tone === "praise").length
-          ? `<span class="up">${"★".repeat(Math.min(byNum[n].filter(x => x.tone === "praise").length, 3))}</span>` : ""}</h3>
-        ${byNum[n].map(one).join("")}`).join("")}
+      <h2>What the coaches said to the team</h2>
+      <p class="muted">★ marks praise. A bullet is a coaching point — something to work on, not a mark against anyone.</p>
+      ${cn.map(one).join("")}
     </div>`;
   })()}
 
   <div class="card">
-    <h2>Everyone, by what they did</h2>
-    <p class="muted">Six-man means everyone does several jobs, so this is what each of them
-      actually did this week rather than a listed position.</p>
+    <h2 style="margin-bottom:2px">Everyone</h2>
+    <p class="muted">Most involved first. Six-man means everyone does several jobs, so this is
+      what each of them actually did rather than a listed position.</p>
     <div class="scroll"><table>
-      <tr><th>Player</th><th>Coach</th><th>Did</th><th class="n">Snaps</th><th class="n">Throws</th>
-      <th class="n">Catch %</th><th class="n">Touches</th><th class="n">Yds</th><th class="n">Stops</th></tr>
-      ${nums.map(n => { const s = now[n] || blank(), st = statusOf(n, WEEK);
-        const cp = s.targets ? Math.round(s.catches / s.targets * 100) + "%" : "—";
+      <tr><th>Player</th><th>Did</th><th class="n">TDs</th><th class="n">Snaps</th>
+      <th class="n">Caught</th><th class="n">Touches</th><th class="n">Stops</th></tr>
+      ${nums.map(n => { const s = S[n] || blank();
         const stops = s.tackles + s.ints + s.pbu + s.ff;
-        const cn = coachNotesFor(n, WEEK);
-        const up = cn.filter(c => c.tone === "praise").length;
-        return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}${
-            st !== "active" ? ` <span class="tag warn">${esc(st)}</span>` : ""}</td>
-          <td>${up ? `<span class="up" title="praised by a coach">${"★".repeat(Math.min(up, 3))}</span>` : ""}</td>
+        const up = coachNotesFor(n, wk).filter(c => c.tone === "praise").length;
+        return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}
+            ${up ? `<span class="up" title="praised by a coach">${"★".repeat(Math.min(up, 3))}</span>` : ""}</td>
           <td class="muted">${esc(roleOf(s) || "—")}</td>
-          <td class="n">${s.snaps || "—"}${s.snapsShared ? ` <span class="muted" title="He was on snap duty for feeding drills. Who took which rep was never called out, so the drill's reps are split evenly between the boys named on duty — an estimate, not a count.">+≈${s.snapsShared} shared</span>` : ""}</td>
-          <td class="n">${s.att ? s.comp + "/" + s.att : "—"}</td>
-          <td class="n">${cp}</td>
+          <td class="n">${tdBy[n] || "—"}</td>
+          <td class="n">${s.snaps || "—"}</td>
+          <td class="n">${s.targets ? s.catches + " / " + s.targets : "—"}</td>
           <td class="n">${(s.carries + s.rec) || "—"}</td>
-          <td class="n">${(s.rushYds + s.recYds) || "—"}</td>
           <td class="n">${stops || "—"}</td></tr>`; }).join("")}
     </table></div>
   </div>
 
   ${nums.map(n => {
-    const rows = areaRows(now[n] || blank(), was[n] || blank());
-    if (!rows.length) return "";
-    const st = statusOf(n, WEEK), role = roleOf(now[n]);
+    const s = S[n] || blank(), line = headline(n, s, tdBy[n]);
+    if (!line) return "";
+    const notes = coachNotesFor(n, wk);
+    const stops = s.tackles + s.ints + s.pbu + s.ff;
+    const row = (label, val, detail) => val
+      ? `<tr><td>${esc(label)}</td><td class="n"><b>${val}</b></td><td class="muted">${detail || ""}</td></tr>` : "";
     return `<div class="card">
       <div class="spread"><h2 style="margin:0">${esc(who(n))}</h2>
-        ${st !== "active" ? `<span class="tag warn">${esc(st)}</span>` : ""}</div>
-      ${role ? `<p class="muted" style="margin:2px 0 6px">This week: ${esc(role)}</p>` : ""}
-      ${/* The "Affects how this is measured" and "Note to self" boxes used to print
-            here. They are Maddie's working — why a number is counted the way it is,
-            and which jersey belongs to whom. Both still live on the player records in
-            BASELINE (`method` and `admin`) and both still govern the parsing; they are
-            simply not shown. A coach wants the number, not the bookkeeping behind it. */ ""}
+        ${statusOf(n, wk) !== "active" ? `<span class="tag warn">${esc(statusOf(n, wk))}</span>` : ""}</div>
+      <p style="margin:6px 0 10px;font-size:15px">${line}</p>
       <div class="scroll"><table>
-        <tr><th>Area</th><th class="n">This week</th><th class="n">${prev ? "Season so far" : ""}</th>
-          <th class="n">${prev ? "Change" : ""}</th><th>From</th></tr>
-        ${rows.map(r => { const m = moveWord(r);
-          return `<tr><td>${esc(r.a.label)}</td><td class="n"><b>${esc(fmtVal(r))}</b></td>
-            <td class="n">${r.wv == null ? "—" : esc(r.a.unit === "%" ? r.wv.toFixed(0) + "%" : String(r.wv))}</td>
-            <td class="n">${m ? `<span class="${m.better ? "up" : "dn"}">${m.better ? "▲" : "▼"} ${esc(m.txt)}</span>`
-              : (r.delta != null && !r.solid ? `<span class="muted">too few reps</span>` : "—")}</td>
-            <td class="muted">${esc(r.detail)}</td></tr>`; }).join("")}
-      </table></div></div>`;
+        ${row("Touchdowns", tdBy[n], "in games")}
+        ${row("Catching", s.targets ? s.catches + " of " + s.targets : 0, "balls thrown at him")}
+        ${row("Touches", s.carries + s.rec, s.carries + " carried, " + s.rec + " caught")}
+        ${row("Throwing", s.att ? s.comp + " of " + s.att : 0, "passes completed")}
+        ${row("Snaps", s.snaps, "every play starts here")}
+        ${row("Stops", stops, "tackles, interceptions and balls broken up that Maddie saw")}
+      </table></div>
+      ${notes.length ? `<h3 style="margin:12px 0 2px">What the coaches said</h3>
+        ${notes.slice().sort((x, y) => String(y.date).localeCompare(String(x.date))).slice(0, 4)
+          .map(c => `<div style="margin:3px 0 6px">${noteMark(c.tone)} ${esc(c.text)}
+          <span class="muted">— ${esc(c.by)}, ${esc(dateLabel(c.date))}</span></div>`).join("")}
+        ${notes.length > 4 ? `<p class="muted" style="margin:2px 0 0">and ${notes.length - 4} more earlier in the season</p>` : ""}` : ""}
+    </div>`;
   }).join("")}
 
-  ${(() => {
-    /* A drop on a SUPER LONG ball is not the same event as a drop on a short one,
-       so a single catch % across styles compares things that aren't alike. */
-    const pracIds = BASELINE.practices.filter(p => mondayOf(p.date) === WEEK).map(p => p.id);
-    const reps = BASELINE.drills.filter(d => d.kind === "rep" && pracIds.includes(d.practiceId));
-    if (!reps.length) return "";
-    const styles = {};
-    reps.forEach(d => {
-      const key = d.style || "styles mixed together";
-      readDrill(d.id).forEach(x => {
-        if (!x.p || x.p.kind !== "tally") return;
-        const k2 = x.p.style || key;             /* a style called mid-drill wins */
-        styles[k2] = styles[k2] || {};
-        const w = x.p.who;
-        styles[k2][w] = styles[k2][w] || { c: 0, d: 0 };
-        styles[k2][w].c += x.p.counts.catch;
-        styles[k2][w].d += x.p.counts.drop;
-      });
-    });
-    const keys = Object.keys(styles);
-    const who = Array.from(new Set(keys.flatMap(k => Object.keys(styles[k]))))
-      .sort((a, b) => (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
-    return `<div class="card"><h2>Catching, by kind of pass</h2>
-      <div class="warnbox">A drop on a long ball and a drop on a short one aren't the same thing.
-        One catch percentage across every style compares things that aren't alike.</div>
-      <div class="scroll"><table>
-        <tr><th>Player</th>${keys.map(k => `<th class="n">${esc(k)}</th>`).join("")}</tr>
-        ${who.map(n => `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}</td>
-          ${keys.map(k => { const v = styles[k][n];
-            if (!v || !(v.c + v.d)) return `<td class="n">—</td>`;
-            return `<td class="n"><b>${Math.round(v.c / (v.c + v.d) * 100)}%</b>
-              <span class="muted">${v.c}/${v.c + v.d}</span></td>`; }).join("")}
-        </tr>`).join("")}
-      </table></div>
-      <p class="muted" style="margin-top:8px">#75, #10, #5 and #40 hold fixed jobs feeding and
-        relaying in these drills, so they have few or no rows here. That's the drill's shape,
-        not their catching.</p></div>`;
-  })()}
-  ${(() => {
-    /* One-on-one drills, shown without a verdict. Which column should be high is
-       a coaching call, so the page asks rather than assumes. */
-    const pracIds2 = BASELINE.practices.filter(p => mondayOf(p.date) === WEEK).map(p => p.id);
-    const reps = [];
-    BASELINE.drills.filter(d => pracIds2.includes(d.practiceId)).forEach(d => {
-      readDrill(d.id).forEach(x => { if (x.p && x.p.kind === "matchup") reps.push(x.p); });
-    });
-    if (!reps.length) return "";
-    const tallyOf = (key) => { const m = {};
-      reps.forEach(r => { const n = r[key];
-        m[n] = m[n] || { reps: 0, escaped: 0, held: 0, juke: 0, through: 0, donut: 0, faced: {} };
-        m[n].reps++;
-        if (key === "off") { if (r.escaped) m[n].escaped++; if (r.method === "juke") m[n].juke++;
-          if (r.method === "through") m[n].through++; if (r.donut) m[n].donut++; m[n].faced[r.def] = 1; }
-        else { if (!r.escaped) m[n].held++; m[n].faced[r.off] = 1; }
-      });
-      return m; };
-    const O = tallyOf("off"), D = tallyOf("def");
-    const ord = m => Object.keys(m).sort((a, b) => (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
-    return `<div class="card">
-      <h2>One-on-one drill</h2>
-      <div class="warnbox"><b>Coach — one question and this becomes a ranking.</b><br>
-        In the shock-and-lock drill, which of these do you want to see high?<br>
-        &nbsp;• the <b>lock holding</b> — the defender keeping his man in place, or<br>
-        &nbsp;• the <b>ball carrier getting to the pad fast</b>, however he gets there.<br>
-        Right now they pull in opposite directions: going around a defender is excellent by the
-        second standard and a failure by the first. Nothing below is scored until you say which.</div>
-      <h3>As the ball carrier</h3>
-      <div class="scroll"><table>
-        <tr><th>Player</th><th class="n">Reps</th><th class="n">Got past</th><th class="n">Through</th>
-        <th class="n">Around</th><th class="n">Hit the pad</th><th>Faced</th></tr>
-        ${ord(O).map(n => { const v = O[n];
-          return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}</td>
-            <td class="n">${v.reps}</td><td class="n">${v.escaped}</td>
-            <td class="n">${v.through || "—"}</td><td class="n">${v.juke || "—"}</td>
-            <td class="n">${v.donut || "—"}</td>
-            <td class="muted">${Object.keys(v.faced).map(x => "#" + esc(x)).join(", ")}</td></tr>`;
-        }).join("")}
-      </table></div>
-      <h3>As the defender</h3>
-      <div class="scroll"><table>
-        <tr><th>Player</th><th class="n">Reps</th><th class="n">Held him</th><th>Faced</th></tr>
-        ${ord(D).map(n => { const v = D[n];
-          return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}</td>
-            <td class="n">${v.reps}</td><td class="n">${v.held}</td>
-            <td class="muted">${Object.keys(v.faced).map(x => "#" + esc(x)).join(", ")}</td></tr>`;
-        }).join("")}
-      </table></div>
-      <p class="muted" style="margin-top:8px"><b>Who they faced matters.</b> These are one-on-one
-        reps, so getting past the biggest player on the team is not the same event as getting past
-        the smallest. The "Faced" column is there so no one is judged without it.</p>
-    </div>`;
-  })()}
-  ${(() => {
-    const pracIds = BASELINE.practices.filter(p => mondayOf(p.date) === WEEK).map(p => p.id);
-    const snappers = nums.filter(n => (now[n] || blank()).snaps >= 3);
-    if (!snappers.length) return "";
-    return `<div class="card"><h2>Snapping</h2>
-      ${(() => {
-        /* Who is actually catching these, worked out from the plays rather than assumed. */
-        const took = {}, pairs = {};
-        BASELINE.drills.filter(d => d.kind !== "rep" && pracIds.includes(d.practiceId)).forEach(d => {
-          readDrill(d.id).forEach(x => {
-            const p = x.p; if (!p || p.kind !== "play" || !p.chain || p.chain.length < 2) return;
-            took[p.chain[1]] = (took[p.chain[1]] || 0) + 1;
-            const k = p.chain[0] + ">" + p.chain[1];
-            pairs[k] = (pairs[k] || 0) + 1;
-          });
-        });
-        const tot = Object.values(took).reduce((a, b) => a + b, 0) || 1;
-        const list = Object.keys(took).sort((a, b) => took[b] - took[a])
-          .map(n => `#${esc(n)} ${esc(nameOf(n) || "")} ${Math.round(took[n] / tot * 100)}%`).join(" · ");
-        return `<div class="warnbox">These snaps go mostly to the quarterbacks — ${list}.
-          Both #5 and #40 catch nearly anything, so <b>"reached him"</b> sits near 100%
-          for every snapper and separates nobody.<br><br>`;
-      })()}
-        <b>How good the snaps were is not shown, on purpose.</b> A snap only gets written down
-        as bad when somebody noticed it, and Maddie has said plainly that she does not reliably
-        catch bad ones — the coaches have asked her to follow tackles closely, which is the other
-        end of the play. So an absence of problems means she was watching something else, not that
-        the snapping was clean. What IS reliable is who took the snaps and how many, and that is
-        what this table shows.</div>
-      <div class="scroll"><table>
-        <tr><th>Snapper</th><th>Snapping to</th><th class="n">Snaps</th></tr>
-        ${snappers.map(n => { const s = now[n];
-          const to = {};
-          BASELINE.drills.filter(d => d.kind !== "rep" && pracIds.includes(d.practiceId)).forEach(d => {
-            readDrill(d.id).forEach(x => {
-              const p = x.p;
-              if (p && p.kind === "play" && p.chain && p.chain[0] === n && p.chain[1])
-                to[p.chain[1]] = (to[p.chain[1]] || 0) + 1;
-            });
-          });
-          const toList = Object.keys(to).sort((x, y) => to[y] - to[x])
-            .map(x => "#" + esc(x) + " ×" + to[x]).join(", ") || "—";
-          return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}</td>
-            <td class="muted">${toList}</td>
-            <td class="n">${s.snaps}</td>
-            </tr>`; }).join("")}
-      </table></div>
-      <div class="warnbox noprint" style="margin:10px 0">
-        <b>Do not read the snap-quality columns as a ranking.</b> A snap only gets written down as bad
-        when it was noticed, and Maddie has said plainly that she does not reliably catch bad snaps —
-        the coaches have asked her to follow tackles closely, which takes her attention away from the
-        exchange. So a snapper with no problems recorded may simply have been snapping while she was
-        watching something else. The <b>number of snaps</b> each boy has taken is solid; the quality
-        figures are not, and nobody should be moved on or off snap duty because of them.
-      </div>
-      <p class="muted" style="margin-top:8px">This ordering comes from the counts above and
-        nothing else — no one's opinion of anyone is recorded here.</p>
-      <p class="muted" style="margin-top:8px">Say one word about how each snap arrived —
-        <i>low, high, wide, perfect</i> — <b>including the good ones</b>. Once every snap is
-        described, this becomes a real accuracy rate instead of a floor.</p>
-    </div>`;
-  })()}
-  <div class="card"><p class="muted">A rate needs ${MIN_SHOW} reps before it appears, and ${MIN_TREND}
-    in both weeks before a change is called real. Smaller swings than that are mostly chance.</p></div>`;
+  <div class="card"><p class="muted">These are totals for ${esc(scopeLabel())}, not rates.
+    Tackles are the ones Maddie saw and said so about — never a count of every tackle made.</p></div>`;
 
-  $("#wk").onchange = e => { WEEK = e.target.value; render(); };
+  $("#wk").onchange = e => { SCOPE = e.target.value; render(); };
 }
 
 /* ---------- every play, and fixing them ---------- */
