@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-05g",
+  "version": "2026-10-05h",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -144,10 +144,17 @@ const BASELINE = {
       "name": "Valor Menn",
       "classOf": "2028",
       "year": "Jr",
-      "status": "out — injured",
+      "status": "active",
       "method": "Quarterback in the passing drills — he takes the relay and catches nearly everything, so a high catch rate here does not mean what it means for a receiver.",
       "note": "On crutches since 28 Aug. Still out.",
-      "admin": "Injured at the 28 Aug game and on crutches. Anything wearing #40 from 2 Sep is somebody else — see #40B."
+      "admin": "Injured at the 28 Aug game and on crutches. Anything wearing #40 from 2 Sep is somebody else — see #40B.",
+      "out": [
+        {
+          "from": "2026-08-28",
+          "to": null,
+          "why": "out — injured"
+        }
+      ]
     },
     {
       "num": "33",
@@ -190,9 +197,16 @@ const BASELINE = {
       "name": "Mason Litt",
       "classOf": "2028",
       "year": "Jr",
-      "status": "available",
+      "status": "active",
       "note": "Sprained his ankle 4 Sep, out five weeks. Back and taking reps by the Giddings game, 2 Oct.",
-      "method": "Back from the ankle injury. Took warm-up reps on 2 Oct; Aiden Lee was still snapping in the game itself."
+      "method": "Back from the ankle injury. Took warm-up reps on 2 Oct; Aiden Lee was still snapping in the game itself.",
+      "out": [
+        {
+          "from": "2026-09-04",
+          "to": "2026-10-01",
+          "why": "out — sprained ankle"
+        }
+      ]
     },
     {
       "num": "5",
@@ -249,10 +263,17 @@ const BASELINE = {
       "name": "Cooper Dailey",
       "classOf": "2027",
       "year": "Sr",
-      "status": "available",
+      "status": "active",
       "admin": "Spelling confirmed from the game team sheet.",
       "note": "Limped off at Prairie Lea on 12 Sep and missed the Allen Academy game. Back for Giddings on 2 Oct, where he scored three touchdowns.",
-      "method": "Back from the Prairie Lea injury. Practised from 21 Sep before he was cleared for games."
+      "method": "Back from the Prairie Lea injury. Practised from 21 Sep before he was cleared for games.",
+      "out": [
+        {
+          "from": "2026-09-12",
+          "to": "2026-10-01",
+          "why": "out — injured at Prairie Lea"
+        }
+      ]
     },
     {
       "num": "50",
@@ -266,9 +287,16 @@ const BASELINE = {
       "name": "Mickey McGuinness",
       "classOf": "2027",
       "year": "Sr",
-      "status": "out — injured",
+      "status": "active",
       "method": "Most of his snaps were only written down because something went wrong with them, so the count of off-target snaps is not a rate and should not be read as one.",
-      "note": "Out with an injured wrist since the week of the Allen Academy game. Not sustained at football — it happened away from practice and games."
+      "note": "Out with an injured wrist since the week of the Allen Academy game. Not sustained at football — it happened away from practice and games.",
+      "out": [
+        {
+          "from": "2026-09-22",
+          "to": null,
+          "why": "out — injured wrist"
+        }
+      ]
     },
     {
       "num": "",
@@ -24671,10 +24699,26 @@ function noteBlock(c) {
     <span class="muted">${esc(dateLabel(c.date))}${c.during ? " · " + esc(c.during) : ""}</span><br>
     ${esc(c.text)}</div>`;
 }
-function statusOf(num) {
+/* Being injured is a thing that happened in a stretch of weeks, not a permanent
+   label. A player who is fit now should read as fit now and still read as out when
+   you look back at the weeks he missed, so `out` holds the periods and the badge is
+   worked out against whichever week is on screen. No badge means available — that
+   is the normal state and does not need announcing. */
+function outSpell(num, when) {
   const p = BASELINE.players.find(x => String(x.num) === String(num));
-  return p ? (p.status || "active") : "active";
+  if (!p || !Array.isArray(p.out)) return null;
+  const d = when || todayISO();
+  return p.out.find(o => d >= o.from && (!o.to || d <= o.to)) || null;
 }
+function statusOf(num, when) {
+  const sp = outSpell(num, when);
+  if (sp) return sp.why || "out \u2014 injured";
+  const p = BASELINE.players.find(x => String(x.num) === String(num));
+  const st = p && p.status ? p.status : "active";
+  return (st === "available") ? "active" : st;
+}
+function todayISO() { const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
 function noteOf(num) {
   const p = BASELINE.players.find(x => String(x.num) === String(num));
   return p && p.note ? p.note : "";
@@ -25044,7 +25088,7 @@ function renderCoach() {
 
   const ups = [], downs = [];
   nums.forEach(n => {
-    if (statusOf(n) !== "active") return;      /* nobody gets called out for being injured */
+    if (statusOf(n, WEEK) !== "active") return;   /* nobody gets called out for a week he was injured */
     areaRows(now[n] || blank(), was[n] || blank()).forEach(r => {
       const m = moveWord(r); if (!m) return;
       (m.better ? ups : downs).push({ n, r, m });
@@ -25135,7 +25179,7 @@ function renderCoach() {
     <div class="scroll"><table>
       <tr><th>Player</th><th>Coach</th><th>Did</th><th class="n">Snaps</th><th class="n">Throws</th>
       <th class="n">Catch %</th><th class="n">Touches</th><th class="n">Yds</th><th class="n">Stops</th></tr>
-      ${nums.map(n => { const s = now[n] || blank(), st = statusOf(n);
+      ${nums.map(n => { const s = now[n] || blank(), st = statusOf(n, WEEK);
         const cp = s.targets ? Math.round(s.catches / s.targets * 100) + "%" : "—";
         const stops = s.tackles + s.ints + s.pbu + s.ff;
         const cn = coachNotesFor(n, WEEK);
@@ -25156,10 +25200,10 @@ function renderCoach() {
   ${nums.map(n => {
     const rows = areaRows(now[n] || blank(), was[n] || blank());
     if (!rows.length) return "";
-    const st = statusOf(n), role = roleOf(now[n]);
+    const st = statusOf(n, WEEK), role = roleOf(now[n]);
     return `<div class="card">
       <div class="spread"><h2 style="margin:0">${esc(who(n))}</h2>
-        ${st !== "active" ? `<span class="tag warn">${esc(noteOf(n) || st)}</span>` : ""}</div>
+        ${st !== "active" ? `<span class="tag warn">${esc(st)}</span>` : ""}</div>
       ${role ? `<p class="muted" style="margin:2px 0 6px">This week: ${esc(role)}</p>` : ""}
       ${/* The "Affects how this is measured" and "Note to self" boxes used to print
             here. They are Maddie's working — why a number is counted the way it is,
@@ -25520,7 +25564,7 @@ function debriefText(week) {
   if (prev) {
     const ups = [], downs = [];
     nums.forEach(n => {
-      if (statusOf(n) !== "active") return;
+      if (statusOf(n, WEEK) !== "active") return;
       /* One entry per player — his biggest move — so the note doesn't repeat
          the same kid three times for three views of the same thing. */
       let best = null;
