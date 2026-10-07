@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-06a",
+  "version": "2026-10-07a",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -25150,19 +25150,7 @@ function renderCoach() {
   ${goodTackleCard(wk)}
 
   ${(() => {
-    const cn = (BASELINE.coachNotes || []).filter(c =>
-      (!wk || mondayOf(c.date) === wk) && !c.private && !c.num);
-    if (!cn.length) return "";
-    /* What a coach said to one boy belongs on that boy's card, not in a second list
-       further up the page. Only things said to the whole team live here. */
-    const one = c => `<div style="margin:3px 0 7px">${noteMark(c.tone)}
-      ${c.shorthand ? `<code>${esc(c.text)}</code>` : esc(c.text)}
-      <span class="muted">— ${esc(c.by)}, ${esc(dateLabel(c.date))}${c.during ? ", " + esc(c.during) : ""}</span></div>`;
-    return `<div class="card">
-      <h2>What the coaches said to the team</h2>
-      <p class="muted">★ marks praise. A bullet is a coaching point — something to work on, not a mark against anyone.</p>
-      ${cn.map(one).join("")}
-    </div>`;
+    return "";
   })()}
 
   <div class="card">
@@ -25174,9 +25162,11 @@ function renderCoach() {
       <th class="n">Caught</th><th class="n">Touches</th><th class="n">Stops</th></tr>
       ${nums.map(n => { const s = S[n] || blank();
         const stops = s.tackles + s.ints + s.pbu + s.ff;
-        const up = coachNotesFor(n, wk).filter(c => c.tone === "praise").length;
-        return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}
-            ${up ? `<span class="up" title="praised by a coach">${"★".repeat(Math.min(up, 3))}</span>` : ""}</td>
+        /* No praise stars beside names. Maddie catches only a fraction of what the
+           coaches say from where she stands, so a boy without a star has not gone
+           unpraised — she just did not hear it. A star would read as a ranking of
+           who the coaches rate, which is not something this page knows. */
+        return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}</td>
           <td class="muted">${esc(roleOf(s) || "—")}</td>
           <td class="n">${tdBy[n] || "—"}</td>
           <td class="n">${s.snaps || "—"}</td>
@@ -25189,7 +25179,6 @@ function renderCoach() {
   ${nums.map(n => {
     const s = S[n] || blank(), line = headline(n, s, tdBy[n]);
     if (!line) return "";
-    const notes = coachNotesFor(n, wk);
     const stops = s.tackles + s.ints + s.pbu + s.ff;
     const row = (label, val, detail) => val
       ? `<tr><td>${esc(label)}</td><td class="n"><b>${val}</b></td><td class="muted">${detail || ""}</td></tr>` : "";
@@ -25205,13 +25194,33 @@ function renderCoach() {
         ${row("Snaps", s.snaps, "every play starts here")}
         ${row("Stops", stops, "tackles, interceptions and balls broken up that Maddie saw")}
       </table></div>
-      ${notes.length ? `<h3 style="margin:12px 0 2px">What the coaches said</h3>
-        ${notes.slice().sort((x, y) => String(y.date).localeCompare(String(x.date))).slice(0, 4)
-          .map(c => `<div style="margin:3px 0 6px">${noteMark(c.tone)} ${esc(c.text)}
-          <span class="muted">— ${esc(c.by)}, ${esc(dateLabel(c.date))}</span></div>`).join("")}
-        ${notes.length > 4 ? `<p class="muted" style="margin:2px 0 0">and ${notes.length - 4} more earlier in the season</p>` : ""}` : ""}
     </div>`;
   }).join("")}
+
+  ${(() => {
+    /* Every coach note in one place, at the end. Deliberately not on the player
+       cards, and deliberately not ordered by who was praised most: Maddie hears a
+       fraction of what is said on that field, so this is a record of what reached
+       her, never a measure of who the coaches rate. */
+    const cn = (BASELINE.coachNotes || []).filter(c => (!wk || mondayOf(c.date) === wk) && !c.private);
+    if (!cn.length) return "";
+    const team = cn.filter(c => !c.num), byNum = {};
+    cn.filter(c => c.num).forEach(c => { (byNum[c.num] = byNum[c.num] || []).push(c); });
+    const order = Object.keys(byNum).sort((a, b) => (parseInt(a, 10) || 999) - (parseInt(b, 10) || 999));
+    const one = c => `<div style="margin:3px 0 7px">${noteMark(c.tone)}
+      ${c.shorthand ? `<code>${esc(c.text)}</code>` : esc(c.text)}
+      <span class="muted">— ${esc(c.by)}, ${esc(dateLabel(c.date))}${c.during ? ", " + esc(c.during) : ""}</span></div>`;
+    return `<div class="card">
+      <h2 style="margin-top:0">What the coaches said</h2>
+      <p class="muted">★ marks praise. A bullet is a coaching point — something to work on,
+        not a mark against anyone. <b>This is only what carried far enough to be heard from the
+        sideline.</b> The coaches say a great deal more than this, and nobody is missing from the
+        list because he was not praised.</p>
+      ${team.length ? `<h3>To the whole team</h3>${team.map(one).join("")}` : ""}
+      ${order.map(n => `<h3 style="margin-bottom:2px">${esc("#" + n + (nameOf(n) ? " " + nameOf(n) : ""))}</h3>
+        ${byNum[n].map(one).join("")}`).join("")}
+    </div>`;
+  })()}
 
   <div class="card"><p class="muted">These are totals for ${esc(scopeLabel())}, not rates.
     Tackles are the ones Maddie saw and said so about — never a count of every tackle made.</p></div>`;
