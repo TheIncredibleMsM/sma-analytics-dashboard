@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-23b",
+  "version": "2026-10-23c",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -214,7 +214,8 @@ const BASELINE = {
       "classOf": "2028",
       "year": "Jr",
       "status": "active",
-      "method": "Quarterback. He receives the snap on most drills, so many of his “catches” are snaps taken rather than receiving reps. Maddie says “Major” when she can see it is him and sometimes falls back to “five” — both mean Major Howard in the offensive drills. The one exception on record is 7 Oct, when Siwoo wore 5 for the kicking drill and she identified him by his pink shoes."
+      "method": "Quarterback. He receives the snap on most drills, so many of his “catches” are snaps taken rather than receiving reps. Maddie says “Major” when she can see it is him and sometimes falls back to “five” — both mean Major Howard in the offensive drills. The one exception on record is 7 Oct, when Siwoo wore 5 for the kicking drill and she identified him by his pink shoes.",
+      "captain": true
     },
     {
       "num": "75",
@@ -249,7 +250,8 @@ const BASELINE = {
       "year": "Sr",
       "status": "active",
       "note": "Cleared to play. Deliberately not credited with anything until his number is mentioned in a drill, so bench time can't read as poor performance.",
-      "method": "His record starts on 17 August. Earlier practices are deliberately not counted against him."
+      "method": "His record starts on 17 August. Earlier practices are deliberately not counted against him.",
+      "captain": true
     },
     {
       "num": "13",
@@ -257,7 +259,8 @@ const BASELINE = {
       "classOf": "2027",
       "year": "Sr",
       "status": "active",
-      "admin": "Wore a purple penny on 24 Aug — “purple” meant 13 that day only."
+      "admin": "Wore a purple penny on 24 Aug — “purple” meant 13 that day only.",
+      "captain": true
     },
     {
       "num": "12",
@@ -279,7 +282,8 @@ const BASELINE = {
           "to": "2026-10-22",
           "why": "out — ankle"
         }
-      ]
+      ],
+      "captain": true
     },
     {
       "num": "50",
@@ -28748,6 +28752,15 @@ function renderBoard() {
    filter for anyone who wants one. No change arrows, no "too few reps", no
    comparison a reader has to hold two numbers in his head to understand. */
 let SCOPE = "season";
+/* Captain is a role the team gave him, not anything this dashboard worked out,
+   so it is a plain label rather than a mark of merit. */
+function isCaptain(n) {
+  const p = BASELINE.players.find(x => String(x.num) === String(canonNum(n)));
+  return !!(p && p.captain);
+}
+function capTag(n) {
+  return isCaptain(n) ? ` <span class="tag" style="background:#eef2ff;border-color:#6366f1;color:#3730a3">captain</span>` : "";
+}
 function scopeWeek() { return SCOPE === "season" ? null : SCOPE; }
 function scopeLabel() { return SCOPE === "season" ? "the whole season" : weekLabel(SCOPE); }
 function scopeItems() {
@@ -28838,7 +28851,7 @@ function renderCoach() {
            coaches say from where she stands, so a boy without a star has not gone
            unpraised — she just did not hear it. A star would read as a ranking of
            who the coaches rate, which is not something this page knows. */
-        return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}</td>
+        return `<tr><td><b>#${esc(n)}</b> ${esc(nameOf(n) || "")}${capTag(n)}</td>
           <td class="muted">${esc(roleOf(s) || "—")}</td>
           <td class="n">${tdBy[n] || "—"}</td>
           <td class="n">${s.snaps || "—"}</td>
@@ -28855,7 +28868,7 @@ function renderCoach() {
     const row = (label, val, detail) => val
       ? `<tr><td>${esc(label)}</td><td class="n"><b>${val}</b></td><td class="muted">${detail || ""}</td></tr>` : "";
     return `<div class="card">
-      <div class="spread"><h2 style="margin:0">${esc(who(n))}</h2>
+      <div class="spread"><h2 style="margin:0">${esc(who(n))}${capTag(n)}</h2>
         ${statusOf(n, wk) !== "active" ? `<span class="tag warn">${esc(statusOf(n, wk))}</span>` : ""}</div>
       <p style="margin:6px 0 10px;font-size:15px">${line}</p>
       <div class="scroll"><table>
