@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-26e",
+  "version": "2026-10-26f",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -30982,7 +30982,7 @@ function renderCoach() {
   <div class="card" style="background:var(--brand);color:#fff">
     <h2 style="margin:0;color:#fff">${esc(BASELINE.team)}</h2>
     <p style="margin:6px 0 0;opacity:.92">${SCOPE === "season"
-      ? `Everything recorded this season — ${pracs.length} practices and ${(BASELINE.games || []).length} games.`
+      ? `Everything recorded this season — ${pracs.length} practice${pracs.length === 1 ? "" : "s"} recorded and ${(BASELINE.games || []).length} game${(BASELINE.games || []).length === 1 ? "" : "s"}. Practices happen that Maddie cannot get to; this counts the ones with a recording behind them.`
       : `Week of ${esc(weekLabel(SCOPE))} — ${pracs.map(p => dateLabel(p.date)).join(" · ")}.`}
       ${items.filter(x => x.p && x.p.kind !== "set").length} plays recorded.</p>
   </div>
@@ -31215,7 +31215,7 @@ function debriefText(week) {
   const L = [];
 
   L.push(BASELINE.team.toUpperCase() + " — PRACTICE NOTES, week of " + weekLabel(W));
-  L.push(pracs.length + " practice" + (pracs.length === 1 ? "" : "s") + " · "
+  L.push(pracs.length + " practice" + (pracs.length === 1 ? "" : "s") + " recorded · "
     + items.filter(x => x.p && x.p.kind !== "set" && x.p.kind !== "style").length + " reps recorded");
   L.push("");
 
@@ -31276,7 +31276,7 @@ function debriefText(week) {
     });
     const nPrev = BASELINE.practices.filter(p => mondayOf(p.date) === prev).length;
     if (pracs.length && nPrev && (pracs.length / nPrev < 0.6 || nPrev / pracs.length < 0.6))
-      L.push("(" + pracs.length + " practice" + (pracs.length === 1 ? "" : "s") + " against "
+      L.push("(" + pracs.length + " practice" + (pracs.length === 1 ? "" : "s") + " recorded against "
         + nPrev + " last week, so treat the comparisons lightly.)");
     const already = found.join(" ");
     const fresh = arr => arr.filter(x => already.indexOf(x.split(" —")[0]) === -1);
@@ -31447,7 +31447,7 @@ function renderMore() {
   el.innerHTML = `
   <div class="card">
     <h2>About this file</h2>
-    <p class="muted">Built ${esc(BASELINE.version)} · ${BASELINE.practices.length} practices ·
+    <p class="muted">Built ${esc(BASELINE.version)} · ${BASELINE.practices.length} practices recorded ·
       ${BASELINE.lines.length} plays · ${BASELINE.players.length} players</p>
     <div class="okbox" style="margin-top:9px">The practice data is written into this file.
       It is never saved to the browser, so it cannot go missing. Opening a second copy of this
