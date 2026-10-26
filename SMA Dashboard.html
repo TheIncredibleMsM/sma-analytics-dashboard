@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-26f",
+  "version": "2026-10-26g",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -30928,6 +30928,17 @@ function isCaptain(n) {
 function capTag(n) {
   return isCaptain(n) ? ` <span class="tag" style="background:#eef2ff;border-color:#6366f1;color:#3730a3">captain</span>` : "";
 }
+/* A practice counts here only if there is a recorded practice drill behind it.
+   BASELINE.practices also holds a record for every game, and a record for days
+   Maddie knew football happened but could not get to — those are deliberately
+   kept, because a gap in the data is not the same as a day off, but neither of
+   them is a practice she recorded. Counting all three made the figure overstate
+   her work by nearly double. */
+function recordedPractices(list) {
+  return (list || BASELINE.practices).filter(p =>
+    BASELINE.drills.some(d => d.practiceId === p.id && !d.isGame
+      && BASELINE.lines.some(l => l.drillId === d.id)));
+}
 function scopeWeek() { return SCOPE === "season" ? null : SCOPE; }
 function scopeLabel() { return SCOPE === "season" ? "the whole season" : weekLabel(SCOPE); }
 function scopeItems() {
@@ -30982,7 +30993,7 @@ function renderCoach() {
   <div class="card" style="background:var(--brand);color:#fff">
     <h2 style="margin:0;color:#fff">${esc(BASELINE.team)}</h2>
     <p style="margin:6px 0 0;opacity:.92">${SCOPE === "season"
-      ? `Everything recorded this season — ${pracs.length} practice${pracs.length === 1 ? "" : "s"} recorded and ${(BASELINE.games || []).length} game${(BASELINE.games || []).length === 1 ? "" : "s"}. Practices happen that Maddie cannot get to; this counts the ones with a recording behind them.`
+      ? `Everything recorded this season — ${recordedPractices(pracs).length} practice${recordedPractices(pracs).length === 1 ? "" : "s"} recorded and ${(BASELINE.games || []).length} game${(BASELINE.games || []).length === 1 ? "" : "s"}. Practices happen that Maddie cannot get to; this counts the ones with a recording behind them.`
       : `Week of ${esc(weekLabel(SCOPE))} — ${pracs.map(p => dateLabel(p.date)).join(" · ")}.`}
       ${items.filter(x => x.p && x.p.kind !== "set").length} plays recorded.</p>
   </div>
@@ -31447,7 +31458,7 @@ function renderMore() {
   el.innerHTML = `
   <div class="card">
     <h2>About this file</h2>
-    <p class="muted">Built ${esc(BASELINE.version)} · ${BASELINE.practices.length} practices recorded ·
+    <p class="muted">Built ${esc(BASELINE.version)} · ${recordedPractices().length} practices recorded ·
       ${BASELINE.lines.length} plays · ${BASELINE.players.length} players</p>
     <div class="okbox" style="margin-top:9px">The practice data is written into this file.
       It is never saved to the browser, so it cannot go missing. Opening a second copy of this
