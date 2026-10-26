@@ -107,7 +107,7 @@ code{background:#eef1ed;padding:1px 5px;border-radius:4px;font-family:ui-monospa
    this file with a newer one and the newer practices come with it.
    ========================================================================== */
 const BASELINE = {
-  "version": "2026-10-26g",
+  "version": "2026-10-26h",
   "team": "San Marcos Academy",
   "fieldLen": 100,
   "note": "",
@@ -30603,8 +30603,9 @@ function go(v) {
 function render() {
   $("#hdT").textContent = BASELINE.team;
   const n = editCount();
-  $("#hdS").textContent = BASELINE.practices.length
-    ? BASELINE.practices.length + " practices · " + LINES().length + " plays"
+  const nPrac = recordedPractices().length;
+  $("#hdS").textContent = nPrac
+    ? nPrac + " practices recorded · " + LINES().length + " plays"
       + (n ? " · " + n + " correction" + (n === 1 ? "" : "s") : "")
     : "waiting for your first practice";
   ({ board: renderBoard, coach: renderCoach, plays: renderPlays, game: renderGame, more: renderMore }[VIEW] || renderBoard)();
