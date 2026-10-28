@@ -5,9 +5,11 @@ by the team's student analyst. Practices and games are recorded by voice from th
 sideline; the transcripts are charted into a single self-contained HTML page that
 the coaching staff opens behind a school Google sign-in.
 
-**3,198 charted entries across 39 practices and 5 games.** One HTML file, 645 KB,
-no external dependencies — data, parser and every view are inlined so the page works
-anywhere it is served from.
+**4,448 charted entries — 4,225 plays — across 27 practices recorded and 8 games.**
+One HTML file, 810 KB, no external dependencies: data, parser and every view are
+inlined so the page works anywhere it is served from. For hosting on Google Apps
+Script, which will not save a file that large, `Code.gs` reassembles the page from
+a handful of smaller ones at request time.
 
 ## How it works
 

@@ -1,6 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+/* ==========================================================================
+   SMA_DIAG - startup self-check.
+
+   Stays quiet when the page loads properly, so coaches never see it. If the
+   data fails to arrive or the code throws on the way up, it prints what went
+   wrong at the top of the page instead of leaving a blank dashboard with no
+   explanation. Add ?diag=1 to the URL to see the report even when all is well.
+   ========================================================================== */
+window.SMA_DIAG = [];
+window.addEventListener('error', function (ev) {
+  window.SMA_DIAG.push(
+    (ev.message || 'error') +
+    '  [' + (ev.filename || '?') + ' line ' + (ev.lineno || '?') + ']');
+});
+window.addEventListener('DOMContentLoaded', function () {
+  var forced = /[?&]diag=1/.test(location.search);
+  var errs = window.SMA_DIAG.slice();
+  var notes = [], healthy = true;
+
+  function probe(label, ok, detail) {
+    if (!ok) healthy = false;
+    notes.push((ok ? 'ok   ' : 'FAIL ') + label + (detail ? '  ' + detail : ''));
+  }
+
+  try {
+    probe('BL_META', typeof BL_META === 'object' && BL_META);
+    probe('BL_G', typeof BL_G !== 'undefined' && BL_G && BL_G.length > 0,
+          typeof BL_G !== 'undefined' && BL_G ? BL_G.length + ' games' : '');
+    for (var i = 1; i <= 4; i++) {
+      var v = window['BL_' + i];
+      probe('BL_' + i, v && v.length > 0, v ? v.length + ' lines' : '');
+    }
+    probe('BASELINE', typeof BASELINE === 'object' && BASELINE &&
+                      BASELINE.lines && BASELINE.lines.length > 0,
+          (typeof BASELINE === 'object' && BASELINE && BASELINE.lines)
+            ? BASELINE.lines.length + ' lines' : '');
+  } catch (e) {
+    healthy = false;
+    notes.push('FAIL probe threw: ' + e.message);
+  }
+
+  /* Did the page actually draw anything? */
+  var drawn = 0;
+  try {
+    var main = document.querySelector('main');
+    drawn = main ? main.textContent.replace(/\s+/g, '').length : 0;
+  } catch (e) { drawn = 0; }
+  probe('page rendered', drawn > 200, drawn + ' chars of content');
+
+  if (healthy && !errs.length && !forced) return;   // nothing to say
+
+  var box = document.createElement('pre');
+  box.className = 'noprint';
+  box.style.cssText =
+    'white-space:pre-wrap;font:12px/1.5 ui-monospace,monospace;margin:12px;' +
+    'padding:12px;border:2px solid ' + (healthy ? '#a16207' : '#b91c1c') +
+    ';border-radius:10px;background:#fff;color:' +
+    (healthy ? '#a16207' : '#b91c1c') + ';position:relative;z-index:9999';
+  box.textContent =
+    (healthy ? 'SMA diagnostic - everything checks out'
+             : 'SMA diagnostic - the dashboard did not start properly') +
+    '\n\n' + notes.join('\n') +
+    (errs.length ? '\n\nerrors:\n' + errs.join('\n') : '') +
+    '\n\ndocument ' + document.documentElement.innerHTML.length + ' chars';
+  document.body.insertBefore(box, document.body.firstChild);
+});
+</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SMA Practice Dashboard</title>
@@ -29401,8 +29470,18 @@ function whoIsViewing() {
   return "";                                   // opened straight from the file
 }
 const VIEWER = whoIsViewing();
-const isOwner = () => !VIEWER || VIEWER.toLowerCase().indexOf(OWNER) === 0
-  || VIEWER.toLowerCase().indexOf(OWNER) > -1;
+
+/* When the page is served by Apps Script, the server works out whether the
+   signed-in person is Maddie and says so here. That answer wins: it cannot be
+   faked with ?as= in the URL the way the name match below can. The name match
+   is only the fallback for opening the file straight off a laptop, where there
+   is no server to ask and the only person who can open it is her anyway. */
+const SERVER_OWNER = (typeof window.SMA_IS_OWNER === "boolean")
+  ? window.SMA_IS_OWNER : null;
+const isOwner = () => SERVER_OWNER !== null
+  ? SERVER_OWNER
+  : (!VIEWER || VIEWER.toLowerCase().indexOf(OWNER) > -1);
+
 
 const EKEY = "sma_dash_edits";
 let EDITS = { baseline: BASELINE.version, changed: {}, deleted: {}, added: [] };
@@ -30605,7 +30684,7 @@ function render() {
   const n = editCount();
   const nPrac = recordedPractices().length;
   $("#hdS").textContent = nPrac
-    ? nPrac + " practices recorded · " + LINES().length + " plays"
+    ? nPrac + " practices recorded · " + playCount() + " plays"
       + (n ? " · " + n + " correction" + (n === 1 ? "" : "s") : "")
     : "waiting for your first practice";
   ({ board: renderBoard, coach: renderCoach, plays: renderPlays, game: renderGame, more: renderMore }[VIEW] || renderBoard)();
@@ -30941,6 +31020,17 @@ function recordedPractices(list) {
       && BASELINE.lines.some(l => l.drillId === d.id)));
 }
 function scopeWeek() { return SCOPE === "season" ? null : SCOPE; }
+/* One definition of "a play", used everywhere a play count appears, so the
+   banner at the top and the cards below can never disagree. A "set" line only
+   says where the ball is or who we are playing - it is not a play. */
+function allItems() {
+  let out = [];
+  BASELINE.drills.forEach(d => { out = out.concat(readDrill(d.id)); });
+  return out;
+}
+function playCount(items) {
+  return (items || allItems()).filter(x => x.p && x.p.kind !== "set").length;
+}
 function scopeLabel() { return SCOPE === "season" ? "the whole season" : weekLabel(SCOPE); }
 function scopeItems() {
   if (SCOPE !== "season") return itemsInWeek(SCOPE);
@@ -30996,7 +31086,7 @@ function renderCoach() {
     <p style="margin:6px 0 0;opacity:.92">${SCOPE === "season"
       ? `Everything recorded this season — ${recordedPractices(pracs).length} practice${recordedPractices(pracs).length === 1 ? "" : "s"} recorded and ${(BASELINE.games || []).length} game${(BASELINE.games || []).length === 1 ? "" : "s"}. Practices happen that Maddie cannot get to; this counts the ones with a recording behind them.`
       : `Week of ${esc(weekLabel(SCOPE))} — ${pracs.map(p => dateLabel(p.date)).join(" · ")}.`}
-      ${items.filter(x => x.p && x.p.kind !== "set").length} plays recorded.</p>
+      ${playCount(items)} plays recorded.</p>
   </div>
 
   <div class="card noprint">

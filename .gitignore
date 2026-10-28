@@ -17,3 +17,9 @@ coverage/
 
 # build artefacts: one snapshot per publish, identical to the dashboard html
 PASTE*.txt
+
+# Apps Script paste artefacts and transfer bundles
+APPSSCRIPT-*
+*.bundle
+__t
+__test
